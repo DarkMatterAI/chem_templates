@@ -5,4 +5,6 @@ d = { 'settings': { 'branch': 'main',
                 'doc_host': 'https://DarkMatterAI.github.io',
                 'git_url': 'https://github.com/DarkMatterAI/chem_templates',
                 'lib_path': 'chem_templates'},
-  'syms': {'chem_templates.utils': {'chem_templates.utils.flatten_list': ('utils.html#flatten_list', 'chem_templates/utils.py')}}}
+  'syms': { 'chem_templates.chem': {},
+            'chem_templates.imports': {},
+            'chem_templates.utils': {'chem_templates.utils.flatten_list': ('utils.html#flatten_list', 'chem_templates/utils.py')}}}
