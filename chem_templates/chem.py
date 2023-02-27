@@ -6,18 +6,20 @@ __all__ = ['to_mol', 'to_smile', 'to_kekule', 'canon_smile', 'remove_stereo', 'r
 # %% ../nbs/01_chem.ipynb 3
 from .imports import *
 from .utils import *
+
 import rdkit
 from rdkit import Chem
+from rdkit.Chem import AllChem, rdMolDescriptors, Descriptors
+from rdkit import RDLogger
+RDLogger.DisableLog('rdApp.*')
 
 # %% ../nbs/01_chem.ipynb 5
 def to_mol(smile: str) -> Union[Chem.Mol, None]:
-
-    mol = Chem.MolFromSmiles(smile)
-    if mol is not None:
-        try:
-            Chem.SanitizeMol(mol)
-        except:
-            mol = None
+    try:
+        mol = Chem.MolFromSmiles(smile)
+        Chem.SanitizeMol(mol)
+    except:
+        mol = None
         
     return mol
 
