@@ -7,6 +7,6 @@ __all__ = ['flatten_list']
 from .imports import *
 
 # %% ../nbs/00_utils.ipynb 4
-def flatten_list(input):
+def flatten_list(input: list[list]) -> list:
     "Flattens list of lists (not recursive)"
     return [item for sublist in input for item in sublist]
