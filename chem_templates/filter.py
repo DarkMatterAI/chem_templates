@@ -2,7 +2,7 @@
 
 # %% auto 0
 __all__ = ['FilterResult', 'Filter', 'ValidityFilter', 'SingleCompoundFilter', 'AttachmentCountFilter', 'BinaryFunctionFilter',
-           'DataFunctionFilter', 'RangeFunctionFilter', 'SmartsFilter']
+           'DataFunctionFilter', 'RangeFunctionFilter', 'SmartsFilter', 'CatalogFilter']
 
 # %% ../nbs/02_filters.ipynb 3
 from .imports import *
@@ -135,6 +135,27 @@ class SmartsFilter(Filter):
         
     def __call__(self, molecule: Molecule) -> FilterResult:
         
+        has_match = self.has_match(molecule)
+        result = not has_match if self.exclude else has_match
+        data = {'filter_result' : has_match}
+        
+        return FilterResult(result, self.name, data)
+
+# %% ../nbs/02_filters.ipynb 15
+class CatalogFilter(Filter):
+    def __init__(self, 
+                 catalog: Catalog, 
+                 name:    str, 
+                 exclude: bool=True):
+        
+        self.catalog = catalog
+        self.name = name
+        self.exclude = exclude
+        
+    def has_match(self, molecule: Molecule) -> bool:
+        return self.catalog.has_match(molecule)
+        
+    def __call__(self, molecule: Molecule) -> FilterResult:
         has_match = self.has_match(molecule)
         result = not has_match if self.exclude else has_match
         data = {'filter_result' : has_match}
