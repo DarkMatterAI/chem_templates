@@ -7,7 +7,7 @@ __all__ = ['FilterResult', 'Filter', 'ValidityFilter', 'SingleCompoundFilter', '
 # %% ../nbs/02_filters.ipynb 3
 from .imports import *
 from .utils import *
-from .chem import Molecule
+from .chem import Molecule, Catalog, mol_func_wrapper
 from rdkit.Chem.FilterCatalog import SmartsMatcher
 
 # %% ../nbs/02_filters.ipynb 4
@@ -72,7 +72,7 @@ class BinaryFunctionFilter(Filter):
         self.name = name
         self.func = func
         
-    def __call__(self, molecule: Molecule):
+    def __call__(self, molecule: Molecule) -> FilterResult:
         result = self.func(molecule)
         
         return FilterResult(result, self.name, {})
@@ -105,7 +105,7 @@ class RangeFunctionFilter(Filter):
         self.max_val = max_val
         self.name = name
                 
-    def __call__(self, molecule: Molecule):
+    def __call__(self, molecule: Molecule) -> FilterResult:
         value = self.func(molecule)
         data = {'computed_value' : value, 'min_val' : self.min_val, 'max_val' : self.max_val}
         result = self.min_val <= value <= self.max_val
@@ -130,15 +130,13 @@ class SmartsFilter(Filter):
         self.max_val = max_val
         self.smarts_matcher = SmartsMatcher(self.name, self.smarts, self.min_val, self.max_val)
         
-    def has_match(self, molecule: Molecule):
+    def has_match(self, molecule: Molecule) -> bool:
         return self.smarts_matcher.HasMatch(molecule.mol)
         
-    def __call__(self, molecule: Molecule):
+    def __call__(self, molecule: Molecule) -> FilterResult:
         
         has_match = self.has_match(molecule)
-        
         result = not has_match if self.exclude else has_match
-        
         data = {'filter_result' : has_match}
         
         return FilterResult(result, self.name, data)
