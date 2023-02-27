@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "chem_templates"
+  site-url: "https://DarkMatterAI.github.io/chem_templates"
+  description: "A python library for controlling chemical space"
+  repo-branch: main
+  repo-url: "https://github.com/DarkMatterAI/chem_templates"
