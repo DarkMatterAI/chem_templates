@@ -5,4 +5,4 @@ d = { 'settings': { 'branch': 'main',
                 'doc_host': 'https://DarkMatterAI.github.io',
                 'git_url': 'https://github.com/DarkMatterAI/chem_templates',
                 'lib_path': 'chem_templates'},
-  'syms': {'chem_templates.core': {'chem_templates.core.foo': ('core.html#foo', 'chem_templates/core.py')}}}
+  'syms': {'chem_templates.utils': {'chem_templates.utils.flatten_list': ('utils.html#flatten_list', 'chem_templates/utils.py')}}}
