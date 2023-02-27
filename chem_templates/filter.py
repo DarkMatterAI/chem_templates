@@ -2,16 +2,21 @@
 
 # %% auto 0
 __all__ = ['FilterResult', 'Filter', 'ValidityFilter', 'SingleCompoundFilter', 'AttachmentCountFilter', 'BinaryFunctionFilter',
-           'DataFunctionFilter', 'RangeFunctionFilter']
+           'DataFunctionFilter', 'RangeFunctionFilter', 'SmartsFilter']
 
 # %% ../nbs/02_filters.ipynb 3
 from .imports import *
 from .utils import *
 from .chem import Molecule
+from rdkit.Chem.FilterCatalog import SmartsMatcher
 
 # %% ../nbs/02_filters.ipynb 4
 class FilterResult():
-    def __init__(self, filter_result: bool, filter_name: str, filter_data: dict):
+    def __init__(self, 
+                 filter_result: bool, 
+                 filter_name:   str, 
+                 filter_data:   dict):
+        
         self.filter_result = filter_result
         self.filter_data = filter_data
 
@@ -43,7 +48,9 @@ class SingleCompoundFilter(Filter):
 
 # %% ../nbs/02_filters.ipynb 7
 class AttachmentCountFilter(Filter):
-    def __init__(self, num_attachments: int):
+    def __init__(self, 
+                 num_attachments: int):
+        
         self.num_attachments = num_attachments
         self.name = f'attachment_count_{num_attachments}'
         
@@ -58,7 +65,10 @@ class AttachmentCountFilter(Filter):
 
 # %% ../nbs/02_filters.ipynb 9
 class BinaryFunctionFilter(Filter):
-    def __init__(self, func: Callable[[Molecule], bool], name: str):
+    def __init__(self, 
+                 func: Callable[[Molecule], bool], 
+                 name: str):
+        
         self.name = name
         self.func = func
         
@@ -68,7 +78,10 @@ class BinaryFunctionFilter(Filter):
         return FilterResult(result, self.name, {})
     
 class DataFunctionFilter(Filter):
-    def __init__(self, func: Callable[[Molecule], Tuple[bool, dict]], name: str):
+    def __init__(self, 
+                 func: Callable[[Molecule], Tuple[bool, dict]], 
+                 name: str):
+        
         self.name = name
         self.func = func
         
@@ -79,15 +92,53 @@ class DataFunctionFilter(Filter):
 
 # %% ../nbs/02_filters.ipynb 11
 class RangeFunctionFilter(Filter):
-    def __init__(self, func: Callable[[Molecule], bool], min_val: [int, float], max_val: [int, float], name: str):
+    def __init__(self, 
+                 func:    Callable[[Molecule], bool], 
+                 name:    str,
+                 min_val: Union[int, float, None]=None, 
+                 max_val: Union[int, float, None]=None):
+        
+        min_val, max_val = validate_range(min_val, max_val, float('-inf'), float('inf'))
+        
         self.func = func
         self.min_val = min_val
         self.max_val = max_val
         self.name = name
-        
+                
     def __call__(self, molecule: Molecule):
         value = self.func(molecule)
         data = {'computed_value' : value, 'min_val' : self.min_val, 'max_val' : self.max_val}
         result = self.min_val <= value <= self.max_val
+        
+        return FilterResult(result, self.name, data)
+
+# %% ../nbs/02_filters.ipynb 13
+class SmartsFilter(Filter):
+    def __init__(self, 
+                 smarts:  str, 
+                 name:    str,
+                 exclude: bool=True,
+                 min_val: Union[int, float, None]=None, 
+                 max_val: Union[int, float, None]=None):
+        
+        min_val, max_val = validate_range(min_val, max_val, 0, int(1e8))
+        
+        self.smarts = smarts
+        self.name = name
+        self.exclude = exclude
+        self.min_val = min_val
+        self.max_val = max_val
+        self.smarts_matcher = SmartsMatcher(self.name, self.smarts, self.min_val, self.max_val)
+        
+    def has_match(self, molecule: Molecule):
+        return self.smarts_matcher.HasMatch(molecule.mol)
+        
+    def __call__(self, molecule: Molecule):
+        
+        has_match = self.has_match(molecule)
+        
+        result = not has_match if self.exclude else has_match
+        
+        data = {'filter_result' : has_match}
         
         return FilterResult(result, self.name, data)
