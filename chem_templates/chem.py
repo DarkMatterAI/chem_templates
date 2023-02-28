@@ -2,7 +2,8 @@
 
 # %% auto 0
 __all__ = ['to_mol', 'to_smile', 'to_kekule', 'canon_smile', 'remove_stereo', 'remove_stereo_smile', 'Molecule',
-           'mol_func_wrapper', 'Catalog']
+           'mol_func_wrapper', 'smile_func_wrapper', 'Catalog', 'fragment_mol', 'clean_fragments', 'fragment_smile',
+           'fragment_molecule']
 
 # %% ../nbs/01_chem.ipynb 3
 from .imports import *
@@ -10,7 +11,7 @@ from .utils import *
 
 import rdkit
 from rdkit import Chem
-from rdkit.Chem import AllChem, rdMolDescriptors, Descriptors
+from rdkit.Chem import AllChem, rdMolDescriptors, Descriptors, rdMMPA
 from rdkit.Chem.FilterCatalog import FilterCatalog, ExclusionList, FilterCatalogEntry, \
 SmartsMatcher, FilterCatalogParams
 from rdkit import RDLogger
@@ -68,7 +69,10 @@ class Molecule():
 
 # %% ../nbs/01_chem.ipynb 8
 def mol_func_wrapper(func: Callable[[Chem.Mol], Any]):
-    return lambda x: func(x.mol)
+    return lambda molecule: func(molecule.mol)
+
+def smile_func_wrapper(func: Callable[[str], Any]):
+    return lambda molecule: func(molecule.smile)
 
 # %% ../nbs/01_chem.ipynb 10
 class Catalog():
@@ -96,3 +100,63 @@ class Catalog():
     def from_params(cls, params: FilterCatalogParams.FilterCatalogs):
         catalog = FilterCatalog(params)
         return cls(catalog)
+
+# %% ../nbs/01_chem.ipynb 12
+def fragment_mol(mol: Chem.Mol, 
+                 cuts: list[int]) -> list[str]:
+    fragments = []
+    for cut in cuts:
+        frags = rdMMPA.FragmentMol(mol, maxCuts=cut, resultsAsMols=False)
+        frags = deduplicate_list(flatten_list(frags))
+        fragments += frags
+        
+    fragments = deduplicate_list(fragments)
+    return fragments
+
+def clean_fragments(fragments: list[str], 
+                    remove_mapping: bool=True) -> list[str]:
+    patt = re.compile('\[\*(.*?)]')
+    clean_fragments = []
+    fragments = list(fragments)
+    
+    while fragments:
+        current = fragments.pop()
+        
+        if not current:
+            continue
+            
+        if '.' in current:
+            fragments += current.split('.')
+        else:
+            if remove_mapping:
+                current = patt.sub('[*]', current)
+                
+            current = canon_smile(current)
+            if current:
+                clean_fragments.append(current)
+                
+    clean_fragments = deduplicate_list(clean_fragments)
+    return clean_fragments
+
+
+def fragment_smile(smile: str, 
+                   cuts: list[int],
+                   remove_mapping: bool=True
+                  ) -> list[str]:
+    
+    mol = to_mol(smile)
+    fragments = fragment_mol(mol, cuts)
+    clean = clean_fragments(fragments, remove_mapping=remove_mapping)
+
+    return clean
+
+def fragment_molecule(molecule: Molecule,
+                      cuts: list[int],
+                      remove_mapping: bool=True
+                     ) -> list[Molecule]:
+    
+    fragments = fragment_mol(molecule.mol, cuts)
+    clean = clean_fragments(fragments, remove_mapping=remove_mapping)
+    clean = [Molecule(i) for i in clean]
+
+    return clean
