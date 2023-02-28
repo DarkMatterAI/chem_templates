@@ -2,8 +2,9 @@
 
 # %% auto 0
 __all__ = ['to_mol', 'to_smile', 'to_kekule', 'canon_smile', 'remove_stereo', 'remove_stereo_smile', 'Molecule',
-           'mol_func_wrapper', 'smile_func_wrapper', 'Catalog', 'fragment_mol', 'clean_fragments', 'fragment_smile',
-           'fragment_molecule']
+           'mol_func_wrapper', 'smile_func_wrapper', 'Catalog', 'remove_fragment_mapping', 'add_fragment_mapping',
+           'generate_mapping_permutations', 'fragment_mol', 'clean_fragments', 'fragment_smile', 'fragment_molecule',
+           'fuse_mol_on_atom_mapping', 'fuse_smile_on_atom_mapping', 'get_dummy_mol', 'combine_dummies']
 
 # %% ../nbs/01_chem.ipynb 3
 from .imports import *
@@ -102,6 +103,51 @@ class Catalog():
         return cls(catalog)
 
 # %% ../nbs/01_chem.ipynb 12
+def remove_fragment_mapping(smile: str) -> str:
+    patt = re.compile('\[\*(.*?)]')
+    smile = patt.sub('[*]', smile)
+    return canon_smile(smile)
+
+def add_fragment_mapping(smile:    str, 
+                         map_nums: list[int]) -> str:
+    
+    assert smile.count('*') == len(map_nums)
+    
+    smile = remove_fragment_mapping(smile)
+    
+    new_smile = ''
+    map_idx = 0
+    for char in smile:
+        if char=='*':
+            new_smile += f'[*:{map_nums[map_idx]}]'
+            map_idx += 1
+        else:
+            new_smile += char
+            
+    return new_smile
+
+def generate_mapping_permutations(smile:    str, 
+                                  map_nums: list[int], 
+                                  exact:    bool=False) -> list[str]:
+    
+    n_attachments = smile.count('*')
+    
+    if map_nums is None:
+        map_nums = list(range(1, n_attachments+1))
+    
+    if exact:
+        assert n_attachments == len(map_nums)
+    else:
+        assert n_attachments <= len(map_nums)
+    
+    perms = permutations(map_nums, n_attachments)
+    outputs = []
+    for p in perms:
+        outputs.append(add_fragment_mapping(smile, p))
+        
+    return outputs
+
+# %% ../nbs/01_chem.ipynb 14
 def fragment_mol(mol: Chem.Mol, 
                  cuts: list[int]) -> list[str]:
     fragments = []
@@ -129,7 +175,7 @@ def clean_fragments(fragments: list[str],
             fragments += current.split('.')
         else:
             if remove_mapping:
-                current = patt.sub('[*]', current)
+                current = remove_fragment_mapping(current)
                 
             current = canon_smile(current)
             if current:
@@ -160,3 +206,50 @@ def fragment_molecule(molecule: Molecule,
     clean = [Molecule(i) for i in clean]
 
     return clean
+
+# %% ../nbs/01_chem.ipynb 16
+def fuse_mol_on_atom_mapping(mol: Chem.Mol) -> Union[Chem.Mol, None]:
+    try:
+        return Chem.molzip(mol)
+    except:
+        return None
+    
+def fuse_smile_on_atom_mapping(smile: str) -> str:
+    mol = to_mol(smile)
+    mol = fuse_mol_on_atom_mapping(mol)
+    if mol is not None:
+        return to_smile(mol)
+    else:
+        return ''
+
+# %% ../nbs/01_chem.ipynb 18
+def get_dummy_mol(name, map_nums):
+    templates = {
+        0 : '[Zr]',
+        1 : '[*][Zr]',
+        2 : '[*][Zr][*]',
+        3 : '[*][Zr]([*])[*]',
+        4 : '[*][Zr]([*])([*])[*]'
+    }
+    
+    num_attachments = len(map_nums)
+    mapping_idx = 0
+    template = templates[num_attachments]
+    template = add_fragment_mapping(template, map_nums)
+            
+    mol = to_mol(template)
+    for atom in mol.GetAtoms():
+        if atom.GetAtomicNum() != 0:
+            atom.SetProp('atomLabel', name)
+            
+    return mol
+
+def combine_dummies(dummies, fuse=True):
+    combo = Chem.MolFromSmiles('')
+    for mol in dummies:
+        combo = Chem.CombineMols(combo, mol)
+        
+    if fuse:
+        combo = Chem.molzip(combo)
+        
+    return combo
