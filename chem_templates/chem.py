@@ -2,9 +2,10 @@
 
 # %% auto 0
 __all__ = ['to_mol', 'to_smile', 'to_kekule', 'canon_smile', 'remove_stereo', 'remove_stereo_smile', 'Molecule',
-           'mol_func_wrapper', 'smile_func_wrapper', 'Catalog', 'remove_fragment_mapping', 'add_fragment_mapping',
-           'generate_mapping_permutations', 'fragment_mol', 'clean_fragments', 'fragment_smile', 'fragment_molecule',
-           'fuse_mol_on_atom_mapping', 'fuse_smile_on_atom_mapping', 'get_dummy_mol', 'combine_dummies']
+           'mol_func_wrapper', 'smile_func_wrapper', 'Catalog', 'remove_fragment_mapping', 'is_mapped',
+           'remove_fragment_dummies', 'add_fragment_mapping', 'generate_mapping_permutations', 'fragment_mol',
+           'clean_fragments', 'fragment_smile', 'fragment_molecule', 'fuse_mol_on_atom_mapping',
+           'fuse_smile_on_atom_mapping', 'get_dummy_mol', 'combine_dummies']
 
 # %% ../nbs/01_chem.ipynb 3
 from .imports import *
@@ -107,6 +108,15 @@ def remove_fragment_mapping(smile: str) -> str:
     patt = re.compile('\[\*(.*?)]')
     smile = patt.sub('[*]', smile)
     return canon_smile(smile)
+
+def is_mapped(smile: str) -> bool:
+    patt = re.compile('\[\*(.*?)]')
+    return len(patt.findall(smile)) == smile.count('*')
+
+def remove_fragment_dummies(smile: str) -> str:
+    smile = remove_fragment_mapping(smile)
+    smile = canon_smile(smile.replace('*', '[H]'))
+    return smile
 
 def add_fragment_mapping(smile:    str, 
                          map_nums: list[int]) -> str:
@@ -223,7 +233,10 @@ def fuse_smile_on_atom_mapping(smile: str) -> str:
         return ''
 
 # %% ../nbs/01_chem.ipynb 18
-def get_dummy_mol(name, map_nums):
+def get_dummy_mol(name:     str, 
+                  map_nums: list[int],
+                  id:       Optional[int]=None
+                 ) -> Chem.Mol:
     templates = {
         0 : '[Zr]',
         1 : '[*][Zr]',
@@ -236,6 +249,9 @@ def get_dummy_mol(name, map_nums):
     mapping_idx = 0
     template = templates[num_attachments]
     template = add_fragment_mapping(template, map_nums)
+    
+    if id is not None:
+        template = template.replace('Zr', f'Zr:{id}')
             
     mol = to_mol(template)
     for atom in mol.GetAtoms():
@@ -244,7 +260,8 @@ def get_dummy_mol(name, map_nums):
             
     return mol
 
-def combine_dummies(dummies, fuse=True):
+def combine_dummies(dummies: list[Chem.Mol], 
+                    fuse:    bool=True) -> Chem.Mol:
     combo = Chem.MolFromSmiles('')
     for mol in dummies:
         combo = Chem.CombineMols(combo, mol)

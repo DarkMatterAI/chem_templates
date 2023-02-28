@@ -14,7 +14,7 @@ class Template():
     def __init__(self, filters: list[Filter]):
         self.filters = filters
         
-    def __call__(self, molecule: Molecule, early_exit: bool=True) -> Tuple[list[FilterResult], list[bool]]:
+    def __call__(self, molecule: Molecule, early_exit: bool=True) -> Tuple[bool, list[bool], list[FilterResult]]:
         filter_results = [None for i in self.filters]
         filter_summary = [False for i in self.filters]
         
@@ -26,4 +26,6 @@ class Template():
             if (not results.filter_result) and early_exit:
                 break
                 
-        return (filter_summary, filter_results)
+        filter_agg = all(filter_summary)
+                
+        return (filter_agg, filter_summary, filter_results)
