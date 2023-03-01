@@ -3,7 +3,8 @@
 # %% auto 0
 __all__ = ['remove_fragment_mapping', 'is_mapped', 'remove_fragment_dummies', 'add_fragment_mapping',
            'generate_mapping_permutations', 'fragment_mol', 'clean_fragments', 'fragment_smile', 'fragment_molecule',
-           'fuse_mol_on_atom_mapping', 'fuse_smile_on_atom_mapping', 'get_dummy_mol', 'combine_dummies']
+           'fuse_mol_on_atom_mapping', 'fuse_smile_on_atom_mapping', 'get_dummy_mol', 'combine_dummies',
+           'flatten_fragments', 'regen_smiles', 'shred_smiles']
 
 # %% ../nbs/04_fragments.ipynb 3
 from .imports import *
@@ -110,8 +111,11 @@ def fragment_smile(smile: str,
                   ) -> list[str]:
     
     mol = to_mol(smile)
-    fragments = fragment_mol(mol, cuts)
-    clean = clean_fragments(fragments, remove_mapping=remove_mapping)
+    if mol is not None:
+        fragments = fragment_mol(mol, cuts)
+        clean = clean_fragments(fragments, remove_mapping=remove_mapping)
+    else:
+        clean = []
 
     return clean
 
@@ -179,3 +183,53 @@ def combine_dummies(dummies: list[Chem.Mol],
         combo = Chem.molzip(combo)
         
     return combo
+
+# %% ../nbs/04_fragments.ipynb 12
+def flatten_fragments(batch: dict[str, list]) -> dict:
+    return {'fragments': flatten_list(batch['fragments'])}
+
+def regen_smiles(batch: dict[str, list], 
+                 max_fragment_length: int) -> dict:
+    outputs = []
+    for fragment in batch['fragments']:
+        if len(fragment) > max_fragment_length:
+            outputs.append(remove_fragment_dummies(fragment))
+            
+    return {'smiles' : outputs}
+
+
+def shred_smiles(smiles:              list[str], 
+                 cuts:                list[int], 
+                 max_fragment_length: int, 
+                 generations:         int, 
+                 keep_long_fragments: bool, 
+                 num_proc:            int=1) -> list[str]:
+    
+    start = time.time()
+    outputs = []
+    
+    for g in range(generations):
+        print(f'processing {len(smiles)} smiles')
+        smiles_dataset = datasets.Dataset.from_dict({'smiles' : smiles})
+        
+        smiles_dataset = smiles_dataset.map(lambda row: {'fragments' : fragment_smile(row['smiles'], cuts)},
+                                   num_proc=num_proc)
+        
+        fragment_dataset = smiles_dataset.map(lambda row: flatten_fragments(row), remove_columns='smiles', 
+                                      batched=True, num_proc=num_proc)
+        
+        smiles_dataset = fragment_dataset.map(lambda row: regen_smiles(row, max_fragment_length),
+                                     remove_columns='fragments', batched=True, num_proc=num_proc)
+        
+        if not keep_long_fragments:
+            fragment_dataset = fragment_dataset.filter(lambda row: len(row['fragments'])<=max_fragment_length)
+            
+        outputs += fragment_dataset['fragments']
+        smiles = deduplicate_list(smiles_dataset['smiles'])
+        outputs = deduplicate_list(outputs)
+        
+        print(f'Generation {g}, {len(outputs)} fragments')
+        
+    duration = time.time() - start
+    print(f'finished in {duration/60} minutes')
+    return outputs
