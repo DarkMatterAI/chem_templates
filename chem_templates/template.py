@@ -12,32 +12,35 @@ from .filter import Filter, FilterResult
 # %% ../nbs/03_template.ipynb 4
 class TemplateResult():
     def __init__(self, 
-                 result: bool, 
-                 filter_summary:  list[bool], 
-                 filter_data:     list[FilterResult]):
+                 result:         bool, 
+                 filter_results: list[bool], 
+                 filter_data:    list[Union[FilterResult, None]]):
         
         self.result = result
-        self.filter_summary = filter_summary
+        self.filter_results = filter_results
         self.filter_data = filter_data
 
 class Template():
     def __init__(self, filters: list[Filter]):
         self.filters = filters
         
-    def __call__(self, molecule: Molecule, early_exit: bool=True) -> TemplateResult:
-        filter_results = [None for i in self.filters]
-        filter_summary = [False for i in self.filters]
+    def _empty_result(self):
+        filter_results = [False for i in self.filters]
+        filter_data = [None for i in self.filters]
         
-        for i, f in enumerate(filters):
-            results = f(molecule)
-            filter_results[i] = results
-            filter_summary[i] = results.filter_result
+        return TemplateResult(False, filter_results, filter_data)
+        
+    def __call__(self, molecule: Molecule, early_exit: bool=True) -> TemplateResult:
+        results = self._empty_result()
+        
+        for i, f in enumerate(self.filters):
+            res = f(molecule)
+            results.filter_results[i] = res.filter_result
+            results.filter_data[i] = res
 
-            if (not results.filter_result) and early_exit:
+            if (not res.filter_result) and early_exit:
                 break
                 
-        filter_agg = all(filter_summary)
-        
-        results = TemplateResult(filter_agg, filter_summary, filter_results)
-                
+        results.result = all(results.filter_results)
+                        
         return results
