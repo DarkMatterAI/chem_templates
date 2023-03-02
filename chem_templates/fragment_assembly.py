@@ -14,14 +14,23 @@ from .fragment import get_dummy_mol, generate_mapping_permutations, combine_dumm
 # %% ../nbs/05_fragment_assembly.ipynb 4
 def visualize_assembly(molecule: Molecule) -> str:
     
+    source = molecule.data['source']
+    
+    if 'template_result' in molecule.data.keys():
+        template_result = 'Pass' if molecule.data['template_result'] else 'Fail'
+        template_result = f', Template {template_result}'
+    else:
+        template_result = ''
+    
     if 'input_smiles' in molecule.data.keys():
-        rep_str = f"{molecule.data['source']}, {molecule.data['input_smiles']} -> {molecule.smile}"
+        rep_str = f"{source}, {molecule.data['input_smiles']} -> {molecule.smile}{template_result}"
         rep_str += '\n'
         for source in molecule.data['source_molecules']:
             rep_str += '\n\t' + '\n\t'.join(visualize_assembly(source).split('\n'))
         return rep_str
     else:
-        return f"{molecule.data['source']}, {molecule.smile}"
+        return f"{source}, {molecule.smile}{template_result}"
+    
 
 # %% ../nbs/05_fragment_assembly.ipynb 5
 class FragmentNode():
