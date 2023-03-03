@@ -136,7 +136,7 @@ class BuildingBlockClass():
 
 # %% ../nbs/06_building_blocks.ipynb 7
 BB_CLASS_NAMES = [
-        'SecondaryAmines',
+#         'SecondaryAmines',
         'Acylhalides',
         'SulfonesSulfinates',
         'Reagents',
