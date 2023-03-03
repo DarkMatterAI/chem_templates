@@ -163,11 +163,11 @@ BB_CLASS_NAMES = [
         'ReagentsForOlefination'
 ]
 
-if os.path.isdir('building_block_schemas'):
-    BB_CLASSES = {i : BuildingBlockClass.from_file(f'building_block_schemas/{i}.json') for i in BB_CLASS_NAMES}
-else:
-    BB_CLASSES = {i : BuildingBlockClass.from_file(
-                        f'../chem_templates/building_block_schemas/{i}.json') for i in BB_CLASS_NAMES}
+# if os.path.isdir('building_block_schemas'):
+#     BB_CLASSES = {i : BuildingBlockClass.from_file(f'building_block_schemas/{i}.json') for i in BB_CLASS_NAMES}
+# else:
+#     BB_CLASSES = {i : BuildingBlockClass.from_file(
+#                         f'../chem_templates/building_block_schemas/{i}.json') for i in BB_CLASS_NAMES}
 
 # %% ../nbs/06_building_blocks.ipynb 9
 class ReactionUniverse():
