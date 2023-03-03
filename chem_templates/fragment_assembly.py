@@ -17,7 +17,7 @@ def visualize_assembly(molecule: Molecule) -> str:
     source = molecule.data['source']
     
     if 'template_result' in molecule.data.keys():
-        template_result = 'Pass' if molecule.data['template_result'] else 'Fail'
+        template_result = 'Pass' if molecule.data['template_overall'] else 'Fail'
         template_result = f', Template {template_result}'
     else:
         template_result = ''
@@ -150,8 +150,9 @@ class FragmentLeafNode(FragmentNode):
         molecule = Molecule(assembly_dict.get(self.name, ''), data=node_data)
         template_result = self.template_screen(molecule)
         
+        molecule.add_data({'template_overall' : template_result.result})
         assembly_str = visualize_assembly(molecule)
-        molecule.add_data({'assembly_string' : assembly_str, 'template_overall' : template_result.result})
+        molecule.add_data({'assembly_string' : assembly_str})
         return molecule
 
 # %% ../nbs/05_fragment_assembly.ipynb 8
@@ -223,9 +224,9 @@ class AssembledFragmentNode(FragmentNode):
         molecule = Molecule(fused_smile, data=node_data)
         template_result = self.template_screen(molecule)
         
-        prev_template = all([getattr(child, 'template_overall', True) for child in child_molecules])
+        prev_templates = [child.data.get('template_overall', True) for child in child_molecules]
         
+        molecule.add_data({'template_overall' : template_result.result and all(prev_templates)})
         assembly_str = visualize_assembly(molecule)
-        molecule.add_data({'assembly_string' : assembly_str, 
-                           'template_overall' : template_result.result and prev_template})
+        molecule.add_data({'assembly_string' : assembly_str})
         return molecule
