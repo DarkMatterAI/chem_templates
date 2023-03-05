@@ -1,1 +1,319 @@
-{"class_name": "SulfonylHalides", "schemas": [{"schema_name": "Heteroaromatic_Sulfonylhalides", "smarts_match_any": ["[F,Cl,Br]S(=O)(=O)[a;!$(c1ccccc1)]"], "smarts_match_all": [], "smarts_match_none": ["[F,Cl,Br][SD4].[C,S,P](=[O,S,N])[Cl,Br,F]", "[F,Cl,Br]S(=O)=O.[Si,P,S,B][Cl,F,Br,I]", "[F,Cl,Br]S(=O)(=O).[F,Cl,Br]S(=O)(=O)", "[F,Cl,Br]S(=O)=O.[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "[Mg,Li,Zn][#6]"]}, {"schema_name": "Sulfamoylhalides", "smarts_match_any": ["[Cl,F,Br]S(=O)(=O)[#7]"], "smarts_match_all": [], "smarts_match_none": ["[F,Cl,Br][SD4].[C,S,P](=[O,S,N])[Cl,Br,F]", "[F,Cl,Br]S(=O)=O.[Si,P,S,B][Cl,F,Br,I]", "[Cl,F,Br]S(=O)(=O)[#7].[F,Cl,Br]S(=O)(=O)", "[F,Cl,Br]S(=O)=O.[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "[Mg,Li,Zn][#6]"]}, {"schema_name": "Benzene_Sulfonylhalides", "smarts_match_any": ["[F,Cl,Br]S(=O)(=O)[c;$(c1ccccc1)]"], "smarts_match_all": [], "smarts_match_none": ["[F,Cl,Br][SD4]=O.[C,S,P](=[O,S,N])[Cl,Br,F]", "[F,Cl,Br]S(=O)=O.[Si,P,S,B][Cl,F,Br,I]", "[F,Cl,Br]S(=O)(=O).[F,Cl,Br]S(=O)(=O)", "[F,Cl,Br]S(=O)=O.[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "[Mg,Li,Zn][#6]"]}, {"schema_name": "SulfonylFluorides", "smarts_match_any": ["F[SD4]=O"], "smarts_match_all": [], "smarts_match_none": ["F[SD4]=O.[C,S,P](=[O,S,N])[Cl,Br,F]", "FS(=O)(=O)O", "[F]S(=O)(=O).[F,Cl,Br]S(=O)(=O)", "F[SD4]=O.[Si,P,S,B][Cl,F,Br,I]", "F[SD4]=O.[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "[Mg,Li,Zn][#6]"]}, {"schema_name": "EnIn_Sulfonylhalides", "smarts_match_any": ["[F,Cl,Br]S(=O)(=O)C=,#C"], "smarts_match_all": [], "smarts_match_none": ["[F,Cl,Br][SD4].[C,S,P](=[O,S,N])[Cl,Br,F]", "[F,Cl,Br]S(=O)=O.[Si,P,S,B][Cl,F,Br,I]", "[F,Cl,Br]S(=O)(=O).[F,Cl,Br]S(=O)(=O)", "[F,Cl,Br]S(=O)=O.[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "[Mg,Li,Zn][#6]"]}, {"schema_name": "FluoroSulfates", "smarts_match_any": ["FS(=O)(=O)O[#6]"], "smarts_match_all": [], "smarts_match_none": ["F[SD4].[C,S,P](=[O,S,N])[Cl,Br,F]", "FS(=O)(=O).[Si,P,S,B][Cl,F,Br,I]", "[F,Cl,Br]S(=O)(=O).[F,Cl,Br]S(=O)(=O)", "FS(=O)(=O).[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "[Mg,Li,Zn][#6]"]}, {"schema_name": "HeteroAliphatic_Sulfonylhalides", "smarts_match_any": ["[F,Cl,Br]S(=O)(=O)[CX4R].[NR,OR,SR]"], "smarts_match_all": [], "smarts_match_none": ["[F,Cl,Br][SD4].[C,S,P](=[O,S,N])[Cl,Br,F]", "[F,Cl,Br]S(=O)=O.[Si,P,S,B][Cl,F,Br,I]", "[F,Cl,Br]S(=O)(=O).[F,Cl,Br]S(=O)(=O)", "[F,Cl,Br]S(=O)=O.[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "[Mg,Li,Zn][#6]"]}, {"schema_name": "Aliphatic_Sulfonylhalides", "smarts_match_any": ["[F,Cl,Br]S(=O)(=O)[CX4]"], "smarts_match_all": [], "smarts_match_none": ["[F,Cl,Br][SD4].[C,S,P](=[O,S,N])[Cl,Br,F]", "[F,Cl,Br]S(=O)(=O)[CX4].[Si,P,S,B][Cl,F,Br,I]", "[F,Cl,Br]S(=O)(=O).[F,Cl,Br]S(=O)(=O)", "[F,Cl,Br]S(=O)(=O)[CX4].[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "[Mg,Li,Zn][#6]"]}, {"schema_name": "Poli_Sulfonylhalides", "smarts_match_any": ["[F,Cl,Br]S(=O)(=O)[#6].[F,Cl,Br]S(=O)(=O)[#6]"], "smarts_match_all": [], "smarts_match_none": ["[C,P](=[O,S,N])[Cl,Br,F]", "[F,Cl,Br]S(=O)(=O)[CX4].[Si,P,S,B][Cl,F,Br,I]", "[F,Cl,Br]S(=O)(=O)[CX4].[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "[Mg,Li,Zn][#6]"]}]}
+{
+    "class_name": "SulfonylHalides",
+    "schemas": [
+        {
+            "schema_name": "Heteroaromatic_Sulfonylhalides",
+            "smarts_match_any": [
+                "[F,Cl,Br]S(=O)(=O)[a;!$(c1ccccc1)]"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "[F,Cl,Br][SD4].[C,S,P](=[O,S,N])[Cl,Br,F]",
+                "[F,Cl,Br]S(=O)=O.[Si,P,S,B][Cl,F,Br,I]",
+                "[F,Cl,Br]S(=O)(=O).[F,Cl,Br]S(=O)(=O)",
+                "[F,Cl,Br]S(=O)=O.[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[S;D4;$(S(=O)(=O)a);!$(Sc1ccccc1):1][F,Cl,Br:2]>>*[S;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*S",
+                                    "mapping_end": "S:10"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "schema_name": "Sulfamoylhalides",
+            "smarts_match_any": [
+                "[Cl,F,Br]S(=O)(=O)[#7]"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "[F,Cl,Br][SD4].[C,S,P](=[O,S,N])[Cl,Br,F]",
+                "[F,Cl,Br]S(=O)=O.[Si,P,S,B][Cl,F,Br,I]",
+                "[Cl,F,Br]S(=O)(=O)[#7].[F,Cl,Br]S(=O)(=O)",
+                "[F,Cl,Br]S(=O)=O.[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[S;D4;$(S(=O)(=O)[#7]):1][F,Cl,Br:2]>>*[S;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*S",
+                                    "mapping_end": "S:10"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "schema_name": "Benzene_Sulfonylhalides",
+            "smarts_match_any": [
+                "[F,Cl,Br]S(=O)(=O)[c;$(c1ccccc1)]"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "[F,Cl,Br][SD4]=O.[C,S,P](=[O,S,N])[Cl,Br,F]",
+                "[F,Cl,Br]S(=O)=O.[Si,P,S,B][Cl,F,Br,I]",
+                "[F,Cl,Br]S(=O)(=O).[F,Cl,Br]S(=O)(=O)",
+                "[F,Cl,Br]S(=O)=O.[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[S;D4;$(S(=O)(=O)c1ccccc1):1][F,Cl,Br:2]>>*[S;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*S",
+                                    "mapping_end": "S:10"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "schema_name": "SulfonylFluorides",
+            "smarts_match_any": [
+                "F[SD4]=O"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "F[SD4]=O.[C,S,P](=[O,S,N])[Cl,Br,F]",
+                "FS(=O)(=O)O",
+                "[F]S(=O)(=O).[F,Cl,Br]S(=O)(=O)",
+                "F[SD4]=O.[Si,P,S,B][Cl,F,Br,I]",
+                "F[SD4]=O.[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[S;D4;$(S=O):1][F:2]>>*[S;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*S",
+                                    "mapping_end": "S:10"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "schema_name": "EnIn_Sulfonylhalides",
+            "smarts_match_any": [
+                "[F,Cl,Br]S(=O)(=O)C=,#C"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "[F,Cl,Br][SD4].[C,S,P](=[O,S,N])[Cl,Br,F]",
+                "[F,Cl,Br]S(=O)=O.[Si,P,S,B][Cl,F,Br,I]",
+                "[F,Cl,Br]S(=O)(=O).[F,Cl,Br]S(=O)(=O)",
+                "[F,Cl,Br]S(=O)=O.[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[S;D4;$(S(=O)(=O)C=,#C):1][F,Cl,Br:2]>>*[S;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*S",
+                                    "mapping_end": "S:10"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "schema_name": "FluoroSulfates",
+            "smarts_match_any": [
+                "FS(=O)(=O)O[#6]"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "F[SD4].[C,S,P](=[O,S,N])[Cl,Br,F]",
+                "FS(=O)(=O).[Si,P,S,B][Cl,F,Br,I]",
+                "[F,Cl,Br]S(=O)(=O).[F,Cl,Br]S(=O)(=O)",
+                "FS(=O)(=O).[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[S;D4;$(S(=O)(=O)O[#6]):1][F:2]>>*[S;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*S",
+                                    "mapping_end": "S:10"
+                                }
+                            ]
+                        },
+                        {
+                            "rxn_smarts": "[#6:1][O;$(OS(=O)(=O)F):2]>>*[#6;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*C",
+                                    "mapping_end": "C:10"
+                                },
+                                {
+                                    "mapping_start": "*[13C]",
+                                    "mapping_end": "13C:10"
+                                },
+                                {
+                                    "mapping_start": "*[13CH]",
+                                    "mapping_end": "13C:10"
+                                },
+                                {
+                                    "mapping_start": "*c",
+                                    "mapping_end": "c:10"
+                                },
+                                {
+                                    "mapping_start": "*[13c]",
+                                    "mapping_end": "13c:10"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "schema_name": "HeteroAliphatic_Sulfonylhalides",
+            "smarts_match_any": [
+                "[F,Cl,Br]S(=O)(=O)[CX4R].[NR,OR,SR]"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "[F,Cl,Br][SD4].[C,S,P](=[O,S,N])[Cl,Br,F]",
+                "[F,Cl,Br]S(=O)=O.[Si,P,S,B][Cl,F,Br,I]",
+                "[F,Cl,Br]S(=O)(=O).[F,Cl,Br]S(=O)(=O)",
+                "[F,Cl,Br]S(=O)=O.[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[S;D4;$(S(=O)(=O)[CX4R]):1][F,Cl,Br:2]>>*[S;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*S",
+                                    "mapping_end": "S:10"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "schema_name": "Aliphatic_Sulfonylhalides",
+            "smarts_match_any": [
+                "[F,Cl,Br]S(=O)(=O)[CX4]"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "[F,Cl,Br][SD4].[C,S,P](=[O,S,N])[Cl,Br,F]",
+                "[F,Cl,Br]S(=O)(=O)[CX4].[Si,P,S,B][Cl,F,Br,I]",
+                "[F,Cl,Br]S(=O)(=O).[F,Cl,Br]S(=O)(=O)",
+                "[F,Cl,Br]S(=O)(=O)[CX4].[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[S;D4;$(S(=O)(=O)[CX4]):1][F,Cl,Br:2]>>*[S;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*S",
+                                    "mapping_end": "S:10"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "schema_name": "Poli_Sulfonylhalides",
+            "smarts_match_any": [
+                "[F,Cl,Br]S(=O)(=O)[#6].[F,Cl,Br]S(=O)(=O)[#6]"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "[C,P](=[O,S,N])[Cl,Br,F]",
+                "[F,Cl,Br]S(=O)(=O)[CX4].[Si,P,S,B][Cl,F,Br,I]",
+                "[F,Cl,Br]S(=O)(=O)[CX4].[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[S;D4;$(S(=O)(=O)[#6]):1][F,Cl,Br:2]>>*[S;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*S",
+                                    "mapping_end": "S:10"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

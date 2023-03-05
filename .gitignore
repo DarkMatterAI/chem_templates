@@ -1,6 +1,7 @@
 _docs/
 _proc/
 dev/
+building_block_schemas_old/
 
 *.bak
 .gitattributes

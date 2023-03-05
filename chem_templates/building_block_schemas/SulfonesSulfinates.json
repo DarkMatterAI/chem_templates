@@ -1,1 +1,227 @@
-{"class_name": "SulfonesSulfinates", "schemas": [{"schema_name": "Aryl_Allyl_Sulphones", "smarts_match_any": ["[CH2]=[CH][CH2][S](=O)(=O)c"], "smarts_match_all": [], "smarts_match_none": ["[#6,O,S,N;!$(C(F)(F)F);!$(C(=O)[OD1])][C,SD4,P](!@=[O,S,N])[OD1,F,Cl,Br]", "[Cl,Br,I][CX4]", "[Sn,B]", "[SH,S-]", "N=C=[O,S]", "[Or3]", "[#6]!@#N[*]", "[C-]#[N+][*]", "[OH,O-]c", "[Si,P,S,B][Cl,F,Br,I]", "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "[Mg,Li,Zn][#6]"]}, {"schema_name": "AlkylSulfinates", "smarts_match_any": ["[OH,O-][SD3](=O)[CX4]"], "smarts_match_all": [], "smarts_match_none": ["[#6,O,S,N;!$(C(F)(F)F);!$(C(=O)[OD1])][C,SD4,P](!@=[O,S,N])[OD1,F,Cl,Br]", "[Cl,Br,I][CX4]", "[Sn,B]", "[SH,S-]", "N=C=[O,S]", "[Or3]", "[#6]!@#N[*]", "[C-]#[N+][*]", "[OH,O-]c", "[Si,P,S,B][Cl,F,Br,I]", "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "[Mg,Li,Zn][#6]"]}, {"schema_name": "ArylSulfinates", "smarts_match_any": ["[OH,O-][SD3](=O)c"], "smarts_match_all": [], "smarts_match_none": ["[#6,O,S,N;!$(C(F)(F)F);!$(C(=O)[OD1])][C,SD4,P](!@=[O,S,N])[OD1,F,Cl,Br]", "[Cl,Br,I][CX4]", "[Sn,B]", "[SH,S-]", "N=C=[O,S]", "[Or3]", "[#6]!@#N[*]", "[C-]#[N+][*]", "[OH,O-]c", "[Si,P,S,B][Cl,F,Br,I]", "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "N=O", "[Mg,Li,Zn][#6]"]}, {"schema_name": "EnInSulfinates", "smarts_match_any": ["[OH,O-][SD3](=O)C=C", "[OH,O-][SD3](=O)C#C"], "smarts_match_all": [], "smarts_match_none": ["[#6,O,S,N;!$(C(F)(F)F);!$(C(=O)[OD1])][C,SD4,P](!@=[O,S,N])[OD1,F,Cl,Br]", "[Cl,Br,I][CX4]", "[Sn,B]", "[SH,S-]", "N=C=[O,S]", "[Or3]", "[#6]!@#N[*]", "[C-]#[N+][*]", "[OH,O-]c", "[Si,P,S,B][Cl,F,Br,I]", "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "[Mg,Li,Zn][#6]"]}]}
+{
+    "class_name": "SulfonesSulfinates",
+    "schemas": [
+        {
+            "schema_name": "Aryl_Allyl_Sulphones",
+            "smarts_match_any": [
+                "[CH2]=[CH][CH2][S](=O)(=O)c"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "[#6,O,S,N;!$(C(F)(F)F);!$(C(=O)[OD1])][C,SD4,P](!@=[O,S,N])[OD1,F,Cl,Br]",
+                "[Cl,Br,I][CX4]",
+                "[Sn,B]",
+                "[SH,S-]",
+                "N=C=[O,S]",
+                "[Or3]",
+                "[#6]!@#N[*]",
+                "[C-]#[N+][*]",
+                "[OH,O-]c",
+                "[Si,P,S,B][Cl,F,Br,I]",
+                "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[c:1][S;$(S(=O)(=O)[CH2][CH]=[CH2]):2]>>*[c;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*c",
+                                    "mapping_end": "c:20"
+                                },
+                                {
+                                    "mapping_start": "*[13c]",
+                                    "mapping_end": "13c:20"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "schema_name": "AlkylSulfinates",
+            "smarts_match_any": [
+                "[OH,O-][SD3](=O)[CX4]"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "[#6,O,S,N;!$(C(F)(F)F);!$(C(=O)[OD1])][C,SD4,P](!@=[O,S,N])[OD1,F,Cl,Br]",
+                "[Cl,Br,I][CX4]",
+                "[Sn,B]",
+                "[SH,S-]",
+                "N=C=[O,S]",
+                "[Or3]",
+                "[#6]!@#N[*]",
+                "[C-]#[N+][*]",
+                "[OH,O-]c",
+                "[Si,P,S,B][Cl,F,Br,I]",
+                "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[S;D3;$(S(=O)[O-]);$(S(=O)[OH]):2][CX4:1]>>*[C;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*C",
+                                    "mapping_end": "C:70"
+                                },
+                                {
+                                    "mapping_start": "*[13C]",
+                                    "mapping_end": "13C:70"
+                                },
+                                {
+                                    "mapping_start": "*[13CH]",
+                                    "mapping_end": "13C:70"
+                                }
+                            ]
+                        },
+                        {
+                            "rxn_smarts": "[O;-1;$([O-]S(=O)[CX4]):1]>>*[O;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*O",
+                                    "mapping_end": "O:20"
+                                }
+                            ]
+                        },
+                        {
+                            "rxn_smarts": "[O;D1;$([OH]S(=O)[CX4]):1]>>*[O;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*O",
+                                    "mapping_end": "O:20"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "schema_name": "ArylSulfinates",
+            "smarts_match_any": [
+                "[OH,O-][SD3](=O)c"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "[#6,O,S,N;!$(C(F)(F)F);!$(C(=O)[OD1])][C,SD4,P](!@=[O,S,N])[OD1,F,Cl,Br]",
+                "[Cl,Br,I][CX4]",
+                "[Sn,B]",
+                "[SH,S-]",
+                "N=C=[O,S]",
+                "[Or3]",
+                "[#6]!@#N[*]",
+                "[C-]#[N+][*]",
+                "[OH,O-]c",
+                "[Si,P,S,B][Cl,F,Br,I]",
+                "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "N=O",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[S;D3;$(S(=O)[O-]);$(S(=O)[OH]):2][c:1]>>*[c;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*c",
+                                    "mapping_end": "c:70"
+                                },
+                                {
+                                    "mapping_start": "*[13c]",
+                                    "mapping_end": "13c:70"
+                                }
+                            ]
+                        },
+                        {
+                            "rxn_smarts": "[O;-1;$([O-]S(=O)c):1]>>*[O;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*O",
+                                    "mapping_end": "O:20"
+                                }
+                            ]
+                        },
+                        {
+                            "rxn_smarts": "[O;D1;$([OH]S(=O)c):1]>>*[O;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*O",
+                                    "mapping_end": "O:20"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "schema_name": "EnInSulfinates",
+            "smarts_match_any": [
+                "[OH,O-][SD3](=O)C=C",
+                "[OH,O-][SD3](=O)C#C"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "[#6,O,S,N;!$(C(F)(F)F);!$(C(=O)[OD1])][C,SD4,P](!@=[O,S,N])[OD1,F,Cl,Br]",
+                "[Cl,Br,I][CX4]",
+                "[Sn,B]",
+                "[SH,S-]",
+                "N=C=[O,S]",
+                "[Or3]",
+                "[#6]!@#N[*]",
+                "[C-]#[N+][*]",
+                "[OH,O-]c",
+                "[Si,P,S,B][Cl,F,Br,I]",
+                "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[C;$(C=C),$(C#C):1][SD3;$(S(=O)[OH,O-]):2]>>*[C;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*C",
+                                    "mapping_end": "C:20"
+                                },
+                                {
+                                    "mapping_start": "*[13C]",
+                                    "mapping_end": "13C:20"
+                                },
+                                {
+                                    "mapping_start": "*[13CH]",
+                                    "mapping_end": "13C:20"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

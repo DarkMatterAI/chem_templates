@@ -1,1 +1,242 @@
-{"class_name": "Aldehyde", "schemas": [{"schema_name": "Heteroaromatic_aldehydes", "smarts_match_any": ["O=[CH][c;!$(c1ccccc1)]"], "smarts_match_all": [], "smarts_match_none": ["[O;$(O=[CH][#6])].[O;$(O=[CH][#6])]", "[C,S,P](!@=[O,N,S])[F,Cl,Br]", "[C,S,P](!@=[O,N,S])[OH]", "[CX4][Cl,Br,I]", "[Sn,B]", "[O,S]=C([#6])[#6]", "[N;$([NH]);!$(NC=[C,N,O,P,S])!$(N=[C,N,O,S])!$(N[P,S])!$(N#C)]", "[SH,S-]", "[*]=[NH]", "[*]=N[OH]", "N=C=[O,S]", "[Si,P,S,B][Cl,F,Br,I]", "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "[Mg,Li,Zn][#6]"]}, {"schema_name": "Aliphatic_Aldehydes", "smarts_match_any": ["[C!a][CH]=O"], "smarts_match_all": [], "smarts_match_none": ["[O;$(O=[CH][#6])].[O;$(O=[CH][#6])]", "[C,S,P](!@=[O,N,S])[F,Cl,Br]", "[C,S,P](!@=[O,N,S])[OH]", "[CX4][Cl,Br,I]", "[Sn,B]", "[O,S]=C([#6])[#6]", "[N;$([NH]);!$(NC=[C,N,O,P,S])!$(N=[C,N,O,S])!$(N[P,S])!$(N#C)]", "[SH,S-]", "[*]=[NH]", "[*]=N[OH]", "N=C=[O,S]", "[Si,P,S,B][Cl,F,Br,I]", "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "[Mg,Li,Zn][#6]"]}, {"schema_name": "Aromatic_aldehydes", "smarts_match_any": ["O=[CH][c;$(c1ccccc1)]"], "smarts_match_all": [], "smarts_match_none": ["[O;$(O=[CH][#6])].[O;$(O=[CH][#6])]", "[C,S,P](!@=[O,N,S])[F,Cl,Br]", "[C,S,P](!@=[O,N,S])[OH]", "[CX4][Cl,Br,I]", "[Sn,B]", "[O,S]=C([#6])[#6]", "[N;$([NH]);!$(NC=[C,N,O,P,S])!$(N=[C,N,O,S])!$(N[P,S])!$(N#C)]", "[SH,S-]", "[*]=[NH]", "[*]=N[OH]", "N=C=[O,S]", "[Si,P,S,B][Cl,F,Br,I]", "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "[Mg,Li,Zn][#6]"]}]}
+{
+    "class_name": "Aldehyde",
+    "schemas": [
+        {
+            "schema_name": "Heteroaromatic_aldehydes",
+            "smarts_match_any": [
+                "O=[CH][c;!$(c1ccccc1)]"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "[O;$(O=[CH][#6])].[O;$(O=[CH][#6])]",
+                "[C,S,P](!@=[O,N,S])[F,Cl,Br]",
+                "[C,S,P](!@=[O,N,S])[OH]",
+                "[CX4][Cl,Br,I]",
+                "[Sn,B]",
+                "[O,S]=C([#6])[#6]",
+                "[N;$([NH]);!$(NC=[C,N,O,P,S])!$(N=[C,N,O,S])!$(N[P,S])!$(N#C)]",
+                "[SH,S-]",
+                "[*]=[NH]",
+                "[*]=N[OH]",
+                "N=C=[O,S]",
+                "[Si,P,S,B][Cl,F,Br,I]",
+                "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[C;$([CH]([c;!$(c1ccccc1)])(=O)):1]=[O:2]>>[C;+0:1]*",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*C",
+                                    "mapping_end": "C:30"
+                                },
+                                {
+                                    "mapping_start": "*[13C]",
+                                    "mapping_end": "13C:30"
+                                },
+                                {
+                                    "mapping_start": "*[13CH]",
+                                    "mapping_end": "13C:30"
+                                }
+                            ]
+                        },
+                        {
+                            "rxn_smarts": "[C;$([CH]([c;!$(c1ccccc1)])(=O)):1]=[O:2]>>[C;+0:1]*",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*C",
+                                    "mapping_end": "C:10"
+                                },
+                                {
+                                    "mapping_start": "*[13C]",
+                                    "mapping_end": "13C:10"
+                                },
+                                {
+                                    "mapping_start": "*[13CH]",
+                                    "mapping_end": "13C:10"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "schema_name": "Aliphatic_Aldehydes",
+            "smarts_match_any": [
+                "[C!a][CH]=O"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "[O;$(O=[CH][#6])].[O;$(O=[CH][#6])]",
+                "[C,S,P](!@=[O,N,S])[F,Cl,Br]",
+                "[C,S,P](!@=[O,N,S])[OH]",
+                "[CX4][Cl,Br,I]",
+                "[Sn,B]",
+                "[O,S]=C([#6])[#6]",
+                "[N;$([NH]);!$(NC=[C,N,O,P,S])!$(N=[C,N,O,S])!$(N[P,S])!$(N#C)]",
+                "[SH,S-]",
+                "[*]=[NH]",
+                "[*]=N[OH]",
+                "N=C=[O,S]",
+                "[Si,P,S,B][Cl,F,Br,I]",
+                "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[C;$([CH](C)(=O)):1]=[O:2]>>[C;+0:1]*",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*C",
+                                    "mapping_end": "C:30"
+                                },
+                                {
+                                    "mapping_start": "*[13C]",
+                                    "mapping_end": "13C:30"
+                                },
+                                {
+                                    "mapping_start": "*[13CH]",
+                                    "mapping_end": "13C:30"
+                                }
+                            ]
+                        },
+                        {
+                            "rxn_smarts": "[C;$([CH](C)(=O)):1]=[O:2]>>[C;+0:1]*",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*C",
+                                    "mapping_end": "C:10"
+                                },
+                                {
+                                    "mapping_start": "*[13C]",
+                                    "mapping_end": "13C:10"
+                                },
+                                {
+                                    "mapping_start": "*[13CH]",
+                                    "mapping_end": "13C:10"
+                                }
+                            ]
+                        },
+                        {
+                            "rxn_smarts": "[C;$([CH](C)(=O)):1]=[O:2]>>*[C;+0:1]-[OH:2]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*C",
+                                    "mapping_end": "C:10"
+                                },
+                                {
+                                    "mapping_start": "*[13C]",
+                                    "mapping_end": "13C:10"
+                                },
+                                {
+                                    "mapping_start": "*[13CH]",
+                                    "mapping_end": "13C:10"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "schema_name": "Aromatic_aldehydes",
+            "smarts_match_any": [
+                "O=[CH][c;$(c1ccccc1)]"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "[O;$(O=[CH][#6])].[O;$(O=[CH][#6])]",
+                "[C,S,P](!@=[O,N,S])[F,Cl,Br]",
+                "[C,S,P](!@=[O,N,S])[OH]",
+                "[CX4][Cl,Br,I]",
+                "[Sn,B]",
+                "[O,S]=C([#6])[#6]",
+                "[N;$([NH]);!$(NC=[C,N,O,P,S])!$(N=[C,N,O,S])!$(N[P,S])!$(N#C)]",
+                "[SH,S-]",
+                "[*]=[NH]",
+                "[*]=N[OH]",
+                "N=C=[O,S]",
+                "[Si,P,S,B][Cl,F,Br,I]",
+                "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[C;$([CH](c)(=O)):1]=[O:2]>>[C;+0:1]*",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*C",
+                                    "mapping_end": "C:30"
+                                },
+                                {
+                                    "mapping_start": "*[13C]",
+                                    "mapping_end": "13C:30"
+                                },
+                                {
+                                    "mapping_start": "*[13CH]",
+                                    "mapping_end": "13C:30"
+                                }
+                            ]
+                        },
+                        {
+                            "rxn_smarts": "[C;$([CH](c)(=O)):1]=[O:2]>>[C;+0:1]*",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*C",
+                                    "mapping_end": "C:10"
+                                },
+                                {
+                                    "mapping_start": "*[13C]",
+                                    "mapping_end": "13C:10"
+                                },
+                                {
+                                    "mapping_start": "*[13CH]",
+                                    "mapping_end": "13C:10"
+                                }
+                            ]
+                        },
+                        {
+                            "rxn_smarts": "[C;$([CH](c)(=O)):1]=[O:2]>>*[C;+0:1]-[OH:2]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*C",
+                                    "mapping_end": "C:10"
+                                },
+                                {
+                                    "mapping_start": "*[13C]",
+                                    "mapping_end": "13C:10"
+                                },
+                                {
+                                    "mapping_start": "*[13CH]",
+                                    "mapping_end": "13C:10"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

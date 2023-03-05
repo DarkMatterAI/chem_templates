@@ -1,1 +1,248 @@
-{"class_name": "ArylHalide", "schemas": [{"schema_name": "Aryl_iodides", "smarts_match_any": ["c[I;D1]"], "smarts_match_all": [], "smarts_match_none": ["cI.cI", "[CX4][I,Br,Cl]", "[C,S,P](!@=[O,N,S])[F,Cl,Br]", "[C,S,P;!$([C,S]C(F)(F)F);!$(C[CH3]);!$(CC(=O)[OD1])](!@=[O,N,S])[OH]", "[SH,S-]", "*=[NH]", "N[OH]", "C(=[S,N])[N]", "[O,N!R]=,#[C,N][CH][C,N]=,#[O,N!R]", "C1OC1", "N=C=[O,S]", "[C-]#[N+][*]", "C#[CH]", "[Si,P,S,B][Cl,F,Br,I]", "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "[Mg,Li,Zn][#6]"]}, {"schema_name": "Aryl_halides_Pd", "smarts_match_any": ["[n]1[a][a]c(Cl)[a][a]1", "[cr6;$(cn)]Cl", "c[I,Br]", "cOS(=O)(=O)C(F)(F)F"], "smarts_match_all": [], "smarts_match_none": ["cI.cI", "cBr.cBr", "[cr6;$(cn)]Cl.[cr6;$(cn)]Cl", "[n]1c(Cl)[a]c(Cl)[a][a]1", "cOS(=O)(=O)C(F)(F)F.cOS(=O)(=O)C(F)(F)F", "[Cl,Br,I][CX4]", "[C,S,P](!@=[O,N,S])[F,Cl,Br]", "[C,S,P;!$([C,S]C(F)(F)F);!$(C[CH3]);!$(CC(=O)[OD1])](!@=[O,N,S])[OH]", "[SH,S-]", "*=[NH]", "N[OH]", "C(=[S,N])[N]", "[O,N!R]=,#[C,N][CH][C,N]=,#[O,N!R]", "C1OC1", "N=C=[O,S]", "[C-]#[N+][*]", "[#6]!@#N[*]", "C#[CH]", "[Si,P,S,B][Cl,F,Br,I]", "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "[Mg,Li,Zn][#6]"]}, {"schema_name": "Aryl_halides_SN", "smarts_match_any": ["[F,Cl,Br,I]c1[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])][a]([$([NX3](=O)=O),$([NX3+](=O)[O-]),$(C#N),$([CH]=O),$(C(O)=O),$(S(=O)=O)])[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])]1", "[F,Cl,Br,I]c1[a]([$([NX3](=O)=O),$([NX3+](=O)[O-]),$(C#N),$([CH]=O),$(C(O)=O),$(S(=O)=O)])[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])]1", "[n]1[a][a]c(Cl)[a][a]1", "[cr6;$(cn)]Cl"], "smarts_match_all": [], "smarts_match_none": ["Fc1[a;!$([a][O])!$([a][Nv3X3])][a](F)[a]([$([NX3](=O)=O),$([NX3+](=O)[O-]),$(C#N),$([CH]=O),$(C(O)=O),$(S(=O)=O)])[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])]1", "Clc1[a;!$([a][O])!$([a][Nv3X3])][a](Cl)[a]([$([NX3](=O)=O),$([NX3+](=O)[O-]),$(C#N),$([CH]=O),$(C(O)=O),$(S(=O)=O)])[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])]1", "Brc1[a;!$([a][O])!$([a][Nv3X3])][a](Br)[a]([$([NX3](=O)=O),$([NX3+](=O)[O-]),$(C#N),$([CH]=O),$(C(O)=O),$(S(=O)=O)])[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])]1", "Ic1[a;!$([a][O])!$([a][Nv3X3])][a](I)[a]([$([NX3](=O)=O),$([NX3+](=O)[O-]),$(C#N),$([CH]=O),$(C(O)=O),$(S(=O)=O)])[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])]1", "Fc1c([$([NX3](=O)=O),$([NX3+](=O)[O-]),$(C#N),$([CH]=O),$(C(O)=O),$(S(=O)=O)])c(F)[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])]1", "Clc1c([$([NX3](=O)=O),$([NX3+](=O)[O-]),$(C#N),$([CH]=O),$(C(O)=O),$(S(=O)=O)])c(Cl)[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])]1", "Brc1c([$([NX3](=O)=O),$([NX3+](=O)[O-]),$(C#N),$([CH]=O),$(C(O)=O),$(S(=O)=O)])c(Br)[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])]1", "Ic1c([$([NX3](=O)=O),$([NX3+](=O)[O-]),$(C#N),$([CH]=O),$(C(O)=O),$(S(=O)=O)])c(I)[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])]1", "[cr6;$(cn)]Cl.[cr6;$(cn)]Cl", "[n]1c(Cl)[a]c(Cl)[a][a]1", "[CX4][I,Br,Cl]", "[C,S,P](!@=[O,N,S])[F,Cl,Br]", "[SH,S-]", "[*]=[NH]", "N[OH]", "[O,N!R]=,#[C,N][CH][C,N]=,#[O,N!R]", "C1OC1", "N=C=[O,S]", "[C-]#[N+][*]", "[N;$([NH,NH2]);!$(NC=[C,N,O,P,S])!$(N=[C,N,O,S])!$(N[P,S])!$(N#[C])]", "[Si,P,S,B][Cl,F,Br,I]", "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "[Mg,Li,Zn][#6]"]}]}
+{
+    "class_name": "ArylHalide",
+    "schemas": [
+        {
+            "schema_name": "Aryl_iodides",
+            "smarts_match_any": [
+                "c[I;D1]"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "cI.cI",
+                "[CX4][I,Br,Cl]",
+                "[C,S,P](!@=[O,N,S])[F,Cl,Br]",
+                "[C,S,P;!$([C,S]C(F)(F)F);!$(C[CH3]);!$(CC(=O)[OD1])](!@=[O,N,S])[OH]",
+                "[SH,S-]",
+                "*=[NH]",
+                "N[OH]",
+                "C(=[S,N])[N]",
+                "[O,N!R]=,#[C,N][CH][C,N]=,#[O,N!R]",
+                "C1OC1",
+                "N=C=[O,S]",
+                "[C-]#[N+][*]",
+                "C#[CH]",
+                "[Si,P,S,B][Cl,F,Br,I]",
+                "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[c:1][I:2]>>*[c;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*c",
+                                    "mapping_end": "c:10"
+                                },
+                                {
+                                    "mapping_start": "*[13c]",
+                                    "mapping_end": "13c:10"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "schema_name": "Aryl_halides_Pd",
+            "smarts_match_any": [
+                "[n]1[a][a]c(Cl)[a][a]1",
+                "[cr6;$(cn)]Cl",
+                "c[I,Br]",
+                "cOS(=O)(=O)C(F)(F)F"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "cI.cI",
+                "cBr.cBr",
+                "[cr6;$(cn)]Cl.[cr6;$(cn)]Cl",
+                "[n]1c(Cl)[a]c(Cl)[a][a]1",
+                "cOS(=O)(=O)C(F)(F)F.cOS(=O)(=O)C(F)(F)F",
+                "[Cl,Br,I][CX4]",
+                "[C,S,P](!@=[O,N,S])[F,Cl,Br]",
+                "[C,S,P;!$([C,S]C(F)(F)F);!$(C[CH3]);!$(CC(=O)[OD1])](!@=[O,N,S])[OH]",
+                "[SH,S-]",
+                "*=[NH]",
+                "N[OH]",
+                "C(=[S,N])[N]",
+                "[O,N!R]=,#[C,N][CH][C,N]=,#[O,N!R]",
+                "C1OC1",
+                "N=C=[O,S]",
+                "[C-]#[N+][*]",
+                "[#6]!@#N[*]",
+                "C#[CH]",
+                "[Si,P,S,B][Cl,F,Br,I]",
+                "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[c;$(c1[a][a][n][a][a]1):1][Cl:2]>>*[c;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*c",
+                                    "mapping_end": "c:10"
+                                },
+                                {
+                                    "mapping_start": "*[13c]",
+                                    "mapping_end": "13c:10"
+                                }
+                            ]
+                        },
+                        {
+                            "rxn_smarts": "[c;$(c1[n][a][a][a][a]1):1][Cl:2]>>*[c;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*c",
+                                    "mapping_end": "c:10"
+                                },
+                                {
+                                    "mapping_start": "*[13c]",
+                                    "mapping_end": "13c:10"
+                                }
+                            ]
+                        },
+                        {
+                            "rxn_smarts": "[c:1][I,Br:2]>>*[c;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*c",
+                                    "mapping_end": "c:10"
+                                },
+                                {
+                                    "mapping_start": "*[13c]",
+                                    "mapping_end": "13c:10"
+                                }
+                            ]
+                        },
+                        {
+                            "rxn_smarts": "[c:1][O;$(OS(=O)(=O)C(F)(F)F):2]>>*[c;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*c",
+                                    "mapping_end": "c:10"
+                                },
+                                {
+                                    "mapping_start": "*[13c]",
+                                    "mapping_end": "13c:10"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "schema_name": "Aryl_halides_SN",
+            "smarts_match_any": [
+                "[F,Cl,Br,I]c1[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])][a]([$([NX3](=O)=O),$([NX3+](=O)[O-]),$(C#N),$([CH]=O),$(C(O)=O),$(S(=O)=O)])[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])]1",
+                "[F,Cl,Br,I]c1[a]([$([NX3](=O)=O),$([NX3+](=O)[O-]),$(C#N),$([CH]=O),$(C(O)=O),$(S(=O)=O)])[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])]1",
+                "[n]1[a][a]c(Cl)[a][a]1",
+                "[cr6;$(cn)]Cl"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "Fc1[a;!$([a][O])!$([a][Nv3X3])][a](F)[a]([$([NX3](=O)=O),$([NX3+](=O)[O-]),$(C#N),$([CH]=O),$(C(O)=O),$(S(=O)=O)])[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])]1",
+                "Clc1[a;!$([a][O])!$([a][Nv3X3])][a](Cl)[a]([$([NX3](=O)=O),$([NX3+](=O)[O-]),$(C#N),$([CH]=O),$(C(O)=O),$(S(=O)=O)])[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])]1",
+                "Brc1[a;!$([a][O])!$([a][Nv3X3])][a](Br)[a]([$([NX3](=O)=O),$([NX3+](=O)[O-]),$(C#N),$([CH]=O),$(C(O)=O),$(S(=O)=O)])[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])]1",
+                "Ic1[a;!$([a][O])!$([a][Nv3X3])][a](I)[a]([$([NX3](=O)=O),$([NX3+](=O)[O-]),$(C#N),$([CH]=O),$(C(O)=O),$(S(=O)=O)])[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])]1",
+                "Fc1c([$([NX3](=O)=O),$([NX3+](=O)[O-]),$(C#N),$([CH]=O),$(C(O)=O),$(S(=O)=O)])c(F)[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])]1",
+                "Clc1c([$([NX3](=O)=O),$([NX3+](=O)[O-]),$(C#N),$([CH]=O),$(C(O)=O),$(S(=O)=O)])c(Cl)[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])]1",
+                "Brc1c([$([NX3](=O)=O),$([NX3+](=O)[O-]),$(C#N),$([CH]=O),$(C(O)=O),$(S(=O)=O)])c(Br)[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])]1",
+                "Ic1c([$([NX3](=O)=O),$([NX3+](=O)[O-]),$(C#N),$([CH]=O),$(C(O)=O),$(S(=O)=O)])c(I)[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])]1",
+                "[cr6;$(cn)]Cl.[cr6;$(cn)]Cl",
+                "[n]1c(Cl)[a]c(Cl)[a][a]1",
+                "[CX4][I,Br,Cl]",
+                "[C,S,P](!@=[O,N,S])[F,Cl,Br]",
+                "[SH,S-]",
+                "[*]=[NH]",
+                "N[OH]",
+                "[O,N!R]=,#[C,N][CH][C,N]=,#[O,N!R]",
+                "C1OC1",
+                "N=C=[O,S]",
+                "[C-]#[N+][*]",
+                "[N;$([NH,NH2]);!$(NC=[C,N,O,P,S])!$(N=[C,N,O,S])!$(N[P,S])!$(N#[C])]",
+                "[Si,P,S,B][Cl,F,Br,I]",
+                "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[F,Cl,Br,I:1][c;$(c1[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])][a]([$([NX3](=O)=O),$([NX3+](=O)[O-]),$(C#N),$(C([H])=O),$(C(O)=O),$(S(=O)=O)])[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])]1):2]>>*[c;+0:2]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*c",
+                                    "mapping_end": "c:10"
+                                },
+                                {
+                                    "mapping_start": "*[13c]",
+                                    "mapping_end": "13c:10"
+                                }
+                            ]
+                        },
+                        {
+                            "rxn_smarts": "[F,Cl,Br,I:1][c;$(c1[a]([$([NX3](=O)=O),$([NX3+](=O)[O-]),$(C#N),$(C([H])=O),$(C(O)=O),$(S(=O)=O)])[a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])][a;!$([a][O])!$([a][Nv3X3])]1):2]>>*[c;+0:2]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*c",
+                                    "mapping_end": "c:10"
+                                },
+                                {
+                                    "mapping_start": "*[13c]",
+                                    "mapping_end": "13c:10"
+                                }
+                            ]
+                        },
+                        {
+                            "rxn_smarts": "[c;$(c1[a][a][n][a][a]1):1][Cl:2]>>*[c;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*c",
+                                    "mapping_end": "c:10"
+                                },
+                                {
+                                    "mapping_start": "*[13c]",
+                                    "mapping_end": "13c:10"
+                                }
+                            ]
+                        },
+                        {
+                            "rxn_smarts": "[c;$(c1[n][a][a][a][a]1):1][Cl:2]>>*[c;+0:1]",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*c",
+                                    "mapping_end": "c:10"
+                                },
+                                {
+                                    "mapping_start": "*[13c]",
+                                    "mapping_end": "13c:10"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,1 +1,278 @@
-{"class_name": "AlkylHalides", "schemas": [{"schema_name": "Alkyl_halides", "smarts_match_any": ["[Cl,Br,I][CX4]"], "smarts_match_all": [], "smarts_match_none": ["[Cl][CX4].[Cl][CX4]", "[CX4,c]O[PD4](=O)(O[CX4,c])[CH;X4;$([Cl,Br,I])][$([C,S](=O)O[CX4,c]),$(C([CX4])(=O)[CX4,c]),$(C#N),$(S(=O)[N,O]),$([ND3]=O)]", "[Br][CX4].[Br][CX4]", "[I][CX4].[I][CX4]", "[Cl,Br,I,OH][CX4][Cl,Br,I,OH]", "Cl[CH,CH2]N=O", "[N;$([NH,NH2][#6,#7,O]);!$(N[CX3,CX2,P,S])]", "[C,S,P](!@=[O,N,S])[OH]", "[C,S,P](!@=[O,N,S])[F,Cl,Br]", "N[OH]", "N=C=[O,S]", "[*]=[NH]", "[OH]C[OD2!R]", "[Si,P,S,B][Cl,F,Br,I]", "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "[Mg,Li,Zn][#6]"]}, {"schema_name": "Heterocyclic_alkyl_halides", "smarts_match_any": ["[Cl,Br,I][$([CX4R]),$([CX4!R][CR]),$([CX4!R][CX4!R][CR])].[NR,SR,OR]"], "smarts_match_all": [], "smarts_match_none": ["[Cl][CX4].[Cl][CX4]", "[Br][CX4].[Br][CX4]", "[I][CX4].[I][CX4]", "[Cl,Br,I,OH][CX4][Cl,Br,I,OH]", "Cl[CH,CH2]N=O", "[N;$([NH,NH2][#6,#7,O]);!$(N[CX3,CX2,P,S])]", "[C,S,P](!@=[O,N,S])[OH]", "[C,S,P](!@=[O,N,S])[F,Cl,Br]", "N[OH]", "N=C=[O,S]", "[*]=[NH]", "[OH]C[OD2!R]", "[Si,P,S,B][Cl,F,Br,I]", "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "[Mg,Li,Zn][#6]"]}, {"schema_name": "Benzyl_halides", "smarts_match_any": ["[Cl,Br,I][CX4]c1ccccc1"], "smarts_match_all": [], "smarts_match_none": ["[Cl][CX4].[Cl][CX4]", "[Br][CX4].[Br][CX4]", "[I][CX4].[I][CX4]", "[Cl,Br,I,OH][CX4][Cl,Br,I,OH]", "Cl[CH,CH2]N=O", "[N;$([NH,NH2][#6,#7,O]);!$(N[CX3,CX2,P,S])]", "[C,S,P](!@=[O,N,S])[OH]", "[C,S,P](!@=[O,N,S])[F,Cl,Br]", "N[OH]", "N=C=[O,S]", "[*]=[NH]", "[OH]C[OD2!R]", "[Si,P,S,B][Cl,F,Br,I]", "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "[Mg,Li,Zn][#6]"]}, {"schema_name": "Heteroaromatic_benzyl_halides", "smarts_match_any": ["[Cl,Br,I][CX4][c;!$(c1ccccc1)]"], "smarts_match_all": [], "smarts_match_none": ["[Cl][CX4].[Cl][CX4]", "[Br][CX4].[Br][CX4]", "[I][CX4].[I][CX4]", "[Cl,Br,I,OH][CX4][Cl,Br,I,OH]", "Cl[CH,CH2]N=O", "[N;$([NH,NH2][#6,#7,O]);!$(N[CX3,CX2,P,S])]", "[C,S,P](!@=[O,N,S])[OH]", "[C,S,P](!@=[O,N,S])[F,Cl,Br]", "N[OH]", "N=C=[O,S]", "[*]=[NH]", "[OH]C[OD2!R]", "[Si,P,S,B][Cl,F,Br,I]", "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]", "[Mg,Li,Zn][#6]"]}]}
+{
+    "class_name": "AlkylHalides",
+    "schemas": [
+        {
+            "schema_name": "Alkyl_halides",
+            "smarts_match_any": [
+                "[Cl,Br,I][CX4]"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "[Cl][CX4].[Cl][CX4]",
+                "[CX4,c]O[PD4](=O)(O[CX4,c])[CH;X4;$([Cl,Br,I])][$([C,S](=O)O[CX4,c]),$(C([CX4])(=O)[CX4,c]),$(C#N),$(S(=O)[N,O]),$([ND3]=O)]",
+                "[Br][CX4].[Br][CX4]",
+                "[I][CX4].[I][CX4]",
+                "[Cl,Br,I,OH][CX4][Cl,Br,I,OH]",
+                "Cl[CH,CH2]N=O",
+                "[N;$([NH,NH2][#6,#7,O]);!$(N[CX3,CX2,P,S])]",
+                "[C,S,P](!@=[O,N,S])[OH]",
+                "[C,S,P](!@=[O,N,S])[F,Cl,Br]",
+                "N[OH]",
+                "N=C=[O,S]",
+                "[*]=[NH]",
+                "[OH]C[OD2!R]",
+                "[Si,P,S,B][Cl,F,Br,I]",
+                "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[Cl,Br,I:1][C;X4:2]>>[C;+0:2]*",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*C",
+                                    "mapping_end": "C:10"
+                                },
+                                {
+                                    "mapping_start": "*[13C]",
+                                    "mapping_end": "13C:10"
+                                },
+                                {
+                                    "mapping_start": "*[13CH]",
+                                    "mapping_end": "13C:10"
+                                }
+                            ]
+                        },
+                        {
+                            "rxn_smarts": "[I:1][C;X4:2]>>[C;+0:2]*",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*C",
+                                    "mapping_end": "C:20"
+                                },
+                                {
+                                    "mapping_start": "*[13C]",
+                                    "mapping_end": "13C:20"
+                                },
+                                {
+                                    "mapping_start": "*[13CH]",
+                                    "mapping_end": "13C:20"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "schema_name": "Heterocyclic_alkyl_halides",
+            "smarts_match_any": [
+                "[Cl,Br,I][$([CX4R]),$([CX4!R][CR]),$([CX4!R][CX4!R][CR])].[NR,SR,OR]"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "[Cl][CX4].[Cl][CX4]",
+                "[Br][CX4].[Br][CX4]",
+                "[I][CX4].[I][CX4]",
+                "[Cl,Br,I,OH][CX4][Cl,Br,I,OH]",
+                "Cl[CH,CH2]N=O",
+                "[N;$([NH,NH2][#6,#7,O]);!$(N[CX3,CX2,P,S])]",
+                "[C,S,P](!@=[O,N,S])[OH]",
+                "[C,S,P](!@=[O,N,S])[F,Cl,Br]",
+                "N[OH]",
+                "N=C=[O,S]",
+                "[*]=[NH]",
+                "[OH]C[OD2!R]",
+                "[Si,P,S,B][Cl,F,Br,I]",
+                "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[Cl,Br,I:1][C;X4:2]>>[C;+0:2]*",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*C",
+                                    "mapping_end": "C:10"
+                                },
+                                {
+                                    "mapping_start": "*[13C]",
+                                    "mapping_end": "13C:10"
+                                },
+                                {
+                                    "mapping_start": "*[13CH]",
+                                    "mapping_end": "13C:10"
+                                }
+                            ]
+                        },
+                        {
+                            "rxn_smarts": "[I:1][C;X4:2]>>[C;+0:2]*",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*C",
+                                    "mapping_end": "C:20"
+                                },
+                                {
+                                    "mapping_start": "*[13C]",
+                                    "mapping_end": "13C:20"
+                                },
+                                {
+                                    "mapping_start": "*[13CH]",
+                                    "mapping_end": "13C:20"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "schema_name": "Benzyl_halides",
+            "smarts_match_any": [
+                "[Cl,Br,I][CX4]c1ccccc1"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "[Cl][CX4].[Cl][CX4]",
+                "[Br][CX4].[Br][CX4]",
+                "[I][CX4].[I][CX4]",
+                "[Cl,Br,I,OH][CX4][Cl,Br,I,OH]",
+                "Cl[CH,CH2]N=O",
+                "[N;$([NH,NH2][#6,#7,O]);!$(N[CX3,CX2,P,S])]",
+                "[C,S,P](!@=[O,N,S])[OH]",
+                "[C,S,P](!@=[O,N,S])[F,Cl,Br]",
+                "N[OH]",
+                "N=C=[O,S]",
+                "[*]=[NH]",
+                "[OH]C[OD2!R]",
+                "[Si,P,S,B][Cl,F,Br,I]",
+                "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[Cl,Br,I:1][C;X4;$(Cc1ccccc1):2]>>[C;+0:2]*",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*C",
+                                    "mapping_end": "C:10"
+                                },
+                                {
+                                    "mapping_start": "*[13C]",
+                                    "mapping_end": "13C:10"
+                                },
+                                {
+                                    "mapping_start": "*[13CH]",
+                                    "mapping_end": "13C:10"
+                                }
+                            ]
+                        },
+                        {
+                            "rxn_smarts": "[I:1][C;X4;$(Cc1ccccc1):2]>>[C;+0:2]*",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*C",
+                                    "mapping_end": "C:20"
+                                },
+                                {
+                                    "mapping_start": "*[13C]",
+                                    "mapping_end": "13C:20"
+                                },
+                                {
+                                    "mapping_start": "*[13CH]",
+                                    "mapping_end": "13C:20"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "schema_name": "Heteroaromatic_benzyl_halides",
+            "smarts_match_any": [
+                "[Cl,Br,I][CX4][c;!$(c1ccccc1)]"
+            ],
+            "smarts_match_all": [],
+            "smarts_match_none": [
+                "[Cl][CX4].[Cl][CX4]",
+                "[Br][CX4].[Br][CX4]",
+                "[I][CX4].[I][CX4]",
+                "[Cl,Br,I,OH][CX4][Cl,Br,I,OH]",
+                "Cl[CH,CH2]N=O",
+                "[N;$([NH,NH2][#6,#7,O]);!$(N[CX3,CX2,P,S])]",
+                "[C,S,P](!@=[O,N,S])[OH]",
+                "[C,S,P](!@=[O,N,S])[F,Cl,Br]",
+                "N[OH]",
+                "N=C=[O,S]",
+                "[*]=[NH]",
+                "[OH]C[OD2!R]",
+                "[Si,P,S,B][Cl,F,Br,I]",
+                "[SiH,SiH2,SiH3,SiH4,PH,PH2,PH3,SH,SH2,BH,BH2,BH3,BH4]",
+                "[Mg,Li,Zn][#6]"
+            ],
+            "n_func": 1,
+            "n_pg": 0,
+            "transforms": [
+                {
+                    "rxns": [
+                        {
+                            "rxn_smarts": "[Cl,Br,I:1][C;X4;!$(Cc1ccccc1):2]>>[C;+0:2]*",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*C",
+                                    "mapping_end": "C:10"
+                                },
+                                {
+                                    "mapping_start": "*[13C]",
+                                    "mapping_end": "13C:10"
+                                },
+                                {
+                                    "mapping_start": "*[13CH]",
+                                    "mapping_end": "13C:10"
+                                }
+                            ]
+                        },
+                        {
+                            "rxn_smarts": "[I:1][C;X4;!$(Cc1ccccc1):2]>>[C;+0:2]*",
+                            "is_deprotection": false,
+                            "mappings": [
+                                {
+                                    "mapping_start": "*C",
+                                    "mapping_end": "C:20"
+                                },
+                                {
+                                    "mapping_start": "*[13C]",
+                                    "mapping_end": "13C:20"
+                                },
+                                {
+                                    "mapping_start": "*[13CH]",
+                                    "mapping_end": "13C:20"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
