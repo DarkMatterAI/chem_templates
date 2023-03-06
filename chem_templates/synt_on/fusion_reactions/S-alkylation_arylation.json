@@ -1,0 +1,17 @@
+{
+    "name": "S-alkylation_arylation",
+    "reactions": [
+        {
+            "name": "S-alkylation arylation",
+            "smarts": "[#6;A:1][#23:3].[#16;+0;$(S!@-[#6]);!$(S-C=[#6,#7,#8,#15,#16,#34]):2][#74:4]>>[#16:2]-[#6:1]"
+        },
+        {
+            "name": "Simple alkylation of sulphinic acid salts",
+            "smarts": "[#6;A:1][#23:3].[S;+0;X4;$(S(=O)(=O)(!@-[#6])):2][#74:4]>>[#16:2]-[#6:1]"
+        },
+        {
+            "name": "Cu-catalyzed arylation of sulphinic acid salts",
+            "smarts": "[#6;a:1][#23:3].[S;+0;X4;$(S(=O)(=O)(!@-[#6])):2][#74:4]>>[#16:2]-[#6:1]"
+        }
+    ]
+}

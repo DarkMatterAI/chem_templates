@@ -1,0 +1,21 @@
+{
+    "name": "Amine_alkylation_arylation",
+    "reactions": [
+        {
+            "name": "SN alkylation of amines",
+            "smarts": "[#23:3][#6;A;!D4;X4:1].[#74:4][#7;A;!D1;+0;$([NH][#6]),$(N([#6])[#6]),$([N;D3]([#6])[#74]):2]>>[#6:1][#7:2]"
+        },
+        {
+            "name": "Buchwald-Hartwig amination(BHA), Cu-mediated C-N coupling",
+            "smarts": "[#23:3][#6;a:1].[#74:4][#7;A;!D1;+0;$([NH][#6]),$(N([#6])[#6]),$([N;D3]([#6])[#74]):2]>>[#6:1][#7:2]"
+        },
+        {
+            "name": "Umpolung cross-coupling",
+            "smarts": "[#6;a:1][#74:3].[N;!D1;+0;$([NH]-[#6]),$(N(-[#6])-[#6]):2][#109:4]>>[#6:1]-[#7:2]"
+        },
+        {
+            "name": "Tertiary amines alkylation arylation",
+            "smarts": "[#23:3][#6;!D4:1].[#74:4][N;D4;+1:2]>>[#6:1]-[#7;+1:2]"
+        }
+    ]
+}

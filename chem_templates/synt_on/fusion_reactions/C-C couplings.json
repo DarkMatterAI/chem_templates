@@ -1,0 +1,29 @@
+{
+    "name": "C-C couplings",
+    "reactions": [
+        {
+            "name": "Suzuki cross-coupling C(Ar)- C(Ar)",
+            "smarts": "[#6;a:1][#23:3].[#6;a:2][#108:4]>>[#6:1]-[#6:2]"
+        },
+        {
+            "name": "Suzuki coupling C(sp2) - C(sp2)",
+            "smarts": "[#6;X3;$([#6](=[#6])[#6]):1][#23:3].[#6;X3;$([#6]=[#6]):2][#108:4]>>[#6:1]-[#6:2]"
+        },
+        {
+            "name": "Heck and Suzuki coupling C(Ar) - C(sp2)",
+            "smarts": "[#6;a,$([#6]=[#6]):1][#23:3].[#6;a,$([#6]=[#6]):2][#74:4]>>[#6:1]-[#6:2]"
+        },
+        {
+            "name": "Sonogashira coupling C(Ar) - C(sp)",
+            "smarts": "[#6;a:1][#23:3].[#6;X2;$([#6]#[#6]):2][#74:4]>>[#6:1]-[#6:2]"
+        },
+        {
+            "name": "Novel methods for C(Ar)-C(sp3) coupling",
+            "smarts": "[#23:3][#6;a:1].[#74:4][#6;A;X4:2]>>[#6:1]-[#6:2]"
+        },
+        {
+            "name": "Novel methods for C(Ar)-C(sp3) coupling with boronics",
+            "smarts": "[#23:3][#6;a:1].[#108:4][#6;A;X4:2]>>[#6:1]-[#6:2]"
+        }
+    ]
+}

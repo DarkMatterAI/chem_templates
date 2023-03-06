@@ -1,0 +1,9 @@
+{
+    "name": "Amine_sulphoacylation",
+    "reactions": [
+        {
+            "name": "Amine sulphoacilation",
+            "smarts": "[#7;A:1][#74:4].[S;+0;X4;$(S(=O)(=O)!@-[#6,#7,#8]):2][#23:3]>>[#16:2]-[#7:1]"
+        }
+    ]
+}

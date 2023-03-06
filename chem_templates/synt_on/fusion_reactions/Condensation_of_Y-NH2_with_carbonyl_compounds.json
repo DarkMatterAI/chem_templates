@@ -1,0 +1,9 @@
+{
+    "name": "Condensation_of_Y-NH2_with_carbonyl_compounds",
+    "reactions": [
+        {
+            "name": "Condensation of Y-NH2 with carbonyl compounds",
+            "smarts": "[#6;$([CH]-[#6]),$(C([#6])[#6]):1]([#72:3])[#72:4].[#7;+0;A;$(N[#6,#7,#8]):2]([#104:5])[#104:6]>>[#6:1]=[#7:2]"
+        }
+    ]
+}
