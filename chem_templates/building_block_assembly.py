@@ -8,9 +8,38 @@ from .building_blocks import Synthon, BuildingBlock, ReactionGroup, ReactionUniv
 from .template import Template, TemplateResult
 
 # %% auto 0
-__all__ = ['BuildingBlockNode', 'ReactionNode', 'SynthonNode', 'ProductNode']
+__all__ = ['AssemblyPool', 'BuildingBlockNode', 'ReactionNode', 'SynthonNode', 'ProductNode']
 
 # %% ../nbs/07_building_block_assembly.ipynb 4
+class AssemblyPool():
+    def __init__(self, synthons: Optional[Synthon]=None):
+        self.synthons = []
+        self.mark_to_synthon = defaultdict(list)
+        if synthons:
+            for synthon in synthons:
+                self.add_synthon(synthon)
+        
+    def add_synthon(self, synthon: Synthon):
+        self.synthons.append(synthon)
+        for mark in synthon.marks:
+            self.mark_to_synthon[mark].append(synthon)
+            
+    def reaction_filter(self, rxn_universe: ReactionUniverse) -> AssemblyPool:
+        valid = []
+        for synthon in self.synthons:
+            if rxn_universe.get_matching_reactions(synthon):
+                valid.append(synthon)
+                
+        return AssemblyPool(valid)
+    
+    def get_matching(self, query_synthon: Synthon) -> list[Synthon]:
+        matching_synthons = []
+        for mark in query_synthon.compatible_marks:
+            matching_synthons += self.mark_to_synthon[mark]
+            
+        return deduplicate_list(matching_synthons)
+
+# %% ../nbs/07_building_block_assembly.ipynb 5
 class BuildingBlockNode():
     def __init__(self, name: str, template: Optional[Template]=None):
         self.name = name
@@ -27,18 +56,18 @@ class BuildingBlockNode():
             
         return output
 
-# %% ../nbs/07_building_block_assembly.ipynb 5
+# %% ../nbs/07_building_block_assembly.ipynb 6
 class ReactionNode(BuildingBlockNode):
     def __init__(self, name: str, reaction_universe: ReactionUniverse):
         super().__init__(name, None)
         self.reaction_universe = reaction_universe
 
-# %% ../nbs/07_building_block_assembly.ipynb 6
+# %% ../nbs/07_building_block_assembly.ipynb 7
 class SynthonNode(BuildingBlockNode):
     def __init__(self, name: str, template: Optional[Template]=None):
         super().__init__(name, template)
 
-# %% ../nbs/07_building_block_assembly.ipynb 7
+# %% ../nbs/07_building_block_assembly.ipynb 8
 class ProductNode(BuildingBlockNode):
     def __init__(self, 
                  name: str, 

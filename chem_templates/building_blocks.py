@@ -39,7 +39,7 @@ def get_synthon_marks(smile: str) -> list[str]:
     pat = re.compile("\[\w*:\w*\]")
     current_marks = deduplicate_list([smile[m.start() + 1] + ":" + smile[m.end() - 3:m.end() - 1]
             for m in re.finditer(pat, smile)])
-    return current_marks
+    return deduplicate_list(current_marks)
 
 # %% ../nbs/06_building_blocks.ipynb 10
 SYNTHON_VALID_COMBINATIONS = {'C:10': ['N:20', 'O:20', 'C:20', 'c:20', 'n:20', 'S:20'],
