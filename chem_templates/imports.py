@@ -8,6 +8,7 @@ import warnings
 import time
 import pickle
 import json
+from multiprocessing import Pool
 
 # external
 import numpy as np

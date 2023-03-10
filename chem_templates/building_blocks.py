@@ -235,7 +235,7 @@ class ReactionGroup():
             return cls.from_dict(input_dict)
     
     def __repr__(self):
-        return f'Reaction Class: {self.name}' + '\n\t'.join([i.__repr__() for i in self.reactions])
+        return f'Reaction Class: {self.name}' + '\n\t' + '\n\t'.join([i.__repr__() for i in self.reactions])
 
 # %% ../nbs/06_building_blocks.ipynb 20
 REACTION_GROUP_NAMES = ['O-acylation',
