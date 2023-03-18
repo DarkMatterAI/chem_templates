@@ -13,15 +13,17 @@ from rdkit.Chem.FilterCatalog import SmartsMatcher
 # %% ../nbs/02_filters.ipynb 4
 class FilterResult():
     def __init__(self, 
-                 filter_result: bool, 
-                 filter_name:   str, 
-                 filter_data:   dict):
+                 filter_result: bool, # overall filter result (True or False)
+                 filter_name:   str,  # name of filter
+                 filter_data:   dict  # filter data dict
+                ):
         
         self.filter_result = filter_result
         self.filter_data = filter_data
 
 class Filter():
-    def __init__(self, name='filter'):
+    def __init__(self, name='filter' # filter name
+                ):
         self.name = name
         
     def __call__(self, molecule: Molecule) -> FilterResult:
@@ -32,6 +34,7 @@ class Filter():
 
 # %% ../nbs/02_filters.ipynb 5
 class ValidityFilter(Filter):
+    'Checks if molecule is valid'
     def __init__(self):
         self.name = 'validity_filter'
         
@@ -39,6 +42,7 @@ class ValidityFilter(Filter):
         return FilterResult(molecule.valid, self.name, {})
     
 class SingleCompoundFilter(Filter):
+    'Checks if molecule is a single compound'
     def __init__(self):
         self.name = 'single_compound'
         
@@ -48,6 +52,7 @@ class SingleCompoundFilter(Filter):
 
 # %% ../nbs/02_filters.ipynb 7
 class AttachmentCountFilter(Filter):
+    'Checks number of dummy attachment atoms'
     def __init__(self, 
                  num_attachments: int):
         
@@ -66,8 +71,10 @@ class AttachmentCountFilter(Filter):
 # %% ../nbs/02_filters.ipynb 9
 class BinaryFunctionFilter(Filter):
     def __init__(self, 
-                 func: Callable[[Molecule], bool], 
-                 name: str):
+            func: Callable[[Molecule], bool], # callable function that takes a Molecule as input and returns a bool
+            name: str # filter name
+                ):
+        'Filters based on the result of `func`'
         
         self.name = name
         self.func = func
@@ -79,8 +86,10 @@ class BinaryFunctionFilter(Filter):
     
 class DataFunctionFilter(Filter):
     def __init__(self, 
-                 func: Callable[[Molecule], Tuple[bool, dict]], 
-                 name: str):
+            func: Callable[[Molecule], Tuple[bool, dict]], # callable that takes a Molecule and returns (bool, dict)
+            name: str # filter name
+                ):
+        "Filters based on the result of `func`. Data from function is added to the filter result"
         
         self.name = name
         self.func = func
@@ -93,10 +102,16 @@ class DataFunctionFilter(Filter):
 # %% ../nbs/02_filters.ipynb 11
 class RangeFunctionFilter(Filter):
     def __init__(self, 
-                 func:    Callable[[Molecule], bool], 
-                 name:    str,
-                 min_val: Union[int, float, None]=None, 
-                 max_val: Union[int, float, None]=None):
+                 func:    Callable[[Molecule], Union[int, float]], # callable function, takes a Molecule as input, returns a numeric value
+                 name:    str, # filter name
+                 min_val: Union[int, float, None]=None, # min acceptable range value (if None, defaults to -inf)
+                 max_val: Union[int, float, None]=None  # max acceptable range value (if None, defaults to inf)
+                ):
+        
+        '''
+        `RangeFunctionFilter` passes a `Molecule` to `func`, then checks if the output is 
+        between `min_val` and `max_val`
+        '''
         
         min_val, max_val = validate_range(min_val, max_val, float('-inf'), float('inf'))
         
@@ -115,13 +130,22 @@ class RangeFunctionFilter(Filter):
 # %% ../nbs/02_filters.ipynb 13
 class SmartsFilter(Filter):
     def __init__(self, 
-                 smarts:  str, 
-                 name:    str,
-                 exclude: bool=True,
-                 min_val: Union[int, float, None]=None, 
-                 max_val: Union[int, float, None]=None):
+                 smarts:  str, # SMARTS string 
+                 name:    str, # filter name
+                 exclude: bool=True, # if filter should be exclusion or inclusion
+                 min_val: Union[int, float, None]=None, # min number of occurences 
+                 max_val: Union[int, float, None]=None # max number of occurences 
+                ): 
         
-        min_val, max_val = validate_range(min_val, max_val, 0, int(1e8))
+        '''
+        `SmartsFilter` checks to see if `smarts` is present in a Molecule. If 
+        `min_val` and `max_val` are passed, the filter will check to see if the number 
+        of occurences are between those values. If `exclude=True`, the filter will 
+        fail molecules that match the filter. Otherwise, filter will fail molecules 
+        that don't match the filter
+        '''
+        
+        min_val, max_val = validate_range(min_val, max_val, 1, int(1e8))
         
         self.smarts = smarts
         self.name = name
@@ -144,9 +168,15 @@ class SmartsFilter(Filter):
 # %% ../nbs/02_filters.ipynb 15
 class CatalogFilter(Filter):
     def __init__(self, 
-                 catalog: Catalog, 
-                 name:    str, 
-                 exclude: bool=True):
+                 catalog: Catalog, # SMARTS catalog
+                 name:    str, # filter name
+                 exclude: bool=True # if filter should be exclusion or inclusion
+                ):
+        
+        '''
+        `CatalogFilter` checks to see if a molecule has a match against the provided `Catalog`. 
+        If `exclude=True`, matching molecules fail the filter. Otherwise, matching molecules will pass
+        '''
         
         self.catalog = catalog
         self.name = name
