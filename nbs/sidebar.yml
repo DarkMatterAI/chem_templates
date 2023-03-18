@@ -1,0 +1,11 @@
+website:
+  sidebar:
+    contents:
+      - index.ipynb
+      - 00_utils.ipynb
+      - 01_chem.ipynb
+      - 02_filters.ipynb
+      - 03_template.ipynb
+      - 04_fragments.ipynb
+      - 05_building_blocks.ipynb
+      - 06_assembly.ipynb

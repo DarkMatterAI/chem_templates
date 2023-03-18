@@ -7,17 +7,20 @@ __all__ = ['flatten_list', 'deduplicate_list', 'validate_range']
 from .imports import *
 
 # %% ../nbs/00_utils.ipynb 4
-def flatten_list(input: list[list]) -> list:
+def flatten_list(input: list[list] # nested list
+                ) -> list: # flattened list
     "Flattens list of lists (not recursive)"
     return [item for sublist in input for item in sublist]
 
-def deduplicate_list(input: list) -> list:
+def deduplicate_list(input: list # input list containing duplicates
+                    ) -> list: # output list, deduplicated
+    # deduplicates list while maintaining order
     return list(OrderedDict.fromkeys(input)) 
 
-def validate_range(min_val:   Union[int, float, None], 
-                   max_val:   Union[int, float, None], 
-                   min_limit: Union[int, float], 
-                   max_limit: Union[int, float]
+def validate_range(min_val:   Union[int, float, None], # minimum range value
+                   max_val:   Union[int, float, None], # maximum range value
+                   min_limit: Union[int, float], # min value limit - replaces `min_val` if `min_val` is None
+                   max_limit: Union[int, float]  # max value limit - replaces `max_val` if `max_val` is None
                   ) -> Tuple[Union[int, float], Union[int, float]]:
     
     if (min_val is None) and (max_val is None):
