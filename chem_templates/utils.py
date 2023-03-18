@@ -14,14 +14,19 @@ def flatten_list(input: list[list] # nested list
 
 def deduplicate_list(input: list # input list containing duplicates
                     ) -> list: # output list, deduplicated
-    # deduplicates list while maintaining order
+    'deduplicates list while maintaining order'
     return list(OrderedDict.fromkeys(input)) 
 
 def validate_range(min_val:   Union[int, float, None], # minimum range value
                    max_val:   Union[int, float, None], # maximum range value
                    min_limit: Union[int, float], # min value limit - replaces `min_val` if `min_val` is None
                    max_limit: Union[int, float]  # max value limit - replaces `max_val` if `max_val` is None
-                  ) -> Tuple[Union[int, float], Union[int, float]]:
+                  ) -> Tuple[Union[int, float], Union[int, float]]: # resolved [min_val, max_val] range
+    
+    '''
+    given a range `min_val`, `max_val`, and range limits `min_limit`, `max_limit`, this 
+    function verifies that `min_limit < min_val < max_val < max_limit` and returns the resolved range
+    '''
     
     if (min_val is None) and (max_val is None):
         raise ValueError('one of min_val or max_val must be defined')

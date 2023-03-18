@@ -17,7 +17,9 @@ from rdkit import RDLogger
 RDLogger.DisableLog('rdApp.*')
 
 # %% ../nbs/01_chem.ipynb 5
-def to_mol(smile: str) -> Union[Chem.Mol, None]:
+def to_mol(smile: str # input SMILES string
+          ) -> Union[Chem.Mol, None]: # output rdkit mol
+    'convertes smile to Mol with sanitization. returns `None` if mol creation fails'
     try:
         mol = Chem.MolFromSmiles(smile)
         Chem.SanitizeMol(mol)
@@ -26,31 +28,43 @@ def to_mol(smile: str) -> Union[Chem.Mol, None]:
         
     return mol
 
-def to_smile(mol: Chem.Mol) -> str:
+def to_smile(mol: Chem.Mol # input rdkit mol
+            ) -> str: # output SMILES string
+    'converts Mol to SMILES string'
     smile = Chem.MolToSmiles(mol)
     return smile
 
-def to_kekule(smile: str) -> str:
+def to_kekule(smile: str # input SMILES string
+             ) -> str: # output kekule SMILES string
+    'converts SMILES string to kekule form'
     return Chem.MolToSmiles(to_mol(smile), kekuleSmiles=True)
 
-def canon_smile(smile: str) -> str:
+def canon_smile(smile: str # input SMILES string
+               ) -> str: # canonicalized SMILES string
+    'attempts to canonicalize SMILES string. returns empty string if canonicalization fails'
     try:
         return Chem.CanonSmiles(smile)
     except:
         return ''
     
-def remove_stereo(mol: Chem.Mol) -> Chem.Mol:
+def remove_stereo(mol: Chem.Mol # input rdkit Mol
+                 ) -> Chem.Mol: # output rdkit Mol
+    'removes stereochemistry from rdkit Mol'
     Chem.rdmolops.RemoveStereochemistry(mol)
     return mol
 
-def remove_stereo_smile(smile: str) -> str:
+def remove_stereo_smile(smile: str # input SMILES string
+                       ) -> str: # output SMILES string
+    'removes stereochemistry from SMILES string'
     if '@' in smile:
         mol = to_mol(smile)
         mol = remove_stereo(mol)
         smile = to_smile(mol)
     return smile
 
-def filter_valid_smiles(smiles: list[str]) -> list[str]:
+def filter_valid_smiles(smiles: list[str] # input list of SMILES strings
+                       ) -> list[str]: # output list of valid SMILES strings
+    'given a list of SMILES, filters list for SMILES that resolve to a valid molecule'
     outputs = []
     for smile in smiles:
         mol = to_mol(smile)
@@ -62,8 +76,9 @@ def filter_valid_smiles(smiles: list[str]) -> list[str]:
 # %% ../nbs/01_chem.ipynb 7
 class Molecule():
     def __init__(self, 
-                 smile: str, 
-                 data:  Optional[dict]=None):
+                 smile: str, # SMILES string
+                 data:  Optional[dict]=None # dictionary of molecule data
+                ):
         self.smile = canon_smile(smile)
         self.mol = to_mol(self.smile)
         self.valid = (self.mol is not None) and (self.smile != '')
@@ -72,32 +87,42 @@ class Molecule():
         self.add_data(data)
             
     def add_data(self, data: Optional[dict]=None):
+        'adds `data` to molecule data dict'
         if data is not None:
             self.data.update(data)
 
 # %% ../nbs/01_chem.ipynb 8
-def mol_func_wrapper(func: Callable[[Chem.Mol], Any]):
+def mol_func_wrapper(func: Callable[[Chem.Mol], Any] # function that takes rdkit Mol as input
+                    ) -> Callable[[Molecule], Any]: # function that takes Molecule as input
+    'takes a function with a Chem.Mol input and returns a wrapped version that accepts a Molecule as input'
     return lambda molecule: func(molecule.mol)
 
-def smile_func_wrapper(func: Callable[[str], Any]):
+def smile_func_wrapper(func: Callable[[str], Any] # function that takes SMILES string as input
+                      ) -> Callable[[Molecule], Any]: # function that takes Molecule as input
+    'takes a function with a SMILES string input and returns a wrapped version that accepts a Molecule as input'
     return lambda molecule: func(molecule.smile)
 
 # %% ../nbs/01_chem.ipynb 10
 class Catalog():
-    def __init__(self, catalog: FilterCatalog):
+    def __init__(self, catalog: FilterCatalog # input filter catalog
+                ):
         self.catalog = catalog
         self.filter_names = [self.catalog.GetEntryWithIdx(i).GetDescription() 
                       for i in range(self.catalog.GetNumEntries())]
         
-    def has_match(self, molecule: Molecule) -> bool:
+    def has_match(self, molecule: Molecule # input molecule
+                 ) -> bool: # returns `True` if match found, else `False`
         return self.catalog.HasMatch(molecule.mol)
     
-    def get_matches(self, molecule: Molecule) -> list[str]:
+    def get_matches(self, molecule: Molecule # input molecule
+                   ) -> list[str]: # list of matching filters
         matches = [i.GetDescription() for i in self.catalog.GetMatches(molecule.mol)]
         return matches
     
     @classmethod
-    def from_smarts(cls, smarts: list[str]):
+    def from_smarts(cls, smarts: list[str] # list of filter SMARTS
+                   ):
+        'builds filter catalog from filter SMARTS'
         catalog = FilterCatalog()
         for s in smarts:
             catalog.AddEntry(FilterCatalogEntry(s, SmartsMatcher(s,s)))
@@ -105,6 +130,11 @@ class Catalog():
         return cls(catalog)
     
     @classmethod
-    def from_params(cls, params: FilterCatalogParams.FilterCatalogs):
+    def from_params(cls, params: FilterCatalogParams.FilterCatalogs # filter catalog params
+                   ):
+        '''
+        builds catalog from rdkit filter catalog params
+        https://www.rdkit.org/docs/source/rdkit.Chem.rdfiltercatalog.html#rdkit.Chem.rdfiltercatalog.FilterCatalogParams.FilterCatalogs
+        '''
         catalog = FilterCatalog(params)
         return cls(catalog)
