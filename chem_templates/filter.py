@@ -12,6 +12,7 @@ from rdkit.Chem.FilterCatalog import SmartsMatcher
 
 # %% ../nbs/02_filters.ipynb 4
 class FilterResult():
+    'Container for filte rresults'
     def __init__(self, 
                  filter_result: bool, # overall filter result (True or False)
                  filter_name:   str,  # name of filter
@@ -22,6 +23,7 @@ class FilterResult():
         self.filter_data = filter_data
 
 class Filter():
+    'Filter base class'
     def __init__(self, name='filter' # filter name
                 ):
         self.name = name

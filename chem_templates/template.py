@@ -11,17 +11,23 @@ from .filter import Filter, FilterResult
 
 # %% ../nbs/03_template.ipynb 4
 class TemplateResult():
+    'Container for template results'
     def __init__(self, 
-                 result:         bool, 
-                 filter_results: list[bool], 
-                 filter_data:    list[Union[FilterResult, None]]):
+                 result:         bool, # overall pass/fail result
+                 filter_results: list[bool], # pass/fail from individual filters
+                 filter_data:    list[Union[FilterResult, None]] # filter data from individual filters
+                ):
         
         self.result = result
         self.filter_results = filter_results
         self.filter_data = filter_data
 
 class Template():
-    def __init__(self, filters: list[Filter]):
+    '''
+    `Template` holds a list of filters and screens a molecule against all of them
+    '''
+    def __init__(self, filters: list[Filter] # list of filters
+                ):
         self.filters = filters
         
     def _empty_result(self):
@@ -30,7 +36,10 @@ class Template():
         
         return TemplateResult(False, filter_results, filter_data)
         
-    def __call__(self, molecule: Molecule, early_exit: bool=True) -> TemplateResult:
+    def __call__(self, 
+                 molecule: Molecule, # input molecule
+                 early_exit: bool=True # if True, early exits on first failed filter
+                ) -> TemplateResult: # output template results
         results = self._empty_result()
         
         for i, f in enumerate(self.filters):

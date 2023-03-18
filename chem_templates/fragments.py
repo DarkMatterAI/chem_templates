@@ -14,13 +14,23 @@ __all__ = ['fuse_mol_on_atom_mapping', 'fuse_smile_on_atom_mapping', 'remove_fra
            'match_and_map']
 
 # %% ../nbs/04_fragments.ipynb 4
-def fuse_mol_on_atom_mapping(mol: Chem.Mol) -> Union[Chem.Mol, None]:
+def fuse_mol_on_atom_mapping(mol: Chem.Mol # input rdkit Mol
+                            ) -> Union[Chem.Mol, None]: # output fused Mol, returns None if failed
+    '''
+    Attempts to fuse mapped molecules into a single molecule (ie `[*:1]C.[*:1]N -> CN`). 
+    Returns None if fusion failed
+    '''
     try:
         return Chem.molzip(mol)
     except:
         return None
     
-def fuse_smile_on_atom_mapping(smile: str) -> str:
+def fuse_smile_on_atom_mapping(smile: str # input SMILES string
+                              ) -> str: # output fused SMILES string
+    '''
+    Attempts to fuse mapped SMILES into a single molecule (ie `[*:1]C.[*:1]N -> CN`). 
+    Returns None if fusion failed
+    '''
     mol = to_mol(smile)
     mol = fuse_mol_on_atom_mapping(mol)
     if mol is not None:
@@ -29,13 +39,24 @@ def fuse_smile_on_atom_mapping(smile: str) -> str:
         return ''
 
 # %% ../nbs/04_fragments.ipynb 6
-def remove_fragment_mapping(smile: str) -> str:
+def remove_fragment_mapping(smile: str # mapped SMILES string
+                           ) -> str: # unmapped SMILES string
     patt = re.compile('\[\*(.*?)]')
     smile = patt.sub('[*]', smile)
     return canon_smile(smile)
 
-def add_fragment_mapping(smile:    str, 
-                         map_nums: list[int]) -> str:
+def add_fragment_mapping(smile:    str, # SMILES string 
+                         map_nums: list[int] # fragment mapping ints
+                        ) -> str: # mapped SMILES
+    
+    '''
+    Given an unmapped fragment SMILES string and a list of mapping ints, 
+    adds mapping to SMILES.
+    
+    ie `add_fragment_mapping('*C*', [3,4]) -> [*:3]C[*:4]`
+    
+    Number of * dummy atoms should match length of `map_nums`
+    '''
     
     assert smile.count('*') == len(map_nums)
     
@@ -53,10 +74,10 @@ def add_fragment_mapping(smile:    str,
     return canon_smile(new_smile)
 
 # %% ../nbs/04_fragments.ipynb 8
-def get_dummy_mol(name:     str, 
-                  map_nums: list[int],
-                  id:       Optional[int]=None
-                 ) -> Chem.Mol:
+def get_dummy_mol(name:     str, # dummy name
+                  map_nums: list[int], # dummy mapping nums
+                  id:       Optional[int]=None # optional dummy ID
+                 ) -> Chem.Mol: # returns dummy mol
     templates = {
         0 : '[Zr]',
         1 : '[*][Zr]',
@@ -80,8 +101,9 @@ def get_dummy_mol(name:     str,
             
     return mol
 
-def combine_dummies(dummies: list[Chem.Mol], 
-                    fuse:    bool=True) -> Chem.Mol:
+def combine_dummies(dummies: list[Chem.Mol], # list of dummy mols 
+                    fuse:    bool=True # if mols should be fused
+                   ) -> Chem.Mol: # returns output mol
     combo = Chem.MolFromSmiles('')
     for mol in dummies:
         combo = Chem.CombineMols(combo, mol)
@@ -92,19 +114,26 @@ def combine_dummies(dummies: list[Chem.Mol],
     return combo
 
 # %% ../nbs/04_fragments.ipynb 10
-def is_mapped(smile: str) -> bool:
+def is_mapped(smile: str # SMILES string
+             ) -> bool: # True if mapped, else False
+    
+    'determines mapping status by matching number of * dummy atoms with number of [*:x] mapping IDs'
+    
     patt = re.compile('\[\*(.*?)]')
     return len(patt.findall(smile)) == smile.count('*')
 
-def match_mapping(molecule: Molecule, mapping_idxs: list[int]):
+def match_mapping(molecule: Molecule, # input Molecule
+                  mapping_idxs: list[int] # mapping ints
+                 ) -> bool: # True if mapping matches, else False
     patt = re.compile('\[\*(.*?)]')
     frag_idxs = [int(i[1:]) for i in patt.findall(molecule.smile)]
     return sorted(frag_idxs) == sorted(mapping_idxs)
 
 # %% ../nbs/04_fragments.ipynb 12
-def generate_mapping_permutations(smile:    str, 
-                                  map_nums: list[int], 
-                                  exact:    bool=False) -> list[str]:
+def generate_mapping_permutations(smile:    str, # SMILES string
+                                  map_nums: list[int], # possible mapping ints
+                                  exact:    bool=False # if True, number of `map_nums` must match number of `*` atoms
+                                 ) -> list[str]: # list of mapped SMILES
     
     n_attachments = smile.count('*')
     
@@ -124,7 +153,9 @@ def generate_mapping_permutations(smile:    str,
     return outputs
 
 # %% ../nbs/04_fragments.ipynb 14
-def match_and_map(fragment: str, mapping_idxs: list[int]) -> list[str]:
+def match_and_map(fragment: str, # fragment SMILES
+                  mapping_idxs: list[int] # mapping ints
+                 ) -> list[str]: # list of mapped SMILES
     outputs = []
     if is_mapped(fragment):
         if match_mapping(Molecule(fragment), mapping_idxs):
