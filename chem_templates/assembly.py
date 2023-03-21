@@ -127,6 +127,28 @@ class FragmentNode(Node):
                 stack += current.children
             else:
                 self.leaf_nodes.append(current)
+                
+    def map_molecule_to_leaf_nodes(self, molecule: Molecule) -> dict[str, list[Molecule]]:
+        output = {}
+        for node in self.leaf_nodes:
+            output[node.name] = node.map_and_screen(molecule)
+        return output
+    
+    def build_assembly_pools(self, 
+                             molecules: list[Molecule], 
+                             worker_pool: Optional[Pool]=None
+                            ) -> dict[str, AssemblyPool]:
+        if worker_pool:
+            mappings = worker_pool.map(self.map_molecule_to_leaf_nodes, molecules)
+        else:
+            mappings = [self.map_molecule_to_leaf_nodes(i) for i in molecules]
+            
+        pool_inputs = defaultdict(list)
+        for mapping in mappings:
+            for k,v in mapping.items():
+                pool_inputs[k] += v
+                
+        return {k:AssemblyPool(v) for k,v in pool_inputs.items()}
         
     def map_and_screen(self, molecule: Molecule) -> list[Molecule]:
         smile = molecule.smile
@@ -318,6 +340,31 @@ class SynthonNode(Node):
             else:
                 stack.append(current.next_node)
                 stack.append(current.incoming_node)
+                
+    def map_molecule_to_leaf_nodes(self, synthon: Synthon) -> dict[str, list[Synthon]]:
+        output = {}
+        for node in self.leaf_nodes:
+            if node.template_screen(synthon):
+                output[node.name] = [synthon]
+            else:
+                output[node.name] = []
+        return output
+    
+    def build_assembly_pools(self, 
+                             synthons: list[Synthon], 
+                             worker_pool: Optional[Pool]=None
+                            ) -> dict[str, SynthonPool]:
+        if worker_pool:
+            mappings = worker_pool.map(self.map_molecule_to_leaf_nodes, synthons)
+        else:
+            mappings = [self.map_molecule_to_leaf_nodes(i) for i in synthons]
+            
+        pool_inputs = defaultdict(list)
+        for mapping in mappings:
+            for k,v in mapping.items():
+                pool_inputs[k] += v
+                
+        return {k:SynthonPool(v) for k,v in pool_inputs.items()}
         
     def template_screen(self, synthon: Synthon) -> bool:
         n_func = synthon.recon_smile.count(':')
