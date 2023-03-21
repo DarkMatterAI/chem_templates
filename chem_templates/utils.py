@@ -12,11 +12,23 @@ def flatten_list(input: list[list] # nested list
     "Flattens list of lists (not recursive)"
     return [item for sublist in input for item in sublist]
 
-def deduplicate_list(input: list # input list containing duplicates
+# %% ../nbs/00_utils.ipynb 6
+def deduplicate_list(input: list, # input list containing duplicates
+                     key_func: Optional[Callable]=None # function to generate deduplication keys
                     ) -> list: # output list, deduplicated
     'deduplicates list while maintaining order'
-    return list(OrderedDict.fromkeys(input)) 
+    
+    if key_func:
+        od = OrderedDict()
+        for item in input:
+            od[key_func(item)] = item
+        output = list(od.values())
+    else:
+        output = list(OrderedDict.fromkeys(input))
+    
+    return output
 
+# %% ../nbs/00_utils.ipynb 8
 def validate_range(min_val:   Union[int, float, None], # minimum range value
                    max_val:   Union[int, float, None], # maximum range value
                    min_limit: Union[int, float], # min value limit - replaces `min_val` if `min_val` is None

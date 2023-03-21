@@ -9,3 +9,6 @@ website:
       - 04_fragments.ipynb
       - 05_building_blocks.ipynb
       - 06_assembly.ipynb
+      - section: tutorials
+        contents:
+          - tutorials/template_tutorial.ipynb
