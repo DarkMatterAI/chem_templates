@@ -7,11 +7,12 @@ from .utils import *
 from .chem import to_mol, to_smile, canon_smile, Molecule
 
 from rdkit import Chem
+from rdkit.Chem import rdMMPA
 
 # %% auto 0
 __all__ = ['fuse_mol_on_atom_mapping', 'fuse_smile_on_atom_mapping', 'remove_fragment_mapping', 'add_fragment_mapping',
            'get_dummy_mol', 'combine_dummies', 'is_mapped', 'match_mapping', 'generate_mapping_permutations',
-           'match_and_map']
+           'match_and_map', 'fragment_smile', 'clean_fragments', 'shred_smiles']
 
 # %% ../nbs/04_fragments.ipynb 4
 def fuse_mol_on_atom_mapping(mol: Chem.Mol # input rdkit Mol
@@ -164,3 +165,99 @@ def match_and_map(fragment: str, # fragment SMILES
         outputs = generate_mapping_permutations(fragment, mapping_idxs, exact=True)
     
     return outputs
+
+# %% ../nbs/04_fragments.ipynb 16
+def fragment_smile(smile: str, # input SMILES string
+                   cuts: list[int] # number of cuts, ie [1,2,3]
+                  ) -> list[str]: # list of fragments
+    mol = to_mol(smile)
+    fragments = []
+    for cut in cuts:
+        frags = rdMMPA.FragmentMol(mol, maxCuts=cut, resultsAsMols=False)
+        frags = deduplicate_list(flatten_list(frags))
+        fragments += frags
+        
+    fragments = deduplicate_list(fragments)
+    return fragments
+
+def clean_fragments(fragments: list[str], # list of input fragments
+                    remove_mapping: bool=True # if mapping should be removed (ie [*:1]C -> *C)
+                   ) -> list[str]: # list of cleaned fragments
+    '''
+    cleans fragments, deduplicates them, and splits multi-compound fragments
+    '''
+    clean_fragments = []
+    
+    while fragments:
+        current = fragments.pop()
+        
+        if not current:
+            continue
+            
+        if '.' in current:
+            fragments += current.split('.')
+        else:
+            if remove_mapping:
+                current = remove_fragment_mapping(current)
+                
+            current = canon_smile(current)
+            if current:
+                clean_fragments.append(current)
+                
+    clean_fragments = deduplicate_list(clean_fragments)
+    return clean_fragments
+
+def shred_smiles(smiles: list[str], 
+                 cuts: list[int], 
+                 max_fragment_length: int, 
+                 generations: int, 
+                 keep_long_fragments: bool, 
+                 worker_pool: Optional[Pool]=None
+                ) -> list[str]:
+    '''
+    given a list of SMILES `smiles`, each SMILES string is fragmented with `cuts` 
+    (see `fragment_smile`). After fragmentation, all fragments longer than 
+    `max_fragment_length` are re-fragmented. Repeats for `generations` iterations. 
+    If `keep_long_fragments=True`, all fragments are returned. Else, only fragments
+    shorter than `max_fragment_length` are returned.
+    
+    `keep_long_fragments=False` is recommended as molecules tend to generate very 
+    large fragments (ie just cleaving off a methyl group)
+    '''
+    processed = set()
+    output = []
+    
+    current_inputs = smiles
+    
+    for g in range(generations):
+        print(g, len(current_inputs))
+        processed.update(set(current_inputs))
+        
+        if worker_pool:
+            func = partial(fragment_smile, cuts=cuts)
+            frags = worker_pool.map(func, current_inputs)
+            frags = flatten_list(worker_pool.map(clean_fragments, frags))
+            frags = deduplicate_list(frags)
+            
+        else:
+            frags = flatten_list([fragment_smile(i, cuts) for i in current_inputs])
+            frags = clean_fragments(frags)
+            frags = deduplicate_list(frags)
+        
+        
+        current_inputs = []
+        for f in frags:
+            if len(f)>max_fragment_length:
+                if not (f in processed):
+                    current_inputs.append(f)
+                
+                if keep_long_fragments:
+                    output.append(f)
+                    
+            else:
+                output.append(f)
+                
+        if not current_inputs:
+            break
+            
+    return deduplicate_list(output)
