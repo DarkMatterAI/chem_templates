@@ -3,4 +3,5 @@ include LICENSE
 include CONTRIBUTING.md
 include README.md
 include chem_templates/synt_on/fusion_reactions/*
+include chem_templates/synt_on/config/*
 recursive-exclude * __pycache__
