@@ -11,4 +11,6 @@ website:
       - 06_assembly.ipynb
       - section: tutorials
         contents:
+          - tutorials/building_block_tutorial.ipynb
+          - tutorials/fragment_tutorial.ipynb
           - tutorials/template_tutorial.ipynb
