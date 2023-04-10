@@ -128,7 +128,7 @@ class Synthon(Molecule):
         self.recon_smile = add_reconstruction_atoms(synthon_smile)
         self.recon_mol = to_mol(self.recon_smile)
         self.marks = set(get_synthon_marks(self.recon_smile))
-        self.compatible_marks = set(flatten_list([SYNTHON_VALID_COMBINATIONS[i] for i in self.marks]))
+        self.compatible_marks = set(flatten_list([SYNTHON_VALID_COMBINATIONS.get(i, []) for i in self.marks]))
         
     def is_compatible(self, synthon: Synthon) -> bool:
         overlaps = self.compatible_marks.intersection(synthon.marks)
