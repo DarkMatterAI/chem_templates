@@ -22,9 +22,8 @@ tutorial](https://darkmatterai.github.io/emb_opt/tutorials/basic_example.html)
 
 ``` python
 from rdkit.Chem import rdMolDescriptors, Descriptors
-from chem_templates.filter import RangeFunctionFilter
+from chem_templates.filter import RangeFunctionFilter, Template
 from chem_templates.chem import Molecule
-from chem_templates.template import Template
 
 def hbd(molecule):
     return rdMolDescriptors.CalcNumHBD(molecule.mol)

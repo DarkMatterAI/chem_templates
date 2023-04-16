@@ -5,7 +5,7 @@ from __future__ import annotations
 from .imports import *
 from .utils import *
 from .chem import Molecule, to_smile
-from .template import Template, TemplateResult
+from .filter import Template, TemplateResult
 from .fragments import combine_dummies, get_dummy_mol, generate_mapping_permutations,\
 match_mapping, fuse_smile_on_atom_mapping
 from .building_blocks import Synthon, ReactionUniverse, REACTION_GROUPS, molecule_to_synthon
@@ -34,6 +34,13 @@ class AssemblyPool():
             bools = [filter_func(i) for i in self.items]
             
         return AssemblyPool([self.items[i] for i in range(len(self.items)) if bools[i]])
+    
+    def deduplicate(self, key_func: Callable) -> AssemblyPool:
+        item_dict = {}
+        for item in self.items:
+            item_dict[key_func(item)] = item
+        
+        return AssemblyPool(list(item_dict.values()))
     
     def __repr__(self) -> str:
         return f'AssemblyPool: {len(self.items)} items'
