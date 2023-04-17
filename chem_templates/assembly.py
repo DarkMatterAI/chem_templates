@@ -5,14 +5,15 @@ from __future__ import annotations
 from .imports import *
 from .utils import *
 from .chem import Molecule, to_smile
-from .template import Template, TemplateResult
+from .filter import Template, TemplateResult
 from .fragments import combine_dummies, get_dummy_mol, generate_mapping_permutations,\
 match_mapping, fuse_smile_on_atom_mapping
-from .building_blocks import Synthon, ReactionUniverse, REACTION_GROUPS
+from .building_blocks import Synthon, ReactionUniverse, REACTION_GROUPS, molecule_to_synthon
 
 # %% auto 0
 __all__ = ['AssemblyPool', 'AssemblyInputs', 'Node', 'FragmentNode', 'FragmentLeafNode', 'SynthonPool', 'make_pairs',
-           'make_pairs_chunked', 'add_rxn', 'make_assemblies', 'SynthonNode', 'SynthonLeafNode']
+           'make_pairs_chunked', 'add_rxn', 'make_assemblies', 'SynthonNode', 'SynthonLeafNode',
+           'build_synthesis_scheme']
 
 # %% ../nbs/06_assembly.ipynb 4
 class AssemblyPool():
@@ -33,6 +34,13 @@ class AssemblyPool():
             bools = [filter_func(i) for i in self.items]
             
         return AssemblyPool([self.items[i] for i in range(len(self.items)) if bools[i]])
+    
+    def deduplicate(self, key_func: Callable) -> AssemblyPool:
+        item_dict = {}
+        for item in self.items:
+            item_dict[key_func(item)] = item
+        
+        return AssemblyPool(list(item_dict.values()))
     
     def __repr__(self) -> str:
         return f'AssemblyPool: {len(self.items)} items'
@@ -184,9 +192,12 @@ class FragmentNode(Node):
         molecule = Molecule(fused_smile, data=fusion_data)
         return molecule
     
-    def assemble(self, assembly_inputs: AssemblyInputs) -> AssemblyPool:
-        child_pools = [child.assemble(assembly_inputs) for child in self.children]
-        print(self.name)
+    def assemble(self, assembly_inputs: AssemblyInputs, verbose:bool=False) -> AssemblyPool:
+        child_pools = [child.assemble(assembly_inputs, verbose=verbose) for child in self.children]
+        
+        if verbose:
+            print(self.name)
+            
         outputs = []
         assembly_iterator = self.assembly_iterator(child_pools, assembly_inputs.assembly_chunksize)
         
@@ -234,8 +245,9 @@ class FragmentLeafNode(FragmentNode):
         self.dummy = get_dummy_mol(self.name, self.mapping_idxs, id=self.id)
         self.dummy_smile = to_smile(self.dummy)
         
-    def assemble(self, assembly_inputs: AssemblyInputs) -> AssemblyPool:
-        print(self.name)
+    def assemble(self, assembly_inputs: AssemblyInputs, verbose:bool=False) -> AssemblyPool:
+        if verbose:
+            print(self.name)
         pool = assembly_inputs.pool_dict[self.name]
         pool = pool.filter(self.template_screen, worker_pool=assembly_inputs.worker_pool)
         return pool
@@ -404,14 +416,15 @@ class SynthonNode(Node):
             outputs = [self._fuse(i) for i in fusion_inputs]
         return SynthonPool(flatten_list(outputs))
     
-    def assemble(self, assembly_inputs: AssemblyInputs) -> SynthonPool:
-        incoming_pool = self.incoming_node.assemble(assembly_inputs)
+    def assemble(self, assembly_inputs: AssemblyInputs, verbose:bool=False) -> SynthonPool:
+        incoming_pool = self.incoming_node.assemble(assembly_inputs, verbose=verbose)
         incoming_pool = incoming_pool.filter(self.reaction_screen, assembly_inputs.worker_pool)
         
-        next_pool = self.next_node.assemble(assembly_inputs)
+        next_pool = self.next_node.assemble(assembly_inputs, verbose=verbose)
         next_pool = next_pool.filter(self.reaction_screen, assembly_inputs.worker_pool)
         
-        print(self.name)
+        if verbose:
+            print(self.name)
         
         outputs = []
         
@@ -444,11 +457,30 @@ class SynthonLeafNode(SynthonNode):
                  template: Optional[Template]=None):
         super().__init__(name, None, None, None, n_func, template)
         
-    def assemble(self, assembly_inputs: AssemblyInputs) -> SynthonPool:
-        print(self.name)
+    def assemble(self, assembly_inputs: AssemblyInputs, verbose:bool=False) -> SynthonPool:
+        if verbose:
+            print(self.name)
         pool = assembly_inputs.pool_dict[self.name]
         pool = pool.filter(self.template_screen, worker_pool=assembly_inputs.worker_pool)
         return pool
     
     def __repr__(self) -> str:
         return f'Synthon Leaf: {self.name}'
+
+# %% ../nbs/06_assembly.ipynb 14
+def build_synthesis_scheme(synthon: Synthon) -> dict:
+    output = {}
+    
+    if 'parents' in synthon.data:
+        if isinstance(synthon.data['parents'][0], Synthon):
+            for i, parent in enumerate(synthon.data['parents']):
+                output['smile'] = synthon.smile
+                output['reaction_tags'] = synthon.data['reaction_tags']
+                output[f'reactant_{i}'] = build_synthesis_scheme(parent)
+            
+        else:
+            parent = synthon.data['parents'][0]
+            output['smile'] = parent.smile
+            output['data'] = parent.data
+            
+    return output

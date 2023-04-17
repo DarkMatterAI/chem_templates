@@ -2,13 +2,14 @@
 
 # %% auto 0
 __all__ = ['FilterResult', 'Filter', 'ValidityFilter', 'SingleCompoundFilter', 'AttachmentCountFilter', 'BinaryFunctionFilter',
-           'DataFunctionFilter', 'RangeFunctionFilter', 'SmartsFilter', 'CatalogFilter']
+           'DataFunctionFilter', 'RangeFunctionFilter', 'SmartsFilter', 'CatalogFilter', 'TemplateResult', 'Template']
 
 # %% ../nbs/02_filters.ipynb 3
 from .imports import *
 from .utils import *
 from .chem import Molecule, Catalog, mol_func_wrapper
 from rdkit.Chem.FilterCatalog import SmartsMatcher
+from rdkit.Chem import rdMolDescriptors, Descriptors
 
 # %% ../nbs/02_filters.ipynb 4
 class FilterResult():
@@ -197,3 +198,48 @@ class CatalogFilter(Filter):
         data = {'filter_result' : has_match}
         
         return FilterResult(result, self.name, data)
+
+# %% ../nbs/02_filters.ipynb 17
+class TemplateResult():
+    'Container for template results'
+    def __init__(self, 
+                 result:         bool, # overall pass/fail result
+                 filter_results: list[bool], # pass/fail from individual filters
+                 filter_data:    list[Union[FilterResult, None]] # filter data from individual filters
+                ):
+        
+        self.result = result
+        self.filter_results = filter_results
+        self.filter_data = filter_data
+
+class Template():
+    '''
+    `Template` holds a list of filters and screens a molecule against all of them
+    '''
+    def __init__(self, filters: list[Filter] # list of filters
+                ):
+        self.filters = filters
+        
+    def _empty_result(self):
+        filter_results = [False for i in self.filters]
+        filter_data = [None for i in self.filters]
+        
+        return TemplateResult(False, filter_results, filter_data)
+        
+    def __call__(self, 
+                 molecule: Molecule, # input molecule
+                 early_exit: bool=True # if True, early exits on first failed filter
+                ) -> TemplateResult: # output template results
+        results = self._empty_result()
+        
+        for i, f in enumerate(self.filters):
+            res = f(molecule)
+            results.filter_results[i] = res.filter_result
+            results.filter_data[i] = res
+
+            if (not res.filter_result) and early_exit:
+                break
+                
+        results.result = all(results.filter_results)
+                        
+        return results

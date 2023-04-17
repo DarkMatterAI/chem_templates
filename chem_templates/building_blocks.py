@@ -19,8 +19,10 @@ __all__ = ['SYNTHON_VALID_COMBINATIONS', 'REACTION_GROUP_NAMES', 'FUSION_REACTIO
            'Synthon', 'molecule_to_synthon', 'FusionReaction', 'ReactionGroup', 'ReactionUniverse']
 
 # %% ../nbs/05_building_blocks.ipynb 4
-def smile_to_synthon(smile: str, 
-                     keep_pg: bool=False) -> Tuple[list[str], list[list[str]]]:
+def smile_to_synthon(smile: str, # smiles string to convert
+                     keep_pg: bool=False # if True, results include synthons with un-removed protecting groups
+            ) -> Tuple[list[str], list[list[str]]]: # Returns paired list of SMILES and reaction classes
+
     classes = BBClassifier(mol=to_mol(smile))
     
     azoles,fSynt = mainSynthonsGenerator(smile, keep_pg, classes, returnBoolAndDict=True)
@@ -31,7 +33,13 @@ def smile_to_synthon(smile: str,
     return smiles, rxns
 
 # %% ../nbs/05_building_blocks.ipynb 6
-def get_synthon_marks(smile: str) -> list[str]:
+def get_synthon_marks(smile: str # input synthon smiles string
+                     ) -> list[str]: # list of marks
+    '''
+    extracts reaction tag marks from synthon
+    
+    ie `'CC1(C)CC(N[CH:10]=O)CC(C)(CNC(=O)NCc2cc([CH:10]=O)ccn2)C1' -> ['C:10']`
+    '''
     pat = re.compile("\[\w*:\w*\]")
     current_marks = [smile[m.start() + 1] + ":" + smile[m.end() - 3:m.end() - 1]
                     for m in re.finditer(pat, smile)]
@@ -59,8 +67,10 @@ SYNTHON_VALID_COMBINATIONS = {'C:10': ['N:20', 'O:20', 'C:20', 'c:20', 'n:20', '
                               'N:40': ['C:30'] }
 
 # %% ../nbs/05_building_blocks.ipynb 9
-def add_reconstruction_atoms(smile: str) -> str:
-    # augments synthon annotations (ie c:10) with dummy atoms for fusion
+def add_reconstruction_atoms(smile: str # synthon smiles string
+                            ) -> str: # synthon reconstruction string
+    
+    'augments synthon annotations (ie c:10) with dummy atoms for fusion'
     labels = [10, 20, 30, 40, 50, 60, 70, 21, 11] # annotation numbers
     atomsForMarking = [23, 74, 72, 104, 105, 106, 107, 108, 109] # dummy atoms
     atomsForMarkingForDoubleBonds = [72, 104, 105]
@@ -84,8 +94,9 @@ def add_reconstruction_atoms(smile: str) -> str:
     mol = Chem.RemoveHs(mol)
     return to_smile(mol)
 
-def remove_reconstruction_atoms(smile: str) -> str:
-    # removes dummy atoms for fusion
+def remove_reconstruction_atoms(smile: str # synthon reconstruction string
+                               ) -> str: # synthon smiles string
+    'removes dummy atoms for fusion'
     atomsForMarking = set([23, 74, 72, 104, 105, 106, 107, 108, 109])
     mol = to_mol(smile)
     
@@ -101,10 +112,10 @@ def remove_reconstruction_atoms(smile: str) -> str:
 # %% ../nbs/05_building_blocks.ipynb 11
 class Synthon(Molecule):
     def __init__(self,
-                 synthon_smile: str,
-                 reaction_tags: list[str]=None,
-                 parents: Optional[list[Molecule]]=None,
-                 data: Optional[dict]=None
+                 synthon_smile: str, # synthon smiles string
+                 reaction_tags: list[str]=None, # reaction class tags
+                 parents: Optional[list[Molecule]]=None, # parent molecule
+                 data: Optional[dict]=None # data
                 ):
         super().__init__(synthon_smile, data)
         
@@ -117,14 +128,16 @@ class Synthon(Molecule):
         self.recon_smile = add_reconstruction_atoms(synthon_smile)
         self.recon_mol = to_mol(self.recon_smile)
         self.marks = set(get_synthon_marks(self.recon_smile))
-        self.compatible_marks = set(flatten_list([SYNTHON_VALID_COMBINATIONS[i] for i in self.marks]))
+        self.compatible_marks = set(flatten_list([SYNTHON_VALID_COMBINATIONS.get(i, []) for i in self.marks]))
         
     def is_compatible(self, synthon: Synthon) -> bool:
         overlaps = self.compatible_marks.intersection(synthon.marks)
         return bool(overlaps)
 
 # %% ../nbs/05_building_blocks.ipynb 12
-def molecule_to_synthon(molecule: Molecule) -> list[Synthon]:
+def molecule_to_synthon(molecule: Molecule # input Molecule
+                       ) -> list[Synthon]: # output list of synthons
+    'Converts `molecule` into a list of corresponding synthons'
     synthon_smiles, rxn_tags = smile_to_synthon(molecule.smile)
     outputs = []
     for i in range(len(synthon_smiles)):
@@ -134,16 +147,18 @@ def molecule_to_synthon(molecule: Molecule) -> list[Synthon]:
 # %% ../nbs/05_building_blocks.ipynb 14
 class FusionReaction():
     def __init__(self, 
-                 name: str, 
-                 rxn_smarts: str):
+                 name: str, # reaction name
+                 rxn_smarts: str # reaction smarts
+                ):
         self.name = name
         self.rxn_smarts = rxn_smarts
         self.rxn = Reactions.ReactionFromSmarts(rxn_smarts)
         self.rxn.Initialize()
         
     def is_reactant(self, 
-                    synthon1: Synthon, 
-                    synthon2: Optional[Synthon]=None) -> bool:
+                    synthon1: Synthon, # first reactant
+                    synthon2: Optional[Synthon]=None # second reactant
+                   ) -> bool: # bool, True if synthons match reaction pattern
         
         if synthon2 is None:
             output = self.rxn.IsMoleculeReactant(synthon1.recon_mol)
@@ -163,8 +178,9 @@ class FusionReaction():
         return output
     
     def _react(self, 
-               synthon1: Synthon, 
-               synthon2: Synthon) -> list[str]:
+               synthon1: Synthon, # first reactant
+               synthon2: Synthon # second reactant
+              ) -> list[str]: # list of product SMILES strings
         products = self.rxn.RunReactants((synthon1.recon_mol, 
                                           synthon2.recon_mol))
         if not products:
@@ -180,8 +196,9 @@ class FusionReaction():
         return products
     
     def react(self, 
-              synthon1: Synthon, 
-              synthon2: Synthon) -> list[Synthon]:
+              synthon1: Synthon, # synthon reactant 1
+              synthon2: Synthon # synthon reactant 2
+             ) -> list[Synthon]: # list of product synthons
         products = self._react(synthon1, synthon2)
         outputs = []
         for recon_smile in products:
@@ -191,8 +208,9 @@ class FusionReaction():
         return outputs
     
     def react_to_dict(self, 
-                      synthon1: Synthon, 
-                      synthon2: Synthon) -> list[dict]:
+                      synthon1: Synthon, # synthon reactant 1
+                      synthon2: Synthon # synthon reactant 2
+                     ) -> list[dict]: # dictionary of product synthon strings
         products = self._react(synthon1, synthon2)
         outputs = []
         for recon_smile in products:
@@ -211,16 +229,21 @@ class FusionReaction():
 
 # %% ../nbs/05_building_blocks.ipynb 15
 class ReactionGroup():
-    # holds reactions beloning to the same type of transform
+    'holds reactions beloning to the same type of transform'
     def __init__(self, 
-                 name: str, 
-                 reactions: list[FusionReaction]):
+                 name: str, # group name
+                 reactions: list[FusionReaction] # list of reactions in group
+                ):
         self.name = name
         self.reactions = reactions
         
     def get_matching_reactions(self, 
-                               synthon1: Synthon, 
-                               synthon2: Optional[Synthon]=None) -> list[FusionReaction]:
+                               synthon1: Synthon, # first synthon reactant
+                               synthon2: Optional[Synthon]=None # second synthon reactant 
+                              ) -> list[FusionReaction]: # list of matching reactions
+        '''
+        checks input synthons against `self.reactions` and returns matches
+        '''
         return [i for i in self.reactions if i.is_reactant(synthon1, synthon2)]
     
     def dump(self) -> dict:
@@ -249,19 +272,22 @@ class ReactionGroup():
 # %% ../nbs/05_building_blocks.ipynb 16
 class ReactionUniverse():
     def __init__(self, 
-                 name: str, 
-                 reaction_groups: list[ReactionGroup]):
+                 name: str, # rxn universe name
+                 reaction_groups: list[ReactionGroup] # list of reaction groups
+                ):
         self.name = name
         self.reaction_groups = reaction_groups
         self.reaction_groups_dict = {i.name : i for i in self.reaction_groups}
         
-    def add_group(self, reaction_group: ReactionGroup):
+    def add_group(self, reaction_group: ReactionGroup # group to add
+                 ):
         self.reaction_groups.append(reaction_group)
         self.reaction_groups_dict[reaction_group.name] = reaction_group
         
     def get_matching_reactions(self, 
-                               synthon1: Synthon, 
-                               synthon2: Optional[Synthon]=None) -> list[FusionReaction]:
+                               synthon1: Synthon, # synthon reactant 1
+                               synthon2: Optional[Synthon]=None # synthon reactant 2
+                              ) -> list[FusionReaction]: # list of matching reactions
         outputs = []
         for group in self.reaction_groups:
             outputs += group.get_matching_reactions(synthon1, synthon2)

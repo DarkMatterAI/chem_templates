@@ -14,3 +14,51 @@ for documentation and tutorials
 ``` sh
 pip install chem_templates
 ```
+
+## Basic Usage
+
+For more detail on the API, see the [basic
+tutorial](https://darkmatterai.github.io/emb_opt/tutorials/basic_example.html)
+
+``` python
+from rdkit.Chem import rdMolDescriptors, Descriptors
+from chem_templates.filter import RangeFunctionFilter, Template
+from chem_templates.chem import Molecule
+
+def hbd(molecule):
+    return rdMolDescriptors.CalcNumHBD(molecule.mol)
+
+def hba(molecule):
+    return rdMolDescriptors.CalcNumHBA(molecule.mol)
+
+def molwt(molecule):
+    return rdMolDescriptors.CalcExactMolWt(molecule.mol)
+
+def logp(molecule):
+    return Descriptors.MolLogP(molecule.mol)
+
+hbd_filter = RangeFunctionFilter(hbd, 'hydrogen_bond_donor', None, 5)
+hba_filter = RangeFunctionFilter(hba, 'hydrogen_bond_acceptor', None, 10)
+molwt_filter = RangeFunctionFilter(molwt, 'mol_weight', None, 500)
+logp_filter = RangeFunctionFilter(logp, 'logp', None, 5)
+
+filters = [
+    hbd_filter,
+    hba_filter,
+    molwt_filter,
+    logp_filter
+]
+
+ro5_template = Template(filters)
+
+smiles = ['C=CCNC(=O)N1CCN(C(=O)[C@H]2C[C@@H]2c2cccc(F)c2F)CC1',
+ 'C[C@@H]1CCCC[C@@H]1OCC(=O)OCc1nnc(-c2cccc(Br)c2)o1',
+ 'CCC[C@@H](OC)C(=O)N[C@@H](CNc1cnc(F)cn1)C(C)C',
+ 'CC(C)/C=C\\C(=O)N1CCC[C@@](CO)(NC(=O)OC(C)(C)C)C1',
+ 'C(c1ccccc1)CCC[C@@H](C)c1nnc(N2CCN(C(=O)OC(C)(C)C)[C@@H](C)C2)n1Cc1csc(C(C)(C)C)n1',
+ 'O=C(c1cccc(F)c1)N1CC[C@]2(CN(CC3=CCCCC3)CCO2)C1']
+
+molecules = [Molecule(i) for i in smiles]
+results = [ro5_template(i).result for i in molecules]
+>[True, True, True, True, False, True]
+```
