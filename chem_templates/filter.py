@@ -2,12 +2,13 @@
 
 # %% auto 0
 __all__ = ['FilterResult', 'Filter', 'ValidityFilter', 'SingleCompoundFilter', 'AttachmentCountFilter', 'BinaryFunctionFilter',
-           'DataFunctionFilter', 'RangeFunctionFilter', 'SmartsFilter', 'CatalogFilter', 'TemplateResult', 'Template']
+           'DataFunctionFilter', 'RangeFunctionFilter', 'SmartsFilter', 'SimpleSmartsFilter', 'CatalogFilter',
+           'TemplateResult', 'Template']
 
 # %% ../nbs/02_filters.ipynb 3
 from .imports import *
 from .utils import *
-from .chem import Molecule, Catalog, mol_func_wrapper
+from .chem import Molecule, Catalog, mol_func_wrapper, smart_to_mol
 from rdkit.Chem.FilterCatalog import SmartsMatcher
 from rdkit.Chem import rdMolDescriptors, Descriptors
 
@@ -145,6 +146,8 @@ class SmartsFilter(Filter):
                 ): 
         
         '''
+        DEPRECIATED IN FAVOR OF `SimpleSmartsFilter`
+        
         `SmartsFilter` checks to see if `smarts` is present in a Molecule. If 
         `min_val` and `max_val` are passed, the filter will check to see if the number 
         of occurences are between those values. If `exclude=True`, the filter will 
@@ -173,6 +176,40 @@ class SmartsFilter(Filter):
         return FilterResult(result, self.name, data)
 
 # %% ../nbs/02_filters.ipynb 15
+class SimpleSmartsFilter(Filter):
+    def __init__(self, 
+                 smarts: str, # SMARTS string
+                 name: str, # filter name
+                 min_val: Union[int, float, None]=None, # min number of occurences 
+                 max_val: Union[int, float, None]=None # max number of occurences 
+                ):
+        '''
+        `SimpleSmartsFilter` checks if an input Molecule has substructure matches to 
+        `smarts`. If the number of matches is between `min_val` and `max_val`, the 
+        molecule passes the filter.
+        '''
+        
+        min_val, max_val = validate_range(min_val, max_val, 0, float('inf'))
+        
+        self.smarts = smarts
+        self.name = name
+        self.min_val = min_val
+        self.max_val = max_val
+        self.smarts_mol = smart_to_mol(self.smarts)
+        assert self.smarts_mol is not None
+    
+    def get_substruct_matches(self, molecule: Molecule) -> list[tuple]:
+        return molecule.mol.GetSubstructMatches(self.smarts_mol)
+    
+    def __call__(self, molecule: Molecule) -> FilterResult:
+        
+        num_matches = len(self.get_substruct_matches(molecule))
+        data = {'num_matches' : num_matches, 'min_val' : self.min_val, 'max_val' : self.max_val}
+        result = self.min_val <= num_matches <= self.max_val
+        
+        return FilterResult(result, self.name, data)
+
+# %% ../nbs/02_filters.ipynb 17
 class CatalogFilter(Filter):
     def __init__(self, 
                  catalog: Catalog, # SMARTS catalog
@@ -199,7 +236,7 @@ class CatalogFilter(Filter):
         
         return FilterResult(result, self.name, data)
 
-# %% ../nbs/02_filters.ipynb 17
+# %% ../nbs/02_filters.ipynb 19
 class TemplateResult():
     'Container for template results'
     def __init__(self, 
