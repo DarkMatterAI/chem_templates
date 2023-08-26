@@ -13,7 +13,7 @@ from .building_blocks import Synthon, ReactionUniverse, REACTION_GROUPS, molecul
 # %% auto 0
 __all__ = ['AssemblyPool', 'AssemblyInputs', 'Node', 'FragmentNode', 'FragmentLeafNode', 'SynthonPool', 'make_pairs',
            'make_pairs_chunked', 'add_rxn', 'make_assemblies', 'SynthonNode', 'SynthonLeafNode',
-           'build_synthesis_scheme']
+           'build_synthesis_scheme', 'build_fragment_assembly_scheme', 'build_assembly_from_dict']
 
 # %% ../nbs/06_assembly.ipynb 4
 class AssemblyPool():
@@ -71,13 +71,14 @@ class Node():
         self.name = name
         self.template = template
         
-    def template_screen(self, molecule: Molecule) -> bool:
+    def template_screen(self, molecule: Molecule, add_template_data=False) -> bool:
         if self.template is not None:
             output = self.template(molecule)
         else:
             output = TemplateResult(True, [], [])
         
-        molecule.add_data({'template_data' : output, 'template_result' : output.result})
+        if add_template_data:
+            molecule.add_data({'template_data' : output, 'template_result' : output.result})
             
         return output.result
     
@@ -90,6 +91,9 @@ class Node():
         else:
             outputs = [self._fuse(i) for i in fusion_inputs]
         return AssemblyPool(outputs)
+    
+    def dump(self):
+        raise NotImplementedError
 
 # %% ../nbs/06_assembly.ipynb 8
 class FragmentNode(Node):
@@ -186,7 +190,7 @@ class FragmentNode(Node):
         fused_smile = fuse_smile_on_atom_mapping(fusion_string)
         fusion_data = {
             'source' : self.name,
-            'source_molecules' : fusion_inputs,
+            'parents' : fusion_inputs,
             'input_smiles' : fusion_string
         }
         molecule = Molecule(fused_smile, data=fusion_data)
@@ -233,6 +237,16 @@ class FragmentNode(Node):
                 
         return rep_str
     
+    def dump(self):
+        dump_dict = {
+                    'name' : self.name,
+                    'node_type' : 'fragment_node',
+                    'template' : self.template,
+                    'children' : [i.dump() for i in self.children]
+                }
+        return dump_dict
+
+# %% ../nbs/06_assembly.ipynb 9
 class FragmentLeafNode(FragmentNode):
     def __init__(self, 
                  name: str, 
@@ -251,8 +265,17 @@ class FragmentLeafNode(FragmentNode):
         pool = assembly_inputs.pool_dict[self.name]
         pool = pool.filter(self.template_screen, worker_pool=assembly_inputs.worker_pool)
         return pool
+    
+    def dump(self):
+        dump_dict = {
+                        'name' : self.name,
+                        'node_type' : 'fragment_leaf_node',
+                        'mapping_idxs' : self.mapping_idxs,
+                        'template' : self.template
+                    }
+        return dump_dict
 
-# %% ../nbs/06_assembly.ipynb 10
+# %% ../nbs/06_assembly.ipynb 11
 class SynthonPool(AssemblyPool):
     def __init__(self, items: list[Synthon]):
         super().__init__(items)
@@ -276,8 +299,11 @@ class SynthonPool(AssemblyPool):
             bools = [filter_func(i) for i in self.items]
             
         return SynthonPool([self.items[i] for i in range(len(self.items)) if bools[i]])
+    
+    def __repr__(self) -> str:
+        return f'SynthonPool: {len(self.items)} items'
 
-# %% ../nbs/06_assembly.ipynb 11
+# %% ../nbs/06_assembly.ipynb 12
 def make_pairs(pool1: SynthonPool, 
                pool2: SynthonPool):
     for s1 in pool1.items:
@@ -326,7 +352,7 @@ def make_assemblies(pool1: SynthonPool,
     
     yield output_assemblies
 
-# %% ../nbs/06_assembly.ipynb 12
+# %% ../nbs/06_assembly.ipynb 13
 class SynthonNode(Node):
     def __init__(self, 
                  name: str, 
@@ -450,6 +476,20 @@ class SynthonNode(Node):
     def __repr__(self) -> str:
         return f'Synthon Product: {self.name}'
     
+    def dump(self):
+        dump_dict = {
+                        'name' : self.name,
+                        'node_type' : 'synthon_node',
+                        'n_func' : self.n_func,
+                        'template' : self.template,
+                        'rxn_universe' : self.rxn_universe,
+                        'incoming_node' : self.incoming_node.dump(),
+                        'next_node' : self.next_node.dump()
+                    }
+        
+        return dump_dict
+
+# %% ../nbs/06_assembly.ipynb 14
 class SynthonLeafNode(SynthonNode):
     def __init__(self, 
                  name: str, 
@@ -466,21 +506,87 @@ class SynthonLeafNode(SynthonNode):
     
     def __repr__(self) -> str:
         return f'Synthon Leaf: {self.name}'
+    
+    def dump(self):
+        dump_dict = {
+                        'name' : self.name,
+                        'node_type' : 'synthon_leaf_node',
+                        'n_func' : self.n_func,
+                        'template' : self.template,
+                    }
+        
+        return dump_dict
 
-# %% ../nbs/06_assembly.ipynb 14
+# %% ../nbs/06_assembly.ipynb 16
 def build_synthesis_scheme(synthon: Synthon) -> dict:
     output = {}
     
     if 'parents' in synthon.data:
         if isinstance(synthon.data['parents'][0], Synthon):
-            for i, parent in enumerate(synthon.data['parents']):
-                output['smile'] = synthon.smile
-                output['reaction_tags'] = synthon.data['reaction_tags']
-                output[f'reactant_{i}'] = build_synthesis_scheme(parent)
+            output['result'] = synthon.smile
+            output['is_input'] = False
+            output['assembly_data'] = {'parents':[]}
+            output['assembly_data']['reaction_tags'] = synthon.data['reaction_tags']
             
+            for i, parent in enumerate(synthon.data['parents']):
+                parent_data = build_synthesis_scheme(parent)
+                output['assembly_data']['parents'].append(parent_data)
+                            
         else:
             parent = synthon.data['parents'][0]
-            output['smile'] = parent.smile
+            output['input'] = parent.smile
+            output['is_input'] = True
             output['data'] = parent.data
             
     return output
+
+# %% ../nbs/06_assembly.ipynb 18
+def build_fragment_assembly_scheme(molecule: Molecule) -> dict:
+    output = {}
+    if 'parents' in molecule.data:
+        output['result'] = molecule.smile
+        output['is_input'] = False
+        output['assembly_data'] = {'parents':[]}
+        output['assembly_data']['input_smiles'] = molecule.data['input_smiles']
+        
+        for i, parent in enumerate(molecule.data['parents']):
+            parent_data = build_fragment_assembly_scheme(parent)
+            output['assembly_data']['parents'].append(parent_data)
+            
+    else:
+        output['input'] = molecule.smile
+        output['is_input'] = True
+        output['data'] = molecule.data
+        
+    return output
+
+# %% ../nbs/06_assembly.ipynb 20
+def build_assembly_from_dict(assembly_schema: dict) -> Node:
+
+    node_type = assembly_schema['node_type']
+    node_name = assembly_schema['name']
+    node_template = assembly_schema['template']
+    
+    if node_type=='fragment_leaf_node':
+        mapping_idxs = assembly_schema['mapping_idxs']
+        node = FragmentLeafNode(node_name, mapping_idxs, node_template)
+        
+    elif node_type=='fragment_node':
+        node_children = [build_assembly_from_dict(i) for i in assembly_schema['children']]
+        node = FragmentNode(node_name, node_children, node_template)
+
+    elif node_type=='synthon_leaf_node':
+        n_func = assembly_schema['n_func']
+        node = SynthonLeafNode(node_name, n_func, node_template)
+        
+    elif node_type=='synthon_node':
+        incoming_node = build_assembly_from_dict(assembly_schema['incoming_node'])
+        next_node = build_assembly_from_dict(assembly_schema['next_node'])
+        rxn_universe = assembly_schema['rxn_universe']
+        n_func = assembly_schema['n_func']
+        node = SynthonNode(node_name, incoming_node, next_node, rxn_universe, n_func, node_template)
+        
+    else:
+        raise ValueError(f'node type {node_type} not found')
+        
+    return node
