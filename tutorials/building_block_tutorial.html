@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="How to assemble building blocks with templates">
+
+<title>chem_templates - Building Block Tutorial</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="chem_templates - Building Block Tutorial">
+<meta property="og:description" content="How to assemble building blocks with templates">
+<meta property="og:image" content="https://DarkMatterAI.github.io/chem_templates/tutorials/building_block_tutorial_files/figure-html/cell-5-output-1.png">
+<meta property="og:site-name" content="chem_templates">
+<meta property="og:image:height" content="600">
+<meta property="og:image:width" content="900">
+<meta name="twitter:title" content="chem_templates - Building Block Tutorial">
+<meta name="twitter:description" content="How to assemble building blocks with templates">
+<meta name="twitter:image" content="https://DarkMatterAI.github.io/chem_templates/tutorials/building_block_tutorial_files/figure-html/cell-5-output-1.png">
+<meta name="twitter:image-height" content="600">
+<meta name="twitter:image-width" content="900">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">chem_templates</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools ms-auto">
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tutorials/building_block_tutorial.html">tutorials</a></li><li class="breadcrumb-item"><a href="../tutorials/building_block_tutorial.html">Building Block Tutorial</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">chem_templates</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../utils.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Utils</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Chem</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../filters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Filters</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fragments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fragments</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../building_blocks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Building Blocks</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../assembly.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Assembly</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">tutorials</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tutorials/building_block_tutorial.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Building Block Tutorial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tutorials/fragment_tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fragment Tutorial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tutorials/template_tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Template Tutorial</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#define-templates" id="toc-define-templates" class="nav-link active" data-scroll-target="#define-templates">Define Templates</a></li>
+  <li><a href="#create-synthon-library" id="toc-create-synthon-library" class="nav-link" data-scroll-target="#create-synthon-library">Create Synthon Library</a></li>
+  <li><a href="#define-assembly-schema" id="toc-define-assembly-schema" class="nav-link" data-scroll-target="#define-assembly-schema">Define Assembly Schema</a></li>
+  <li><a href="#assemble-library" id="toc-assemble-library" class="nav-link" data-scroll-target="#assemble-library">Assemble Library</a></li>
+  <li><a href="#other-assembly-schemas" id="toc-other-assembly-schemas" class="nav-link" data-scroll-target="#other-assembly-schemas">Other Assembly Schemas</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/DarkMatterAI/chem_templates/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Building Block Tutorial</h1>
+</div>
+
+<div>
+  <div class="description">
+    How to assemble building blocks with templates
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<p>This tutorial shows how to use <code>chem_templates</code> building block assembly.</p>
+<p>Building blocks are chemical subunits that can be assembled via easy chemistry. Building blocks are a simple way to combinatorially generate diverse compounds. The <code>chem_templates</code> building block functions allow us to assemble molecules from building blocks and screen building blocks, intermediate products, and the final molecule with specific <a href="https://DarkMatterAI.github.io/chem_templates/filters.html#template"><code>Template</code></a> filters.</p>
+<p>In this example, we will look at the simple case of assembling a molecule from two building blocks - <code>BB1 + BB2 -&gt; product</code>.</p>
+<p>We can accomplish this with the following steps: 1. define templates 2. create synthon library 3. define assembly schema 4. assemble molecules</p>
+<section id="define-templates" class="level2">
+<h2 class="anchored" data-anchor-id="define-templates">Define Templates</h2>
+<p>We need a template for each building block, as well as the final product. For simplicity, we will use Rule of 3 filters for the individual building blocks, and the Rule of 5 filters for the final molecule</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> chem_templates.utils <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> chem_templates.chem <span class="im">import</span> Molecule</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> chem_templates.building_blocks <span class="im">import</span> molecule_to_synthon, REACTION_GROUPS, ReactionUniverse</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> chem_templates.assembly <span class="im">import</span> AssemblyInputs, SynthonNode, SynthonLeafNode</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> chem_templates.<span class="bu">filter</span> <span class="im">import</span> (</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    RangeFunctionFilter, </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    ValidityFilter, </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    SingleCompoundFilter, </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    SmartsFilter,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    Template</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rdkit.Chem <span class="im">import</span> rdMolDescriptors, Descriptors</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rdkit.Chem <span class="im">import</span> Draw</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> hbd(molecule):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rdMolDescriptors.CalcNumHBD(molecule.mol)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> hba(molecule):</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rdMolDescriptors.CalcNumHBA(molecule.mol)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> molwt(molecule):</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rdMolDescriptors.CalcExactMolWt(molecule.mol)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> logp(molecule):</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Descriptors.MolLogP(molecule.mol)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> rotb(molecule):</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rdMolDescriptors.CalcNumRotatableBonds(molecule.mol)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># building block</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>bb_template <span class="op">=</span> Template([</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    RangeFunctionFilter(hbd, <span class="st">'hydrogen_bond_donors'</span>, <span class="va">None</span>, <span class="dv">3</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    RangeFunctionFilter(hba, <span class="st">'hydrogen_bond_acceptors'</span>, <span class="va">None</span>, <span class="dv">3</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    RangeFunctionFilter(molwt, <span class="st">'molecular_weight'</span>, <span class="va">None</span>, <span class="dv">300</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    RangeFunctionFilter(logp, <span class="st">'CLogP'</span>, <span class="va">None</span>, <span class="dv">3</span>),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    RangeFunctionFilter(rotb, <span class="st">'rotatable_bonds'</span>, <span class="va">None</span>, <span class="dv">3</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># full</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>full_template <span class="op">=</span> Template([</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    ValidityFilter(),</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    SingleCompoundFilter(),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    RangeFunctionFilter(hbd, <span class="st">'hydrogen_bond_donors'</span>, <span class="va">None</span>, <span class="dv">5</span>),</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    RangeFunctionFilter(hba, <span class="st">'hydrogen_bond_acceptors'</span>, <span class="va">None</span>, <span class="dv">10</span>),</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    RangeFunctionFilter(molwt, <span class="st">'molecular_weight'</span>, <span class="va">None</span>, <span class="dv">500</span>),</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    RangeFunctionFilter(logp, <span class="st">'CLogP'</span>, <span class="va">None</span>, <span class="dv">5</span>),</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    SmartsFilter(<span class="st">'[CX3](=O)[OX2H1]'</span>, <span class="st">'carboxylic_acid'</span>, </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                 exclude<span class="op">=</span><span class="va">True</span>, min_val<span class="op">=</span><span class="dv">2</span>, max_val<span class="op">=</span><span class="va">None</span>), <span class="co"># at most 1 carboxylic acid in final molecule</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    SmartsFilter(<span class="st">'[CX3](=[OX1])OCC'</span>, <span class="st">'carboxylic_ester'</span>, </span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                 exclude<span class="op">=</span><span class="va">True</span>, min_val<span class="op">=</span><span class="dv">1</span>, max_val<span class="op">=</span><span class="va">None</span>) <span class="co"># no carboxylic acid reactive group in final molecule</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="create-synthon-library" class="level2">
+<h2 class="anchored" data-anchor-id="create-synthon-library">Create Synthon Library</h2>
+<p>Now we need to create a library of <em>synthons</em>. A synthon is a hypothetical molecule that represents a building block after reaction. Reactive groups are converted to placeholder molecules. Later, we will use the placeholders to simulate building block assembly. A single molecule can have multiple synthons.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>molecule <span class="op">=</span> Molecule(<span class="st">'CCOC(=O)c1c(N)ccnc1C(F)(F)F'</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>synthons <span class="op">=</span> molecule_to_synthon(molecule)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Draw.MolsToGridImage([molecule.mol]<span class="op">+</span>[i.mol <span class="cf">for</span> i <span class="kw">in</span> synthons], </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                     legends<span class="op">=</span>[<span class="st">'Building Block'</span>] <span class="op">+</span> [<span class="ss">f'synthon </span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(synthons))],</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                     subImgSize<span class="op">=</span>(<span class="dv">300</span>,<span class="dv">300</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="building_block_tutorial_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>building_blocks <span class="op">=</span> [<span class="st">'CCOC(=O)c1c(N)ccnc1C(F)(F)F'</span>,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)C(C)N=C=O'</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)c1[nH]c2ccc(C)cc2c1N'</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)c1c(N)sc2c1CCC(C)C2'</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a> <span class="st">'O=C(NC[C@@H]1C[C@H](F)CN1)OCc1ccccc1'</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a> <span class="st">'O=C(NCC1CCNCC1)OCc1ccccc1'</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a> <span class="st">'NCC1CCCN(C(=O)OCc2ccccc2)C1'</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a> <span class="st">'CC(C)(CN)NC(=O)OCc1ccccc1'</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a> <span class="st">'O=C(NCC1CCCCN1)OCc1ccccc1'</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a> <span class="st">'C[C@@H]1CNCCN1C(=O)OCc1ccccc1'</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a> <span class="st">'NCC1CCN(C(=O)OCc2ccccc2)C1'</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCC1CNCCN1C(=O)OCc1ccccc1'</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a> <span class="st">'CNC1CCN(C(=O)OCc2ccccc2)CC1'</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a> <span class="st">'NC[C@@H]1CCN(C(=O)OCc2ccccc2)C1'</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a> <span class="st">'NC1CCN(C(=O)OCc2ccccc2)CC1F'</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a> <span class="st">'NC[C@H]1CCCN1C(=O)OCc1ccccc1'</span>,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a> <span class="st">'N[C@@H]1C[C@H](C(=O)O)N(C(=O)OCc2ccccc2)C1'</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a> <span class="st">'O=C(OCc1ccccc1)N1CCN[C@H](Cc2ccccc2)C1'</span>,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a> <span class="st">'O=C(OCc1ccccc1)N1CCC2(CCCCN2)C1'</span>,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a> <span class="st">'O=C(OCc1ccccc1)N1CCCC2NCCC21'</span>,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a> <span class="st">'C[C@H](N)C(=O)NCC1CCCCN1C(=O)OCc1ccccc1'</span>,</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a> <span class="st">'CC(C)[C@H](N)C(=O)N1CCCCC1CNC(=O)OCc1ccccc1'</span>,</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a> <span class="st">'NCC(=O)N1CCCC(CNC(=O)OCc2ccccc2)C1'</span>,</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a> <span class="st">'O=C(O)CN[C@@H]1CCCN(C(=O)OCc2ccccc2)C1'</span>,</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCN(C(=O)OCc1ccccc1)C1CCNCC1'</span>,</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a> <span class="st">'NCC(=O)NC[C@@H]1CCCN1C(=O)OCc1ccccc1'</span>,</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a> <span class="st">'C[C@H](N)C(=O)NC[C@@H]1CCCN1C(=O)OCc1ccccc1'</span>,</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCN(C(=O)OCc1ccccc1)[C@@H]1CCN(C(=O)CN)C1'</span>,</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCN(C(=O)OCc1ccccc1)[C@H]1CCN(C(=O)[C@H](C)N)C1'</span>,</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a> <span class="st">'CC(C)NC[C@@H]1CCCN1C(=O)OCc1ccccc1'</span>,</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a> <span class="st">'O=C(OCc1ccccc1)N(CC1CCNC1)C1CC1'</span>,</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCN(C(=O)[C@H](C)N)C1CCCCC1NC(=O)OCc1ccccc1'</span>,</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a> <span class="st">'CNC1CCCCC1N(C(=O)OCc1ccccc1)C(C)C'</span>,</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a> <span class="st">'O=C(NC[C@@H]1CNCCO1)OCc1ccccc1'</span>,</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a> <span class="st">'CN(C(=O)OCc1ccccc1)C1CCCNC1'</span>,</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a> <span class="st">'O=C(OCc1ccccc1)N1C[C@H]2CNCC[C@H]21'</span>,</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a> <span class="st">'O=C(OCc1ccccc1)N1CCCC2(CCN2)C1'</span>,</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a> <span class="st">'NC1(C(F)(F)F)CCN(C(=O)OCc2ccccc2)CC1'</span>,</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a> <span class="st">'NC1CCCCN(C(=O)OCc2ccccc2)C1'</span>,</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)C(OC(=O)C(Cc1ccccc1)NC=O)c1ccccc1'</span>,</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)c1cc(-c2c(F)cccc2COC(=O)C(Cc2ccccc2)NC=O)ccc1F'</span>,</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)c1ccc(F)c(-c2cc(COC(=O)C(Cc3ccccc3)NC=O)ccc2F)c1'</span>,</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)c1cccc(-c2cccc(COC(=O)C(Cc3ccccc3)NC=O)c2C)c1'</span>,</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)c1[nH]c2ccc(Br)cc2c1C=O'</span>,</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)COc1c(Cl)cc(C=O)cc1Cl'</span>,</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)C(NNc1ccccc1)(NC(=O)CC(C)C)C(F)(F)F'</span>,</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)COc1ccc(Cl)cc1C=O'</span>,</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)c1c(C)c(C=O)n(C)c1C'</span>,</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)c1nc2cc(C)ccn2c1C=O'</span>,</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)Cn1cc(C=O)c2cc(OC)ccc21'</span>,</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)c1nn(-c2ccc(Cl)cc2)cc1C=O'</span>,</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)C1CCN(c2ccccc2C=O)CC1'</span>,</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)c1cc(F)cc(C=O)c1F'</span>,</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)c1cccc(C=O)c1OC'</span>,</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)c1cc(Br)c2c(C=O)n[nH]c2c1'</span>,</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)c1c(C=O)c(C)n(C)c1C'</span>,</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)c1nn(-c2cccc(Cl)c2)cc1C=O'</span>,</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)C(C)(C)CC=O'</span>,</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)c1ccc(Cl)c(C=O)c1'</span>,</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)c1oc(C=O)cc1C'</span>,</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)c1c[nH]c(C=O)c1C1CC1'</span>,</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)c1ncc(C=O)cc1Cl'</span>,</span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)c1c(Cl)ccc(C=O)c1F'</span>,</span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)CC=O'</span>,</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)C1CCCCN1c1ccccc1C=O'</span>,</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOc1ccc(C(=O)OC)cc1C=O'</span>,</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)N[C@H](C=O)C(C)C'</span>,</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)Nc1ccc(C=O)c([N+](=O)[O-])c1'</span>,</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)c1cc2n(c1C=O)CCCC2'</span>,</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)c1cn(C)c2cc(C=O)ccc2c1=O'</span>,</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)C1CCN(C(=O)OC(C)(C)C)C=C1C=O'</span>,</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)c1ncn(C)c1C=O'</span>,</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)c1cc(F)c(C=O)cc1F'</span>,</span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)Cc1cccc(C=O)c1'</span>,</span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)C(Cl)=C(Cl)C=O'</span>,</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)c1cccc(NC(=O)C=O)c1'</span>,</span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)c1cc2cc(C=O)sc2[nH]1'</span>,</span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)Cn1cc(C=O)c(C(F)(F)F)n1'</span>,</span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)C1(CC=O)CCCN(C(=O)OC(C)(C)C)C1'</span>,</span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)/C=C/C=O'</span>,</span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)c1cc(Cl)cc(C=O)n1'</span>,</span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)c1c(C#N)cc(Br)cc1C=O'</span>,</span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)C(C=O)c1cccc(F)c1'</span>,</span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)c1c(C#N)ccc(Br)c1C=O'</span>,</span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)Cc1cc(Br)c(C=O)cc1C#N'</span>,</span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)Cc1cc(Br)c(C=O)cc1C#N'</span>,</span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)c1[nH]c2c(C)cc(F)cc2c1C=O'</span>,</span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)C1C(CC)NC(=S)NC1(C)O'</span>,</span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a> <span class="st">'O=C(O)CCN=C=S'</span>,</span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)[C@@H]1CO[C@H](C(C)(C)C)N1C=O'</span>,</span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)CNC(=S)N1CCN(C=O)CC1'</span>,</span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)c1ccc(OC=O)cc1'</span>,</span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a> <span class="st">'[N-]=[N+]=Nc1cccc(S(=O)(=O)F)c1'</span>,</span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)c1ccc(C)c(S(=O)(=O)Cl)c1'</span>,</span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)c1c(Cl)ccc(S(=O)(=O)Cl)c1Cl'</span>,</span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a> <span class="st">'COC(=O)c1ccc(S(=O)(=O)Cl)cc1Cl'</span>,</span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)c1ccc(F)c(S(=O)(=O)Cl)c1'</span>,</span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a> <span class="st">'CCOC(=O)C(C)S(=O)(=O)Cl'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>molecules <span class="op">=</span> [Molecule(i) <span class="cf">for</span> i <span class="kw">in</span> building_blocks]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>synthons <span class="op">=</span> deduplicate_list(flatten_list([molecule_to_synthon(i) <span class="cf">for</span> i <span class="kw">in</span> molecules]), </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                            key_func<span class="op">=</span><span class="kw">lambda</span> x: x.smile)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(synthons)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>468</code></pre>
+</div>
+</div>
+<p>We can check the compatibility between two synthons to see if they can react:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># note exact index values may change</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>s1 <span class="op">=</span> synthons[<span class="dv">0</span>]</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>s2 <span class="op">=</span> synthons[<span class="dv">153</span>]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(s1.is_compatible(s2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>True</code></pre>
+</div>
+</div>
+<p>To actually react them, we need to use a reaction template. Reactions are represented in the following way:</p>
+<ul>
+<li>A <a href="https://DarkMatterAI.github.io/chem_templates/building_blocks.html#fusionreaction"><code>FusionReaction</code></a> holds a specific set of reaction SMARTS.</li>
+<li>A <a href="https://DarkMatterAI.github.io/chem_templates/building_blocks.html#reactiongroup"><code>ReactionGroup</code></a> holds several <a href="https://DarkMatterAI.github.io/chem_templates/building_blocks.html#fusionreaction"><code>FusionReaction</code></a> of the same reaction type (ie there are multiple N-acylation reaction SMARTS)</li>
+<li>A <a href="https://DarkMatterAI.github.io/chem_templates/building_blocks.html#reactionuniverse"><code>ReactionUniverse</code></a> holds a list of <a href="https://DarkMatterAI.github.io/chem_templates/building_blocks.html#reactiongroup"><code>ReactionGroup</code></a> objects</li>
+</ul>
+<p>Several reaction groups are provided:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> REACTION_GROUPS:</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(item)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reaction Class: O-acylation
+    Reaction: Alcohol/Phenol acylation
+    Reaction: O-Acylation by O=C(+)-X reagents
+    Reaction: O-Acylation of O-X compounds
+Reaction Class: Olefination
+    Reaction: Knovenagel-, Wittig-, Julia-Kocienski- type reactions
+    Reaction: Olefin Metathesis
+Reaction Class: Condensation_of_Y-NH2_with_carbonyl_compounds
+    Reaction: Condensation of Y-NH2 with carbonyl compounds
+Reaction Class: Amine_sulphoacylation
+    Reaction: Amine sulphoacilation
+Reaction Class: C-C couplings
+    Reaction: Suzuki cross-coupling C(Ar)- C(Ar)
+    Reaction: Suzuki coupling C(sp2) - C(sp2)
+    Reaction: Heck and Suzuki coupling C(Ar) - C(sp2)
+    Reaction: Sonogashira coupling C(Ar) - C(sp)
+    Reaction: Novel methods for C(Ar)-C(sp3) coupling
+    Reaction: Novel methods for C(Ar)-C(sp3) coupling with boronics
+Reaction Class: Radical_reactions
+    Reaction: Minisci reaction and Baran diversinates C(Ar)-C(sp3)
+    Reaction: Giese reaction C(sp3) - C(sp3)
+Reaction Class: N-acylation
+    Reaction: Amine acylation
+    Reaction: N-Acylation of RN-X compounds
+    Reaction: N-Acylation by O=C(+)-X reagents (except isocyanates - R1.4)
+    Reaction: Amine acylation by isocyanates or analogues
+Reaction Class: O-alkylation_arylation
+    Reaction: O-SN alkylation
+    Reaction: Cu-mediated C-O coupling
+    Reaction: O-C Chan-Evans-Lam coupling
+    Reaction: N-O-alkylation
+Reaction Class: Metal organics C-C bong assembling
+    Reaction: Addition of Li, Mg, Zn organics to aldehydes and ketones
+    Reaction: Acylation of Li, Mg, Zn organics
+Reaction Class: S-alkylation_arylation
+    Reaction: S-alkylation arylation
+    Reaction: Simple alkylation of sulphinic acid salts
+    Reaction: Cu-catalyzed arylation of sulphinic acid salts
+Reaction Class: Alkylation_arylation_of_NH-lactam
+    Reaction: NH-lactam SN alkylation
+    Reaction: NH-lactam Chan-Evans-Lam coupling
+    Reaction: NH-lactam Cu-mediated C-N coupling
+Reaction Class: Alkylation_arylation_of_NH-heterocycles
+    Reaction: nH-SN alkylation
+    Reaction: nH-Chan-Evans-Lam coupling
+    Reaction: nH-Cu-mediated C-N coupling
+Reaction Class: Amine_alkylation_arylation
+    Reaction: SN alkylation of amines
+    Reaction: Buchwald-Hartwig amination(BHA), Cu-mediated C-N coupling
+    Reaction: Umpolung cross-coupling
+    Reaction: Tertiary amines alkylation arylation</code></pre>
+</div>
+</div>
+<p>For this example, we will create a <a href="https://DarkMatterAI.github.io/chem_templates/building_blocks.html#reactionuniverse"><code>ReactionUniverse</code></a> with all the available groups. Note that currently there are no cheminformatics checks on reaction compatibility for multiple reaction chains.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rxn_universe <span class="op">=</span> ReactionUniverse(<span class="st">'all_rxns'</span>, REACTION_GROUPS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we can see which reactions match a compatible synthon pair</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>matching_rxns <span class="op">=</span> rxn_universe.get_matching_reactions(s1, s2)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(matching_rxns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[Reaction: SN alkylation of amines]</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>rxn <span class="op">=</span> matching_rxns[<span class="dv">0</span>]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>product <span class="op">=</span> rxn.react(s1, s2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Draw.MolsToGridImage([s1.mol, s2.mol, product[<span class="dv">0</span>].mol], legends<span class="op">=</span>[<span class="st">'Synthon1'</span>, <span class="st">'Synthon2'</span>, <span class="st">'Product'</span>],</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                    subImgSize<span class="op">=</span>(<span class="dv">300</span>,<span class="dv">300</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="building_block_tutorial_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>A note on working with synthons:</p>
+<p>In the above, synthon1 and synthon2 still have reactive groups present on the molecule (carboxylic acid and carboxylic ester). This is because we generate a variety of synthons for each input building block based on the functional groups and reaction pathways available (see image below).</p>
+<p>If you want to ensure specific reactive groups or protecting groups aren’t present on final molecules, use a SMARTS filter in your template to eliminate them</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Draw.MolsToGridImage([i.mol <span class="cf">for</span> i <span class="kw">in</span> molecule_to_synthon(s2.data[<span class="st">'parents'</span>][<span class="dv">0</span>])], molsPerRow<span class="op">=</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="building_block_tutorial_files/figure-html/cell-14-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="define-assembly-schema" class="level2">
+<h2 class="anchored" data-anchor-id="define-assembly-schema">Define Assembly Schema</h2>
+<p>Now we define how our building blocks will fit together.</p>
+<p>First we define our leaf nodes with the <a href="https://DarkMatterAI.github.io/chem_templates/assembly.html#synthonleafnode"><code>SynthonLeafNode</code></a> class. Each leaf node has a name, a set of <code>n_func</code> values, and a template.</p>
+<p>The <code>n_func</code> values define how many functional groups a building block is allowed to have. So <code>n_func=set([1])</code> would only allow building blocks with 1 functional group. <code>n_func=set([2,3])</code> would allow building blocks with 2-3 functional groups.</p>
+<p>Note that as discussed above, <code>n_func</code> looks at the <em>annotated</em> functional groups on the synthon, so will not exclude multi-functional building blocks with un-annotated groups.</p>
+<p>Since we want to assemble two building blocks into a final molecule, we will set <code>n_func=set([1])</code> for each building block:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>bb1 <span class="op">=</span> SynthonLeafNode(<span class="st">'bb1'</span>, <span class="bu">set</span>([<span class="dv">1</span>]), bb_template)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>bb2 <span class="op">=</span> SynthonLeafNode(<span class="st">'bb2'</span>, <span class="bu">set</span>([<span class="dv">1</span>]), bb_template)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we make the product node with the <a href="https://DarkMatterAI.github.io/chem_templates/assembly.html#synthonnode"><code>SynthonNode</code></a> class, passing in our input nodes and reaction universe</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>prod <span class="op">=</span> SynthonNode(<span class="st">'product'</span>, bb1, bb2, rxn_universe, <span class="bu">set</span>([<span class="dv">0</span>]), full_template)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="assemble-library" class="level2">
+<h2 class="anchored" data-anchor-id="assemble-library">Assemble Library</h2>
+<p>To assemble, first we run <code>prod.build_assembly_pools(synthons)</code> which builds a dictionary of assembly pools based on which synthons match the <code>n_func</code> and template specifications at the leaf nodes.</p>
+<p>Then we create the <a href="https://DarkMatterAI.github.io/chem_templates/assembly.html#assemblyinputs"><code>AssemblyInputs</code></a> and pass them to <code>prod.assemble(assembly_inputs)</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>assembly_dict <span class="op">=</span> prod.build_assembly_pools(synthons)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>assembly_dict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>{'bb1': AssemblyPool: 180 items, 'bb2': AssemblyPool: 180 items}</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>assembly_inputs <span class="op">=</span> AssemblyInputs(assembly_dict, <span class="dv">1000</span>, <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>assembled <span class="op">=</span> prod.assemble(assembly_inputs)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>assembled</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>bb1
+bb2
+product</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>AssemblyPool: 1497 items</code></pre>
+</div>
+</div>
+<p>Now we can review the assembled molecules. We can see some of these still contain reactive groups. These can be triaged if needed by adding additional smarts filters</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>Draw.MolsToGridImage([assembled[i].mol <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">15</span>)], molsPerRow<span class="op">=</span><span class="dv">5</span>, subImgSize<span class="op">=</span>(<span class="dv">300</span>,<span class="dv">300</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="building_block_tutorial_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="other-assembly-schemas" class="level2">
+<h2 class="anchored" data-anchor-id="other-assembly-schemas">Other Assembly Schemas</h2>
+<p>Consider assembling 3 building blocks. Our assembly schema would follow: * select first building block * select second building block * select matching reactions * react and generate products * select third building block * select matching reactions * react and generate products</p>
+<p>We may want to impose different potential reactions at each step. We can do this by specifying different <a href="https://DarkMatterAI.github.io/chem_templates/building_blocks.html#reactionuniverse"><code>ReactionUniverse</code></a> at the different product nodes. An example schema would look something like this:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>bb1 <span class="op">=</span> SynthonLeafNode(<span class="st">'bb1'</span>, <span class="bu">set</span>([<span class="dv">1</span>]), bb_template1) <span class="co"># first building block with 1 functional group</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>bb2 <span class="op">=</span> SynthonLeafNode(<span class="st">'bb2'</span>, <span class="bu">set</span>([<span class="dv">2</span>]), bb_template2) <span class="co"># middle building block with 2 functional groups</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>bb3 <span class="op">=</span> SynthonLeafNode(<span class="st">'bb3'</span>, <span class="bu">set</span>([<span class="dv">3</span>]), bb_template3) <span class="co"># final building block with 1 functional group</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>product1 <span class="op">=</span> SynthonNode(<span class="st">'product1'</span>, bb1, bb2, rxn_universe1, </span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>                       <span class="bu">set</span>([<span class="dv">1</span>]), prod1_template) <span class="co"># first product with 1 remaining functional group</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>product2 <span class="op">=</span> SynthonNode(<span class="st">'product2'</span>, product1, bb3, rxn_universe2, </span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>                       <span class="bu">set</span>([<span class="dv">0</span>]), prod2_template) <span class="co"># final product with 0 remaining functional groups</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

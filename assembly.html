@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="assembly related functions">
+
+<title>chem_templates - Assembly</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="chem_templates - Assembly">
+<meta property="og:description" content="assembly related functions">
+<meta property="og:site-name" content="chem_templates">
+<meta name="twitter:title" content="chem_templates - Assembly">
+<meta name="twitter:description" content="assembly related functions">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">chem_templates</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools ms-auto">
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./assembly.html">Assembly</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">chem_templates</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./utils.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Utils</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Chem</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./filters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Filters</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fragments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fragments</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./building_blocks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Building Blocks</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./assembly.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Assembly</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">tutorials</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tutorials/building_block_tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Building Block Tutorial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tutorials/fragment_tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fragment Tutorial</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tutorials/template_tutorial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Template Tutorial</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#assemblypool" id="toc-assemblypool" class="nav-link active" data-scroll-target="#assemblypool">AssemblyPool</a></li>
+  <li><a href="#assemblyinputs" id="toc-assemblyinputs" class="nav-link" data-scroll-target="#assemblyinputs">AssemblyInputs</a></li>
+  <li><a href="#node" id="toc-node" class="nav-link" data-scroll-target="#node">Node</a></li>
+  <li><a href="#fragmentnode" id="toc-fragmentnode" class="nav-link" data-scroll-target="#fragmentnode">FragmentNode</a></li>
+  <li><a href="#fragmentleafnode" id="toc-fragmentleafnode" class="nav-link" data-scroll-target="#fragmentleafnode">FragmentLeafNode</a></li>
+  <li><a href="#synthonpool" id="toc-synthonpool" class="nav-link" data-scroll-target="#synthonpool">SynthonPool</a></li>
+  <li><a href="#make_assemblies" id="toc-make_assemblies" class="nav-link" data-scroll-target="#make_assemblies">make_assemblies</a></li>
+  <li><a href="#add_rxn" id="toc-add_rxn" class="nav-link" data-scroll-target="#add_rxn">add_rxn</a></li>
+  <li><a href="#make_pairs_chunked" id="toc-make_pairs_chunked" class="nav-link" data-scroll-target="#make_pairs_chunked">make_pairs_chunked</a></li>
+  <li><a href="#make_pairs" id="toc-make_pairs" class="nav-link" data-scroll-target="#make_pairs">make_pairs</a></li>
+  <li><a href="#synthonnode" id="toc-synthonnode" class="nav-link" data-scroll-target="#synthonnode">SynthonNode</a></li>
+  <li><a href="#synthonleafnode" id="toc-synthonleafnode" class="nav-link" data-scroll-target="#synthonleafnode">SynthonLeafNode</a></li>
+  <li><a href="#build_synthesis_scheme" id="toc-build_synthesis_scheme" class="nav-link" data-scroll-target="#build_synthesis_scheme">build_synthesis_scheme</a></li>
+  <li><a href="#build_fragment_assembly_scheme" id="toc-build_fragment_assembly_scheme" class="nav-link" data-scroll-target="#build_fragment_assembly_scheme">build_fragment_assembly_scheme</a></li>
+  <li><a href="#build_assembly_from_dict" id="toc-build_assembly_from_dict" class="nav-link" data-scroll-target="#build_assembly_from_dict">build_assembly_from_dict</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/DarkMatterAI/chem_templates/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Assembly</h1>
+</div>
+
+<div>
+  <div class="description">
+    assembly related functions
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<hr>
+<p><a href="https://github.com/DarkMatterAI/chem_templates/blob/main/chem_templates/assembly.py#L19" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="assemblypool" class="level3">
+<h3 class="anchored" data-anchor-id="assemblypool">AssemblyPool</h3>
+<blockquote class="blockquote">
+<pre><code> AssemblyPool (items:list[Molecule])</code></pre>
+</blockquote>
+<p>Initialize self. See help(type(self)) for accurate signature.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pool <span class="op">=</span> AssemblyPool([Molecule(<span class="st">'C'</span>), Molecule(<span class="st">'CCCCC'</span>)])</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(pool)<span class="op">==</span><span class="dv">2</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> filter_func(molecule):</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">len</span>(molecule.smile)<span class="op">&gt;</span><span class="dv">1</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>pool2 <span class="op">=</span> pool.<span class="bu">filter</span>(filter_func)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(pool2)<span class="op">==</span><span class="dv">1</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>pool <span class="op">=</span> AssemblyPool([Molecule(<span class="st">'C'</span>), Molecule(<span class="st">'C'</span>), Molecule(<span class="st">'C'</span>)])</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>pool <span class="op">=</span> pool.deduplicate(<span class="kw">lambda</span> x: x.smile)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(pool)<span class="op">==</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+<p><a href="https://github.com/DarkMatterAI/chem_templates/blob/main/chem_templates/assembly.py#L49" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="assemblyinputs" class="level3">
+<h3 class="anchored" data-anchor-id="assemblyinputs">AssemblyInputs</h3>
+<blockquote class="blockquote">
+<pre><code> AssemblyInputs (pool_dict:dict[str,AssemblyPool], assembly_chunksize:int,
+                 max_assemblies_per_node:int,
+                 worker_pool:Optional[Pool]=None, log:bool=True)</code></pre>
+</blockquote>
+<p>Initialize self. See help(type(self)) for accurate signature.</p>
+<hr>
+<p><a href="https://github.com/DarkMatterAI/chem_templates/blob/main/chem_templates/assembly.py#L67" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="node" class="level3">
+<h3 class="anchored" data-anchor-id="node">Node</h3>
+<blockquote class="blockquote">
+<pre><code> Node (name:str, template:Optional[Template]=None)</code></pre>
+</blockquote>
+<p>Initialize self. See help(type(self)) for accurate signature.</p>
+<hr>
+<p><a href="https://github.com/DarkMatterAI/chem_templates/blob/main/chem_templates/assembly.py#L99" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="fragmentnode" class="level3">
+<h3 class="anchored" data-anchor-id="fragmentnode">FragmentNode</h3>
+<blockquote class="blockquote">
+<pre><code> FragmentNode (name:str, children:list[FragmentNode],
+               template:Optional[Template]=None)</code></pre>
+</blockquote>
+<p>Initialize self. See help(type(self)) for accurate signature.</p>
+<hr>
+<p><a href="https://github.com/DarkMatterAI/chem_templates/blob/main/chem_templates/assembly.py#L250" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="fragmentleafnode" class="level3">
+<h3 class="anchored" data-anchor-id="fragmentleafnode">FragmentLeafNode</h3>
+<blockquote class="blockquote">
+<pre><code> FragmentLeafNode (name:str, mapping_idxs:list[int],
+                   template:Optional[Template]=None)</code></pre>
+</blockquote>
+<p>Initialize self. See help(type(self)) for accurate signature.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>f1 <span class="op">=</span> [<span class="st">'[*:1]C'</span>, <span class="st">'[*:1]N'</span>, <span class="st">'[*:2]O'</span>]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>f2 <span class="op">=</span> [<span class="st">'[*:1]CC'</span>, <span class="st">'[*:1]CCC'</span>]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>m1 <span class="op">=</span> [Molecule(i) <span class="cf">for</span> i <span class="kw">in</span> f1]</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>m2 <span class="op">=</span> [Molecule(i) <span class="cf">for</span> i <span class="kw">in</span> f2]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">=</span> AssemblyPool(m1)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>p2 <span class="op">=</span> AssemblyPool(m2)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>assembly_dict <span class="op">=</span> {</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'R1'</span> : p1,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'R2'</span> : p2</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>assembly_inputs <span class="op">=</span> AssemblyInputs(assembly_dict, <span class="dv">10000</span>, <span class="fl">1e8</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>r1 <span class="op">=</span> FragmentLeafNode(<span class="st">'R1'</span>, [<span class="dv">1</span>])</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>r2 <span class="op">=</span> FragmentLeafNode(<span class="st">'R2'</span>, [<span class="dv">1</span>])</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>full <span class="op">=</span> FragmentNode(<span class="st">'F'</span>, [r1, r2])</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>out <span class="op">=</span> full.assemble(assembly_inputs)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(out)<span class="op">==</span><span class="dv">4</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(json.dumps(full.dump(), indent<span class="op">=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{
+ "name": "F",
+ "node_type": "fragment_node",
+ "template": null,
+ "children": [
+  {
+   "name": "R1",
+   "node_type": "fragment_leaf_node",
+   "mapping_idxs": [
+    1
+   ],
+   "template": null
+  },
+  {
+   "name": "R2",
+   "node_type": "fragment_leaf_node",
+   "mapping_idxs": [
+    1
+   ],
+   "template": null
+  }
+ ]
+}</code></pre>
+</div>
+</div>
+<hr>
+<p><a href="https://github.com/DarkMatterAI/chem_templates/blob/main/chem_templates/assembly.py#L279" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="synthonpool" class="level3">
+<h3 class="anchored" data-anchor-id="synthonpool">SynthonPool</h3>
+<blockquote class="blockquote">
+<pre><code> SynthonPool (items:list[Synthon])</code></pre>
+</blockquote>
+<p>Initialize self. See help(type(self)) for accurate signature.</p>
+<hr>
+<p><a href="https://github.com/DarkMatterAI/chem_templates/blob/main/chem_templates/assembly.py#L326" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="make_assemblies" class="level3">
+<h3 class="anchored" data-anchor-id="make_assemblies">make_assemblies</h3>
+<blockquote class="blockquote">
+<pre><code> make_assemblies (pool1:__main__.SynthonPool, pool2:__main__.SynthonPool,
+                  rxn_universe:chem_templates.building_blocks.ReactionUniv
+                  erse, chunksize:int, worker_pool:Optional[&lt;boundmethodBa
+                  seContext.Poolof&lt;multiprocessing.context.DefaultContexto
+                  bjectat0x7fce59bc5130&gt;&gt;]=None)</code></pre>
+</blockquote>
+<hr>
+<p><a href="https://github.com/DarkMatterAI/chem_templates/blob/main/chem_templates/assembly.py#L321" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="add_rxn" class="level3">
+<h3 class="anchored" data-anchor-id="add_rxn">add_rxn</h3>
+<blockquote class="blockquote">
+<pre><code> add_rxn (pair:Tuple[chem_templates.building_blocks.Synthon,chem_templates
+          .building_blocks.Synthon],
+          rxn_universe:chem_templates.building_blocks.ReactionUniverse)</code></pre>
+</blockquote>
+<hr>
+<p><a href="https://github.com/DarkMatterAI/chem_templates/blob/main/chem_templates/assembly.py#L314" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="make_pairs_chunked" class="level3">
+<h3 class="anchored" data-anchor-id="make_pairs_chunked">make_pairs_chunked</h3>
+<blockquote class="blockquote">
+<pre><code> make_pairs_chunked (pool1:__main__.SynthonPool,
+                     pool2:__main__.SynthonPool, chunksize:int)</code></pre>
+</blockquote>
+<hr>
+<p><a href="https://github.com/DarkMatterAI/chem_templates/blob/main/chem_templates/assembly.py#L307" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="make_pairs" class="level3">
+<h3 class="anchored" data-anchor-id="make_pairs">make_pairs</h3>
+<blockquote class="blockquote">
+<pre><code> make_pairs (pool1:__main__.SynthonPool, pool2:__main__.SynthonPool)</code></pre>
+</blockquote>
+<hr>
+<p><a href="https://github.com/DarkMatterAI/chem_templates/blob/main/chem_templates/assembly.py#L356" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="synthonnode" class="level3">
+<h3 class="anchored" data-anchor-id="synthonnode">SynthonNode</h3>
+<blockquote class="blockquote">
+<pre><code> SynthonNode (name:str, incoming_node:SynthonNode, next_node:SynthonNode,
+              rxn_universe:ReactionUniverse, n_func:set[int],
+              template:Optional[Template]=None)</code></pre>
+</blockquote>
+<p>Initialize self. See help(type(self)) for accurate signature.</p>
+<hr>
+<p><a href="https://github.com/DarkMatterAI/chem_templates/blob/main/chem_templates/assembly.py#L493" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="synthonleafnode" class="level3">
+<h3 class="anchored" data-anchor-id="synthonleafnode">SynthonLeafNode</h3>
+<blockquote class="blockquote">
+<pre><code> SynthonLeafNode (name:str, n_func:set[int],
+                  template:Optional[Template]=None)</code></pre>
+</blockquote>
+<p>Initialize self. See help(type(self)) for accurate signature.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">=</span> SynthonPool([Synthon(<span class="st">'O=C(O)CCN[CH:10]=O'</span>), Synthon(<span class="st">'O=C(O)CCCN[CH:10]=O'</span>)])</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="op">=</span> SynthonPool([Synthon(<span class="st">'CCOC(=O)c1c([NH2:20])sc2c1CCNC2'</span>), Synthon(<span class="st">'C1CN(C2CC[NH:20]C2)CCN1'</span>)])</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>rxn_universe <span class="op">=</span> ReactionUniverse(<span class="st">'all_rxns'</span>, REACTION_GROUPS)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>bb1 <span class="op">=</span> SynthonLeafNode(<span class="st">'bb1'</span>, <span class="bu">set</span>([<span class="dv">1</span>]))</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>bb2 <span class="op">=</span> SynthonLeafNode(<span class="st">'bb2'</span>, <span class="bu">set</span>([<span class="dv">1</span>]))</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>prod <span class="op">=</span> SynthonNode(<span class="st">'product'</span>, bb1, bb2, rxn_universe, <span class="bu">set</span>([<span class="dv">0</span>]))</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>input_dict <span class="op">=</span> {</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'bb1'</span> : p1,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'bb2'</span> : p2</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>inputs <span class="op">=</span> AssemblyInputs(input_dict, <span class="dv">10000</span>, <span class="dv">10000</span>)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>outputs <span class="op">=</span> prod.assemble(inputs, verbose<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(outputs) <span class="op">==</span> <span class="dv">4</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>prod.dump()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>bb1
+bb2
+product</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>{'name': 'product',
+ 'node_type': 'synthon_node',
+ 'n_func': {0},
+ 'template': None,
+ 'rxn_universe': &lt;chem_templates.building_blocks.ReactionUniverse&gt;,
+ 'incoming_node': {'name': 'bb1',
+  'node_type': 'synthon_leaf_node',
+  'n_func': {1},
+  'template': None},
+ 'next_node': {'name': 'bb2',
+  'node_type': 'synthon_leaf_node',
+  'n_func': {1},
+  'template': None}}</code></pre>
+</div>
+</div>
+<hr>
+<p><a href="https://github.com/DarkMatterAI/chem_templates/blob/main/chem_templates/assembly.py#L521" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="build_synthesis_scheme" class="level3">
+<h3 class="anchored" data-anchor-id="build_synthesis_scheme">build_synthesis_scheme</h3>
+<blockquote class="blockquote">
+<pre><code> build_synthesis_scheme (synthon:chem_templates.building_blocks.Synthon)</code></pre>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>bb1 <span class="op">=</span> SynthonLeafNode(<span class="st">'bb1'</span>, <span class="bu">set</span>([<span class="dv">1</span>]))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>bb2 <span class="op">=</span> SynthonLeafNode(<span class="st">'bb2'</span>, <span class="bu">set</span>([<span class="dv">2</span>]))</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>prod1 <span class="op">=</span> SynthonNode(<span class="st">'product1'</span>, bb1, bb2, rxn_universe, <span class="bu">set</span>([<span class="dv">1</span>]))</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>bb3 <span class="op">=</span> SynthonLeafNode(<span class="st">'bb3'</span>, <span class="bu">set</span>([<span class="dv">1</span>]))</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>prod2 <span class="op">=</span> SynthonNode(<span class="st">'product2'</span>, prod1, bb3, rxn_universe, <span class="bu">set</span>([<span class="dv">0</span>]))</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>mol1 <span class="op">=</span> Molecule(<span class="st">'Nc1cc(O)c(Br)cc1Br'</span>, {<span class="st">'ID'</span> : <span class="st">'EN300-104251'</span>})</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>mol2 <span class="op">=</span> Molecule(<span class="st">'CCOC(=O)c1c(C)[nH]c(C(=O)C(C)Cl)c1C'</span>, {<span class="st">'ID'</span> : <span class="st">'EN300-08472'</span>})</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>mol3 <span class="op">=</span> Molecule(<span class="st">'O=C(O)C1(Cc2ccc(Br)cc2F)CCCNC1'</span>, {<span class="st">'ID'</span> : <span class="st">'EN300-6745292'</span>})</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">=</span> SynthonPool(molecule_to_synthon(mol1))</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>p2 <span class="op">=</span> SynthonPool(molecule_to_synthon(mol2))</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>p3 <span class="op">=</span> SynthonPool(molecule_to_synthon(mol3))</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>input_dict <span class="op">=</span> {</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'bb1'</span> : p1,</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'bb2'</span> : p2,</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'bb3'</span> : p3</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>inputs <span class="op">=</span> AssemblyInputs(input_dict, <span class="dv">10000</span>, <span class="dv">10000</span>)</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>outputs <span class="op">=</span> prod2.assemble(inputs, verbose<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(json.dumps(build_synthesis_scheme(outputs[<span class="dv">0</span>]), indent<span class="op">=</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{
+  "result": "CCOC(=O)c1c(C)c(C(=O)C(C)Oc2cc(N)c(Br)cc2Br)n(C(=O)C2(Cc3ccc(Br)cc3F)CCCNC2)c1C",
+  "is_input": false,
+  "assembly_data": {
+    "parents": [
+      {
+        "result": "CCOC(=O)c1c(C)c(C(=O)C(C)Oc2cc(N)c(Br)cc2Br)[nH:20]c1C",
+        "is_input": false,
+        "assembly_data": {
+          "parents": [
+            {
+              "input": "Nc1cc(O)c(Br)cc1Br",
+              "is_input": true,
+              "data": {
+                "ID": "EN300-104251"
+              }
+            },
+            {
+              "input": "CCOC(=O)c1c(C)[nH]c(C(=O)C(C)Cl)c1C",
+              "is_input": true,
+              "data": {
+                "ID": "EN300-08472"
+              }
+            }
+          ],
+          "reaction_tags": [
+            "O-SN alkylation"
+          ]
+        }
+      },
+      {
+        "input": "O=C(O)C1(Cc2ccc(Br)cc2F)CCCNC1",
+        "is_input": true,
+        "data": {
+          "ID": "EN300-6745292"
+        }
+      }
+    ],
+    "reaction_tags": [
+      "nH-Cu-mediated C-N coupling"
+    ]
+  }
+}</code></pre>
+</div>
+</div>
+<hr>
+<p><a href="https://github.com/DarkMatterAI/chem_templates/blob/main/chem_templates/assembly.py#L544" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="build_fragment_assembly_scheme" class="level3">
+<h3 class="anchored" data-anchor-id="build_fragment_assembly_scheme">build_fragment_assembly_scheme</h3>
+<blockquote class="blockquote">
+<pre><code> build_fragment_assembly_scheme (molecule:chem_templates.chem.Molecule)</code></pre>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>f1 <span class="op">=</span> [<span class="st">'[*:1]C'</span>, <span class="st">'[*:1]N'</span>, <span class="st">'[*:2]O'</span>]</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>f2 <span class="op">=</span> [<span class="st">'[*:1]CC'</span>, <span class="st">'[*:1]CCC'</span>]</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>m1 <span class="op">=</span> [Molecule(i, data<span class="op">=</span>{<span class="st">'test1'</span>:<span class="st">'test1'</span>}) <span class="cf">for</span> i <span class="kw">in</span> f1]</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>m2 <span class="op">=</span> [Molecule(i, data<span class="op">=</span>{<span class="st">'test2'</span>:<span class="st">'test2'</span>}) <span class="cf">for</span> i <span class="kw">in</span> f2]</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">=</span> AssemblyPool(m1)</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>p2 <span class="op">=</span> AssemblyPool(m2)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>assembly_dict <span class="op">=</span> {</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'R1'</span> : p1,</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'R2'</span> : p2</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>assembly_inputs <span class="op">=</span> AssemblyInputs(assembly_dict, <span class="dv">10000</span>, <span class="fl">1e8</span>)</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>r1 <span class="op">=</span> FragmentLeafNode(<span class="st">'R1'</span>, [<span class="dv">1</span>])</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>r2 <span class="op">=</span> FragmentLeafNode(<span class="st">'R2'</span>, [<span class="dv">1</span>])</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>full <span class="op">=</span> FragmentNode(<span class="st">'F'</span>, [r1, r2])</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>outputs <span class="op">=</span> full.assemble(assembly_inputs)</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(json.dumps(build_fragment_assembly_scheme(outputs[<span class="dv">0</span>]), indent<span class="op">=</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{
+  "result": "CCC",
+  "is_input": false,
+  "assembly_data": {
+    "parents": [
+      {
+        "input": "C[*:1]",
+        "is_input": true,
+        "data": {
+          "test1": "test1"
+        }
+      },
+      {
+        "input": "CC[*:1]",
+        "is_input": true,
+        "data": {
+          "test2": "test2"
+        }
+      }
+    ],
+    "input_smiles": "C[*:1].CC[*:1]"
+  }
+}</code></pre>
+</div>
+</div>
+<hr>
+<p><a href="https://github.com/DarkMatterAI/chem_templates/blob/main/chem_templates/assembly.py#L564" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="build_assembly_from_dict" class="level3">
+<h3 class="anchored" data-anchor-id="build_assembly_from_dict">build_assembly_from_dict</h3>
+<blockquote class="blockquote">
+<pre><code> build_assembly_from_dict (assembly_schema:dict)</code></pre>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>schema1 <span class="op">=</span> {</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a> <span class="st">"name"</span>: <span class="st">"F"</span>,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a> <span class="st">"node_type"</span>: <span class="st">"fragment_node"</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a> <span class="st">"template"</span>: <span class="va">None</span>,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a> <span class="st">"children"</span>: [</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>   <span class="st">"name"</span>: <span class="st">"R1"</span>,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>   <span class="st">"node_type"</span>: <span class="st">"fragment_leaf_node"</span>,</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>   <span class="st">"mapping_idxs"</span>: [<span class="dv">1</span>],</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>   <span class="st">"template"</span>: <span class="va">None</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  },</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>   <span class="st">"name"</span>: <span class="st">"R2"</span>,</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>   <span class="st">"node_type"</span>: <span class="st">"fragment_leaf_node"</span>,</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>   <span class="st">"mapping_idxs"</span>: [<span class="dv">1</span>],</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>   <span class="st">"template"</span>: <span class="va">None</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a> ]</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>assembly_schema <span class="op">=</span> build_assembly_from_dict(schema1)</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>schema2 <span class="op">=</span> {<span class="st">'name'</span>: <span class="st">'product'</span>,</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a> <span class="st">'node_type'</span>: <span class="st">'synthon_node'</span>,</span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a> <span class="st">'n_func'</span>: {<span class="dv">0</span>},</span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a> <span class="st">'template'</span>: <span class="va">None</span>,</span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a> <span class="st">'rxn_universe'</span>: ReactionUniverse(<span class="st">'all_rxns'</span>, REACTION_GROUPS),</span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a> <span class="st">'incoming_node'</span>: {<span class="st">'name'</span>: <span class="st">'bb1'</span>,</span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>  <span class="st">'node_type'</span>: <span class="st">'synthon_leaf_node'</span>,</span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>  <span class="st">'n_func'</span>: {<span class="dv">1</span>},</span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a>  <span class="st">'template'</span>: <span class="va">None</span>},</span>
+<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a> <span class="st">'next_node'</span>: {<span class="st">'name'</span>: <span class="st">'bb2'</span>,</span>
+<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a>  <span class="st">'node_type'</span>: <span class="st">'synthon_leaf_node'</span>,</span>
+<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a>  <span class="st">'n_func'</span>: {<span class="dv">1</span>},</span>
+<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a>  <span class="st">'template'</span>: <span class="va">None</span>}}</span>
+<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a>assembly_schema <span class="op">=</span> build_assembly_from_dict(schema2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
