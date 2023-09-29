@@ -11,7 +11,8 @@ match_mapping, fuse_smile_on_atom_mapping
 from .building_blocks import Synthon, ReactionUniverse, REACTION_GROUPS, molecule_to_synthon
 
 # %% auto 0
-__all__ = ['AssemblyPool', 'AssemblyInputs', 'Node', 'FragmentNode', 'FragmentLeafNode', 'SynthonPool', 'make_pairs',
+__all__ = ['SYNTHON_NODE_SCHEMA', 'SYNTHON_LEAF_NODE_SCHEMA', 'FRAGMENT_NODE_SCHEMA', 'FRAGMENT_LEAF_NODE_SCHEMA', 'AssemblyPool',
+           'AssemblyInputs', 'Node', 'FragmentNode', 'FragmentLeafNode', 'SynthonPool', 'make_pairs',
            'make_pairs_chunked', 'add_rxn', 'make_assemblies', 'SynthonNode', 'SynthonLeafNode',
            'build_synthesis_scheme', 'build_fragment_assembly_scheme', 'build_assembly_from_dict']
 
@@ -299,6 +300,13 @@ class SynthonPool(AssemblyPool):
             bools = [filter_func(i) for i in self.items]
             
         return SynthonPool([self.items[i] for i in range(len(self.items)) if bools[i]])
+    
+    def deduplicate(self, key_func: Callable) -> SynthonPool:
+        item_dict = {}
+        for item in self.items:
+            item_dict[key_func(item)] = item
+        
+        return SynthonPool(list(item_dict.values()))
     
     def __repr__(self) -> str:
         return f'SynthonPool: {len(self.items)} items'
@@ -590,3 +598,35 @@ def build_assembly_from_dict(assembly_schema: dict) -> Node:
         raise ValueError(f'node type {node_type} not found')
         
     return node
+
+# %% ../nbs/06_assembly.ipynb 22
+SYNTHON_NODE_SCHEMA = {
+                        'name' : '', 
+                        'node_type' : 'synthon_node', 
+                        'n_func' : [],
+                        'template' : None,
+                        'rxn_universe' : None,
+                        'incoming_node' : None,
+                        'next_node' : None
+                    }
+
+SYNTHON_LEAF_NODE_SCHEMA = {
+                        'name' : '',
+                        'node_type' : 'synthon_leaf_node',
+                        'n_func' : [],
+                        'template' : None
+                    }
+
+FRAGMENT_NODE_SCHEMA = {
+                            'name' : '',
+                            'node_type' : 'fragment_node',
+                            'template' : None,
+                            'children' : []
+                        }
+
+FRAGMENT_LEAF_NODE_SCHEMA = {
+                                'name' : '',
+                                'node_type' : 'fragment_leaf_node',
+                                'mapping_idxs' : [],
+                                'template' : None
+                            }
